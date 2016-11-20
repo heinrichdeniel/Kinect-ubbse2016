@@ -9,17 +9,28 @@ namespace FileManager
 {
     class KeyInput
     {
+
+        XDocument doc;
+        String xmlFileName = "eyCommands.xml";
+
         public KeyInput()
         {
-            XDocument doc = XDocument.Load("KeyCommands.xml");
-
-            var authors = doc.Descendants("Name");
-
-            foreach (var author in authors)
+            try
             {
-                Console.WriteLine(author.Value);
+                doc = XDocument.Load(xmlFileName);
             }
-            Console.ReadLine();
+            catch(System.IO.FileNotFoundException e)
+            {
+                Console.WriteLine(xmlFileName + " not found");
+            }
+
+            //var authors = doc.Descendants("Name");
+
+            //foreach (var author in authors)
+            //{
+            //    Console.WriteLine(author.Value);
+            //}
+            //Console.ReadLine();
         }
     }
 }
