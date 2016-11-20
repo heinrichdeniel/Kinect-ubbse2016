@@ -1,4 +1,3 @@
-*.csproj
-*.cache
 obj/
-.vs/
+*.cache
+*.vs
