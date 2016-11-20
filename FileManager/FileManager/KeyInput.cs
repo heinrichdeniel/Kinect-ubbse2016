@@ -10,8 +10,8 @@ namespace FileManager
     class KeyInput
     {
 
-        XDocument doc;
-        String xmlFileName = "eyCommands.xml";
+        private XDocument doc = null;
+        private String xmlFileName = "KeyCommands.xml";
 
         public KeyInput()
         {
@@ -23,14 +23,18 @@ namespace FileManager
             {
                 Console.WriteLine(xmlFileName + " not found");
             }
+        }
 
-            //var authors = doc.Descendants("Name");
-
-            //foreach (var author in authors)
-            //{
-            //    Console.WriteLine(author.Value);
-            //}
-            //Console.ReadLine();
+        public void sendKey(int ID)
+        {
+            foreach (XElement xe in doc.Descendants("Item"))
+            {
+                if (xe.Element("ID").Value.Equals(ID + ""))
+                {
+                    System.Windows.Forms.SendKeys.SendWait(xe.Element("Name").Value);
+                    break;
+                }
+            }
         }
     }
 }
