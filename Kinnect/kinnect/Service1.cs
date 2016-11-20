@@ -105,10 +105,13 @@ namespace Kinnect
                         eventLog1.WriteEntry("Kinect kapcsolodott !!!", EventLogEntryType.Information, eventId++);
 
                         // Write the string to a file.
-                        System.IO.StreamWriter file = new System.IO.StreamWriter("d:\\test.txt");
-                        file.WriteLine(lines);
+                        // System.IO.StreamWriter file = new System.IO.StreamWriter("d:\\test.txt");
+                        //file.WriteLine(lines);
 
-                        file.Close();
+                        //file.Close();
+
+                        FileManager pb = new FileManager()
+                        Process.Start(pb.returnPath() + \\"Project_B.exe");
                         started = true;
             
                     }
