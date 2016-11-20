@@ -17,6 +17,16 @@ namespace Kinnect
     {
         private bool started = false;
 
+        private void inditsdEl()
+        {
+
+            // Write the string to a file.
+            System.IO.StreamWriter file = new System.IO.StreamWriter("d:\\test.txt");
+            file.WriteLine("ASD");
+            inditsdEl();
+            file.Close();
+            System.Diagnostics.Process.Start("d:\\futtasdbazdmeg.exe");
+        }
         public enum ServiceState
         {
             SERVICE_STOPPED = 0x00000001,
@@ -103,15 +113,14 @@ namespace Kinnect
                     {
                         string lines = "Kinect elindult";
                         eventLog1.WriteEntry("Kinect kapcsolodott !!!", EventLogEntryType.Information, eventId++);
-
-                        // Write the string to a file.
-                        // System.IO.StreamWriter file = new System.IO.StreamWriter("d:\\test.txt");
-                        //file.WriteLine(lines);
-
-                        //file.Close();
-
                         FileManager.Program pb = new FileManager.Program();
-                        Process.Start(pb.returnPath() + "Project_B.exe");
+
+                 
+                        inditsdEl();
+         
+
+                        eventLog1.WriteEntry(pb.returnPath(), EventLogEntryType.Information, eventId++);
+                        System.Diagnostics.Process.Start(pb.returnPath());
                         started = true;
             
                     }
