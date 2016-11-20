@@ -13,7 +13,7 @@ namespace FileManager
         {
             XDocument doc = XDocument.Load("KeyCommands.xml");
 
-            var authors = doc.Descendants("name");
+            var authors = doc.Descendants("Name");
 
             foreach (var author in authors)
             {
