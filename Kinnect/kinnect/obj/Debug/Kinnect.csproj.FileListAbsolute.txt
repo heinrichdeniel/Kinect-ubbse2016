@@ -13,3 +13,11 @@ C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\Kinnect\bin\Debug\Ki
 C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\Kinnect\bin\Debug\Kinnect.pdb
 C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\Kinnect\obj\Debug\Kinnect.ProjectInstaller.resources
 C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\Kinnect\obj\Debug\Kinnect.csproj.GenerateResource.Cache
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\Kinnect.exe.config
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.exe
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.pdb
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\Kinnect.pdb
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.csprojResolveAssemblyReference.cache
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.ProjectInstaller.resources
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.csproj.GenerateResource.Cache

@@ -110,8 +110,8 @@ namespace Kinnect
 
                         //file.Close();
 
-                        FileManager pb = new FileManager()
-                        Process.Start(pb.returnPath() + \\"Project_B.exe");
+                        FileManager.Program pb = new FileManager.Program();
+                        Process.Start(pb.returnPath() + "Project_B.exe");
                         started = true;
             
                     }
