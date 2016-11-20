@@ -22,7 +22,8 @@ namespace FileManager
             path = System.IO.Directory.GetCurrentDirectory();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.Run(new Form1());
+            KeyInput keyInput = new KeyInput();
         }
         public string returnPath()
         {
