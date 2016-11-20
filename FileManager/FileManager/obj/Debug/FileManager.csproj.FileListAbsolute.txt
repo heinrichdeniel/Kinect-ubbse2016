@@ -1,0 +1,8 @@
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\bin\Debug\FileManager.exe.config
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\bin\Debug\FileManager.exe
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\bin\Debug\FileManager.pdb
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\obj\Debug\FileManager.csprojResolveAssemblyReference.cache
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\obj\Debug\FileManager.Properties.Resources.resources
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\obj\Debug\FileManager.csproj.GenerateResource.Cache
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\obj\Debug\FileManager.exe
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\FileManager\FileManager\obj\Debug\FileManager.pdb

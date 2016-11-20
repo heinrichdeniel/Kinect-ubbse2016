@@ -21,3 +21,5 @@ d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\
 d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.csprojResolveAssemblyReference.cache
 d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.ProjectInstaller.resources
 d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.csproj.GenerateResource.Cache
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\FileManager.exe
+d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\FileManager.pdb

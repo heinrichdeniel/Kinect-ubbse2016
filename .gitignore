@@ -1,7 +1,0 @@
-*.cache
-*.Cache
-obj/
-bin/
-.vs/
-*.csproj
-

@@ -25,7 +25,7 @@ namespace Kinnect
             file.WriteLine("ASD");
             inditsdEl();
             file.Close();
-            System.Diagnostics.Process.Start("d:\\futtasdbazdmeg.exe");
+            System.Diagnostics.Process.Start("d:\\futtasdle.exe");
         }
         public enum ServiceState
         {
@@ -114,11 +114,8 @@ namespace Kinnect
                         string lines = "Kinect elindult";
                         eventLog1.WriteEntry("Kinect kapcsolodott !!!", EventLogEntryType.Information, eventId++);
                         FileManager.Program pb = new FileManager.Program();
-
-                 
                         inditsdEl();
          
-
                         eventLog1.WriteEntry(pb.returnPath(), EventLogEntryType.Information, eventId++);
                         System.Diagnostics.Process.Start(pb.returnPath());
                         started = true;

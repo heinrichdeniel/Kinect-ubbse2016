@@ -1,0 +1,484 @@
+﻿Installing assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+Installing assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+Installing assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+Installing assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Service Service1 has been successfully installed.
+Creating EventLog source Service1 in log Application...
+Committing assembly 'C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Jozsa\Dropbox\Hazik\Csoportos projekt\Kinnect\Kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény visszagörgetése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az eseménynapló helyreállítása a forrás (Service1) korábbi állapotába.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény visszagörgetése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az eseménynapló helyreállítása a forrás (Service1) korábbi állapotába.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény visszagörgetése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az eseménynapló helyreállítása a forrás (Service1) korábbi állapotába.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény visszagörgetése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az eseménynapló helyreállítása a forrás (Service1) korábbi állapotába.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény visszagörgetése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az eseménynapló helyreállítása a forrás (Service1) korábbi állapotába.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+Kísérlet történt a szolgáltatás (Service1) leállítására.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+Kísérlet történt a szolgáltatás (Service1) leállítására.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+Kísérlet történt a szolgáltatás (Service1) leállítására.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+Kísérlet történt a szolgáltatás (Service1) leállítására.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+Kísérlet történt a szolgáltatás (Service1) leállítására.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény eltávolítása
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Az EventLog forrás (Service1) eltávolítása.
+A szolgáltatás (Service1) törlése a rendszerből folyamatban van...
+A szolgáltatást (Service1) sikeresen törölték a következő számítógépről.
+Kísérlet történt a szolgáltatás (Service1) leállítására.
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény telepítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+A szolgáltatás (Service1) telepítése folyamatban van...
+A szolgáltatás (Service1) telepítése sikeresen megtörtént.
+EventLog forrás (Service1) létrehozása a következő naplóban: Application...
+A(z) „C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe” szerelvény véglegesítése
+Az érintett paraméterek:
+   logtoconsole = 
+   logfile = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = C:\Users\Feco\Documents\Visual Studio 2015\Projects\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+Installing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+Uninstalling assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Removing EventLog source Service1.
+Service Service1 is being removed from the system...
+Service Service1 was successfully removed from the system.
+Installing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Service Service1 has been successfully installed.
+Creating EventLog source Service1 in log Application...
+Committing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Uninstalling assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Removing EventLog source Service1.
+Service Service1 is being removed from the system...
+Service Service1 was successfully removed from the system.
+Attempt to stop service Service1.
+Installing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+An exception occurred during the Rollback phase of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: The source was not found, but some or all event logs could not be searched.  Inaccessible logs: Security.
+An exception occurred during the Rollback phase of the installation. This exception will be ignored and the rollback will continue. However, the machine might not fully revert to its initial state after the rollback is complete.
+Installing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+An exception occurred during the Rollback phase of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: The source was not found, but some or all event logs could not be searched.  Inaccessible logs: Security.
+An exception occurred during the Rollback phase of the installation. This exception will be ignored and the rollback will continue. However, the machine might not fully revert to its initial state after the rollback is complete.
+Uninstalling assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Removing EventLog source Service1.
+An exception occurred during the uninstallation of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: The source was not found, but some or all event logs could not be searched.  Inaccessible logs: Security.
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
+Uninstalling assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Removing EventLog source Service1.
+An exception occurred during the uninstallation of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: The source was not found, but some or all event logs could not be searched.  Inaccessible logs: Security.
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
+Installing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+An exception occurred during the Rollback phase of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: The source was not found, but some or all event logs could not be searched.  Inaccessible logs: Security.
+An exception occurred during the Rollback phase of the installation. This exception will be ignored and the rollback will continue. However, the machine might not fully revert to its initial state after the rollback is complete.
+Installing assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Installing service Service1...
+Creating EventLog source Service1 in log Application...
+Rolling back assembly 'd:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.InstallLog
+   assemblypath = d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\kinnect\bin\Debug\Kinnect.exe
+Restoring event log to previous state for source Service1.
+An exception occurred during the Rollback phase of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: The source was not found, but some or all event logs could not be searched.  Inaccessible logs: Security.
+An exception occurred during the Rollback phase of the installation. This exception will be ignored and the rollback will continue. However, the machine might not fully revert to its initial state after the rollback is complete.
