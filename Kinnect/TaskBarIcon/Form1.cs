@@ -12,7 +12,7 @@ namespace TaskBarIcon
 {
     public partial class TaskBar : Form
     {
-        public TaskBar()
+        public TaskBar() 
         {
             InitializeComponent();
         }
