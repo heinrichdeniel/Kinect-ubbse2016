@@ -1,4 +1,6 @@
-*.csproj
 *.cache
+*.Cache
 obj/
+bin/
 .vs/
+*.csproj
