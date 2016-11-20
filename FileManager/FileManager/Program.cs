@@ -17,9 +17,9 @@ namespace FileManager
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
-            //KeyInput keyInput = new KeyInput();
-            //keyInput.sendKey(2);
-            System.Windows.Forms.SendKeys.SendWait("{F1}");
+            KeyInput keyInput = new KeyInput();
+            keyInput.sendKey(14);
+            //System.Windows.Forms.SendKeys.SendWait("{F1}");
         }
         public string returnPath()
         {
