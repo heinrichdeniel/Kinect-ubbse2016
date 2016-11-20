@@ -40,7 +40,7 @@
             // Service1
             // 
             this.Service1.Description = "A sample service";
-            this.Service1.DisplayName = "Az en szerviszem";
+            this.Service1.DisplayName = "Kinect recognizer";
             this.Service1.ServiceName = "Service1";
             this.Service1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
