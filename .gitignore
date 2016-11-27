@@ -1,3 +1,7 @@
 *.cache
+*.Cache
 obj/
-.vs
+bin/
+.vs/
+*.csproj
+*.exe
