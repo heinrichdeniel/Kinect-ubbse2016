@@ -28,9 +28,7 @@ namespace FileManager
 
             //System.Windows.Forms.SendKeys.SendWait("{F1}");
         }
-        public string returnPath()
-        {
-            return new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).AbsolutePath ;
-        }
+
+    
     }
 }

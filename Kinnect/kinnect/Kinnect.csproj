@@ -79,6 +79,10 @@
       <Project>{a8468356-e660-4689-a5e6-7170db130758}</Project>
       <Name>FileManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaskBarIcon\TaskBarIcon.csproj">
+      <Project>{d7e16454-b33c-42b1-9f7d-79558d3c25a1}</Project>
+      <Name>TaskBarIcon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

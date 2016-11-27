@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Management;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,10 +19,11 @@ namespace TaskBarIcon
             InitializeComponent();
         }
 
+      
         private void Form1_Load(object sender, EventArgs e)
         {
-
-        }
+          
+         }
 
         private void Service_Opening(object sender, CancelEventArgs e)
         {
@@ -45,7 +48,12 @@ namespace TaskBarIcon
         }
 
 
+
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            show();
+        }
+        public void show()
         {
             this.Show();
             WindowState = FormWindowState.Normal;

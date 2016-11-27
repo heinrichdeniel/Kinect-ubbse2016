@@ -23,3 +23,5 @@ d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\
 d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\obj\Debug\Kinnect.csproj.GenerateResource.Cache
 d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\FileManager.exe
 d:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\FileManager.pdb
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\TaskBarIcon.exe
+D:\Egyetem\Csop projekt\SajatProjekt\Kinect-ubbse2016\Kinnect\Kinnect\bin\Debug\TaskBarIcon.pdb
