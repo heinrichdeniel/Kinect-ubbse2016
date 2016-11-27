@@ -10,13 +10,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TaskBarIcon
+namespace KinectControl
 {
     public partial class TaskBar : Form
     {
+        HandMovementAnalysis movementAnalysis;
         public TaskBar() 
         {
             InitializeComponent();
+            movementAnalysis = new HandMovementAnalysis();
         }
 
       
@@ -63,6 +65,7 @@ namespace TaskBarIcon
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+            movementAnalysis.Close();
         }
 
         private void Service_MouseClick(object sender, MouseEventArgs e)

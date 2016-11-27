@@ -1,5 +1,5 @@
 ﻿
-namespace TaskBarIcon
+namespace KinectControl
 {
     partial class TaskBar
     {
