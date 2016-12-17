@@ -4,4 +4,7 @@ obj/
 bin/
 .vs/
 *.csproj
+*.exe
+*.pdb
+
 

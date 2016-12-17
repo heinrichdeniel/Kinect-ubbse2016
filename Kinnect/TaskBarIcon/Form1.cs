@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Kinect;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,23 +10,61 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace KinectControl
 {
     public partial class TaskBar : Form
     {
-        HandMovementAnalysis movementAnalysis;
+       // HandMovementAnalysis movementAnalysis;
+        KinectSensor sensor = null;
+        MultiSourceFrameReader myReader = null;
         public TaskBar() 
         {
             InitializeComponent();
-            movementAnalysis = new HandMovementAnalysis();
+           // movementAnalysis = new HandMovementAnalysis();
         }
 
       
         private void Form1_Load(object sender, EventArgs e)
         {
-          
-         }
+            sensor = KinectSensor.GetDefault();  
+
+            if (sensor != null)
+            {
+                sensor.Open();
+            }
+            myReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color);
+            myReader.MultiSourceFrameArrived += myReader_MultiSourceFrameArrived;
+        }
+
+        private void myReader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
+        {
+            var reference = e.FrameReference.AcquireFrame();
+
+            using (var frame = reference.ColorFrameReference.AcquireFrame())
+            {
+                if (frame != null)
+                {
+                    var width = frame.FrameDescription.Width;
+                    var height = frame.FrameDescription.Height;
+                    var data = new byte[width * height * 32 / 8];
+                    frame.CopyConvertedFrameDataToArray(data, ColorImageFormat.Bgra);
+
+                    var bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
+
+                    var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+
+                    Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
+                    bitmap.UnlockBits(bitmapData);
+                    bitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
+                    pictureBox1.Image = bitmap;
+
+
+                }
+            }
+        }
 
         private void Service_Opening(object sender, CancelEventArgs e)
         {
@@ -65,7 +104,7 @@ namespace KinectControl
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
-            movementAnalysis.Close();
+            //movementAnalysis.Close();
         }
 
         private void Service_MouseClick(object sender, MouseEventArgs e)
@@ -98,6 +137,10 @@ namespace KinectControl
         private void TaskBar_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Close();
+        }
+
+        private void TakePicture_Click(object sender, EventArgs e)
+        {
         }
     }
 }
