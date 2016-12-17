@@ -58,6 +58,7 @@ namespace Kinnect
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
+            watchKinect();
 
         }
 
@@ -68,10 +69,6 @@ namespace Kinnect
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
             eventLog1.WriteEntry("In OnStart");
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 5000; // 5 seconds
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            timer.Start();  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
         }
@@ -86,39 +83,13 @@ namespace Kinnect
             eventLog1.WriteEntry("In OnContinue.");
         }
 
-        public void OnTimer(Object sender, System.Timers.ElapsedEventArgs args)
+        public void watchKinect()
         {
+            new Thread(new TaskBarIcon.Program().runProgram).Start();
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
-            ManagementObjectCollection mbsList = null;
-            ManagementObjectSearcher mbs = new ManagementObjectSearcher("Select * From Win32_USBHub");
-            mbsList = mbs.Get();
 
-            foreach (ManagementObject mo in mbsList)
-            {
-               // Console.WriteLine("USBHub device Friendly name:{0}", mo["Name"].ToString());
-                if (Convert.ToString(mo["Name"]).IndexOf("SuperSpeed") > -1)
-                {
-                    // Process.Start("notepad.exe", "D:/myd.txt");
-                    if (started == false)
-                    {
-                        string lines = "Kinect elindult";
-                        eventLog1.WriteEntry("Kinect kapcsolodott !!!", EventLogEntryType.Information, eventId++);
-
-                        // Write the string to a file.
-                        System.IO.StreamWriter file = new System.IO.StreamWriter("d:\\test.txt");
-                        file.WriteLine(lines);
-
-                        file.Close();
-                        started = true;
-            
-                    }
-                }
-                else
-                {
-                    started = false;
-                }
-            }
         }
+
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);

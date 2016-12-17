@@ -40,6 +40,7 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,11 +67,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FileManager\FileManager\FileManager.csproj">
+      <Project>{a8468356-e660-4689-a5e6-7170db130758}</Project>
+      <Name>FileManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskBarIcon\TaskBarIcon.csproj">
+      <Project>{d7e16454-b33c-42b1-9f7d-79558d3c25a1}</Project>
+      <Name>TaskBarIcon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
