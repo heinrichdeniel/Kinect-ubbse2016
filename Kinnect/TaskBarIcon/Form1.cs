@@ -59,8 +59,13 @@ namespace KinectControl
                     Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
                     bitmap.UnlockBits(bitmapData);
                     bitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
-                    pictureBox1.Image = bitmap;
 
+                    Bitmap b = new Bitmap(800, 800);
+                    using (Graphics g = Graphics.FromImage((Image)b))
+                    {
+                        g.DrawImage(bitmap, 0, 0, 800, 600);
+                    }
+                    pictureBox1.Image = b;
 
                 }
             }

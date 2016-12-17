@@ -80,7 +80,7 @@ namespace KinectControl
             // 
             this.pictureBox1.Location = new System.Drawing.Point(274, 41);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1098, 748);
+            this.pictureBox1.Size = new System.Drawing.Size(1533, 1096);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
@@ -100,7 +100,7 @@ namespace KinectControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1384, 850);
+            this.ClientSize = new System.Drawing.Size(1807, 1137);
             this.ContextMenuStrip = this.Service;
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
