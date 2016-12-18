@@ -55,7 +55,7 @@ namespace KinectControl
             this.showToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.Service.Name = "Service";
-            this.Service.Size = new System.Drawing.Size(104, 48);
+            this.Service.Size = new System.Drawing.Size(121, 56);
             this.Service.Text = "Service";
             this.Service.Opening += new System.ComponentModel.CancelEventHandler(this.Service_Opening);
             this.Service.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Service_MouseClick);
@@ -63,14 +63,14 @@ namespace KinectControl
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -84,38 +84,43 @@ namespace KinectControl
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(418, 16);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Location = new System.Drawing.Point(557, 20);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(783, 597);
+            this.pictureBox1.Size = new System.Drawing.Size(1044, 735);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(602, 672);
+            this.button1.Location = new System.Drawing.Point(803, 827);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(384, 78);
+            this.button1.Size = new System.Drawing.Size(512, 96);
             this.button1.TabIndex = 3;
             this.button1.Text = "Add gesture";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(18, 16);
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(24, 20);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(361, 784);
+            this.listBox1.Size = new System.Drawing.Size(480, 964);
             this.listBox1.TabIndex = 4;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(16, 15);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1237, 832);
+            this.tabControl1.Size = new System.Drawing.Size(1649, 1024);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage1
@@ -124,10 +129,11 @@ namespace KinectControl
             this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1229, 806);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(1641, 995);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Billentyűzet";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -135,21 +141,23 @@ namespace KinectControl
             // tabPage2
             // 
             this.tabPage2.AllowDrop = true;
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1229, 806);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(1641, 995);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Egér";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // TaskBar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1259, 856);
+            this.ClientSize = new System.Drawing.Size(1841, 1045);
             this.ContextMenuStrip = this.Service;
             this.Controls.Add(this.tabControl1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "TaskBar";
             this.Text = "TaskBar";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TaskBar_FormClosing);

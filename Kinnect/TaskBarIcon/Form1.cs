@@ -8,10 +8,12 @@ namespace KinectControl
 {
     public partial class TaskBar : Form
     {
+        KinectControl.Connection conn;
+
         public TaskBar() 
         {
             InitializeComponent();
-            KinectControl.Connection conn = new KinectControl.Connection(pictureBox1);
+            conn = new KinectControl.Connection(pictureBox1, button1);
 
         }
 
@@ -93,6 +95,11 @@ namespace KinectControl
         private void TakePicture_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            conn.saveNewGesture();
         }
     }
 }

@@ -143,8 +143,7 @@ namespace KinectControl
                     float x = handLeft.X - spineBase.X + 0.3f;
                     float y = spineBase.Y - handLeft.Y + 0.51f;
                     Point curPos = MouseControl.GetCursorPosition();
-                    float smoothing = 1 - cursorSmoothing;
-                    MouseControl.SetCursorPos((int)(curPos.X + (x * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((y + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
+                    MouseControl.SetCursorPos((int)(curPos.X + (x * mouseSensitivity * screenWidth - curPos.X)), (int)(curPos.Y + ((y + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) ));
                     alreadyTrackedPos = true;
 
                     if (doClick && useGripGesture)

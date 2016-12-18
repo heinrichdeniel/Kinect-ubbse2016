@@ -12,37 +12,41 @@ namespace KinectControl
 {
     public class Connection
     {
+        Button btn = null;
         PictureBox pb = null;
         Body[] bodies = null;
-        Dictionary<string, CameraSpacePoint> handpoints = new Dictionary<string, CameraSpacePoint>();
+        int handpointsnumber = 0;
+        Dictionary<int, CameraSpacePoint> handpoints = new Dictionary<int, CameraSpacePoint>();
         KinectSensor sensor;
         BodyFrameReader bodyFrameReader;
         bool moving = false;
-        CameraSpacePoint prevHandRight;
+        bool waitingForGesture = false;
+        bool gestureStarted = false;
 
-        MouseMovementHandler movementHandler;
+       // MouseMovementHandler movementHandler;
         MultiSourceFrameReader myReader = null;
 
-        public Connection(PictureBox pictureBox)
+        public Connection(PictureBox pictureBox, Button btn)
         {
             pb = pictureBox;
+            this.btn = btn;
             sensor = KinectSensor.GetDefault();
             bodyFrameReader = sensor.BodyFrameSource.OpenReader();
             bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
 
             myReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color);
             myReader.MultiSourceFrameArrived += myReader_MultiSourceFrameArrived;
+
             if (sensor != null)
             {
                 sensor.Open();
             }
-            movementHandler = new MouseMovementHandler();
+          //  movementHandler = new MouseMovementHandler();
         }
 
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
-
-
+            
             using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
             {
                 if (bodyFrame != null)
@@ -63,8 +67,7 @@ namespace KinectControl
                 // get first tracked body only, notice there's a break below.
                 if (body.IsTracked)
                 {
-                    movementHandler.bodyUpdated(body);
-                    handpoints.Clear();
+                    //movementHandler.bodyUpdated(body);
                     // get various skeletal positions
                     CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
                     CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
@@ -73,56 +76,63 @@ namespace KinectControl
                     CameraSpacePoint handTipRight = body.Joints[JointType.HandTipRight].Position;
                     CameraSpacePoint hipLeft = body.Joints[JointType.HipLeft].Position;
 
-                    if (prevHandRight != null)
+                    if (waitingForGesture)
                     {
-
-                        if (Math.Abs(prevHandRight.Y - handRight.Y) > 0.01)
+                        if (handpointsnumber > 5)
                         {
-                            if (!moving)
-                            {
-                                moving = true;
-                                Debug.WriteLine("Elindult");
-                            }
-                            Debug.WriteLine("X: " + handRight.X);
-                            Debug.WriteLine("Y: " + handRight.Y);
-                            Debug.WriteLine("Z: " + handRight.Z);
+                            gestureStarted = true;
+                            waitingForGesture = false;
+                            btn.Text = "Capturing";
+                            btn.BackColor = Color.Green;
                         }
-
+                        else
+                        {
+                            compareHands(hipLeft, handRight);
+                        }
                     }
-                    /*  if (first == true)
-                      {
-                          //first = false;
-                          if (handLeft.Y - hipLeft.Y > 0)
-                          {
-                              MessageBox.Show("Fent");
-                              first = false;
-                          }
-                      }
-                      if (first == false)
-                      {
-                          if (handLeft.Y - hipLeft.Y <= 0)
-                          {
-                              MessageBox.Show("Lent");
-                              first = true;
-                          }
-                      }*/
-
-
+          
                     //Thread.Sleep(100);
-                    handpoints["HandLeft"] = handLeft;
-                    handpoints["HandRight"] = handRight;
-                    handpoints["wristRight"] = wristRight;
-                    handpoints["ThumbRight"] = thumbRight;
-                    handpoints["HandTipRight"] = handTipRight;
-                    // get first tracked body only
+         
 
-                    prevHandRight = body.Joints[JointType.HandRight].Position;
                     break;
                 }
             }
         }
 
-         private void myReader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
+        private void compareHands(CameraSpacePoint hipLeft, CameraSpacePoint hand)
+        {
+            if (handpointsnumber == 0)
+            {
+                handpoints[0] = hand;
+                handpointsnumber = 1;
+            }
+            else
+            {
+                if (hand.Y - hipLeft.Y > 0 && !handMoved(handpoints[handpointsnumber-1], hand))
+                {
+                    btn.Text = "Capturing in "+ (5 - handpointsnumber) + " sec";
+                    handpoints[handpointsnumber] = hand;
+                    handpointsnumber++;
+                }
+                else
+                {
+                    handpoints[0] = hand;
+                    handpointsnumber = 1;
+                }
+            }
+            System.Threading.Thread.Sleep(100);
+        }
+
+        private Boolean handMoved(CameraSpacePoint prevHand, CameraSpacePoint hand)
+        {
+            if(Math.Abs(prevHand.X - hand.X) > 0.01 || Math.Abs(prevHand.Y - hand.Y) > 0.01 || Math.Abs(prevHand.Z - hand.Z) > 0.01)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void myReader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
          {
              var reference = e.FrameReference.AcquireFrame();
 
@@ -185,6 +195,14 @@ namespace KinectControl
                 }
             }
         }
-
+        public void saveNewGesture()
+        {
+            this.waitingForGesture = true;
+            btn.Text = "Please raise up your right hand before starting capture!";
+            btn.BackColor = Color.Red;
+            btn.Enabled = false;
+        }
     }
+
+   
 }
