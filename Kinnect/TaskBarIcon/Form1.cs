@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using TaskBarIcon;
+using System.Diagnostics;
+using System.IO;
 
 namespace KinectControl
 {
@@ -21,14 +22,14 @@ namespace KinectControl
         //HandMovementAnalysis movementAnalysis;
         KinectSensor sensor = null;
         MultiSourceFrameReader myReader = null;
-        Connection conn = new Connection();
         BodyFrameReader bodyFrameReader;
 
         Body[] bodies = null;
         Dictionary<string, CameraSpacePoint> handpoints = new Dictionary<string, CameraSpacePoint>();
         bool first;
         int count = 0;
-
+        bool moving = false;
+        CameraSpacePoint prevHandRight;
 
         public TaskBar() 
         {
@@ -40,25 +41,106 @@ namespace KinectControl
         private void Form1_Load(object sender, EventArgs e)
         {
             sensor = KinectSensor.GetDefault();
+
+            //myReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color);
+            //myReader.MultiSourceFrameArrived += myReader_MultiSourceFrameArrived;
             bodyFrameReader = sensor.BodyFrameSource.OpenReader();
             bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
             if (sensor != null)
             {
                 sensor.Open();
             }
-           
+        }
 
-            myReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color);
-            myReader.MultiSourceFrameArrived += myReader_MultiSourceFrameArrived;
-            /*this.bodyFrameReader = this.sensor.BodyFrameSource.OpenReader();
-            this.bodyFrameReader.FrameArrived += this.bodyFrameReader_FrameArrived;*/
+        private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
+        {
+
+            //bool dataReceived = false;
+
+            using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
+            {
+                if (bodyFrame != null)
+                {
+                    if (this.bodies == null)
+                    {
+                        this.bodies = new Body[bodyFrame.BodyCount];
+                    }
+
+                    // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
+                    // As long as those body objects are not disposed and not set to null in the array,
+                    // those body objects will be re-used.
+                    bodyFrame.GetAndRefreshBodyData(this.bodies);
+                    //dataReceived = true;
+                }
+            }
+            foreach (Body body in this.bodies)
+            {
+                // get first tracked body only, notice there's a break below.
+                if (body.IsTracked)
+                {
+                    handpoints.Clear();
+                    // get various skeletal positions
+                    CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
+                    CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
+                    CameraSpacePoint wristRight = body.Joints[JointType.WristRight].Position;
+                    CameraSpacePoint thumbRight = body.Joints[JointType.ThumbRight].Position;
+                    CameraSpacePoint handTipRight = body.Joints[JointType.HandTipRight].Position;
+                    CameraSpacePoint hipLeft = body.Joints[JointType.HipLeft].Position;
+
+                    if (prevHandRight != null)
+                    {
+
+                        if (Math.Abs(prevHandRight.Y - handRight.Y) > 0.01)
+                        {
+                            if (!moving)
+                            {
+                                moving = true;
+                                Debug.WriteLine("Elindult");
+                            }
+                                Debug.WriteLine("X: " + handRight.X);
+                                Debug.WriteLine("Y: " + handRight.Y);
+                                Debug.WriteLine("Z: " + handRight.Z);
+                        }
+
+                    }
+                  /*  if (first == true)
+                    {
+                        //first = false;
+                        if (handLeft.Y - hipLeft.Y > 0)
+                        {
+                            MessageBox.Show("Fent");
+                            first = false;
+                        }
+                    }
+                    if (first == false)
+                    {
+                        if (handLeft.Y - hipLeft.Y <= 0)
+                        {
+                            MessageBox.Show("Lent");
+                            first = true;
+                        }
+                    }*/
+
+
+                    //Thread.Sleep(100);
+                    handpoints["HandLeft"] = handLeft;
+                    handpoints["HandRight"] = handRight;
+                    handpoints["wristRight"] = wristRight;
+                    handpoints["ThumbRight"] = thumbRight;
+                    handpoints["HandTipRight"] = handTipRight;
+                    // get first tracked body only
+
+                    prevHandRight = body.Joints[JointType.HandRight].Position;
+                    break;
+                }
+            }
         }
     
 
-        private void myReader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
+       /* private void myReader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
           {
               conn.DrawImage(e,pictureBox1);
-          }
+          }*/
 
         /*private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
@@ -97,69 +179,7 @@ namespace KinectControl
                  }
              }
          }*/
-
-        private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
-        {
-            //bool dataReceived = false;
-
-            using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
-            {
-                if (bodyFrame != null)
-                {
-                    if (this.bodies == null)
-                    {
-                        this.bodies = new Body[bodyFrame.BodyCount];
-                    }
-
-                    // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
-                    // As long as those body objects are not disposed and not set to null in the array,
-                    // those body objects will be re-used.
-                    bodyFrame.GetAndRefreshBodyData(this.bodies);
-                    //dataReceived = true;
-                }
-            }
-            foreach (Body body in this.bodies)
-            {
-                // get first tracked body only, notice there's a break below.
-                if (body.IsTracked)
-                {
-                    handpoints.Clear();
-                    // get various skeletal positions
-                    CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
-                    CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
-                    CameraSpacePoint wristRight = body.Joints[JointType.WristRight].Position;
-                    CameraSpacePoint thumbRight = body.Joints[JointType.ThumbRight].Position;
-                    CameraSpacePoint handTipRight = body.Joints[JointType.HandTipRight].Position;
-                    CameraSpacePoint hipLeft = body.Joints[JointType.HipLeft].Position;
-                    if (first == true)
-                    {
-                        //first = false;
-                        if (handLeft.Y - hipLeft.Y > 0)
-                        {
-                            MessageBox.Show("Fent");
-                            first = false;
-                        }
-                    }
-                    if (first == false)
-                    {
-                        if (handLeft.Y - hipLeft.Y <= 0)
-                        {
-                            MessageBox.Show("Lent");
-                            first = true;
-                        }
-                    }
-                    //Thread.Sleep(100);
-                    handpoints["HandLeft"] = handLeft;
-                    handpoints["HandRight"] = handRight;
-                    handpoints["wristRight"] = wristRight;
-                    handpoints["ThumbRight"] = thumbRight;
-                    handpoints["HandTipRight"] = handTipRight;
-                    CameraSpacePoint spineBase = body.Joints[JointType.SpineBase].Position;
-                    // get first tracked body only
-                    break;
-                }
-            }
-        }
+         
 
         private void Service_Opening(object sender, CancelEventArgs e)
         {
