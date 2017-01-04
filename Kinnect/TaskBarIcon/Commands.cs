@@ -9,21 +9,54 @@ namespace TaskBarIcon
 {
     class Commands
     {
-        private int[][][] momentum;
-        private List< Dictionary<String, CameraSpacePoint> > [] points;
-        
-        public Commands()
+      
+        public struct Command
         {
-            points = new List<Dictionary<string, CameraSpacePoint>>[3];
-            points[0] = new List<Dictionary<string, CameraSpacePoint>>();
-            points[1] = new List<Dictionary<string, CameraSpacePoint>>();
-            points[2] = new List<Dictionary<string, CameraSpacePoint>>();
-            momentum = new int[3][][];
+            public float totalTime;
+            public List<MomentInTime> points;
         }
 
-        public void addDictionary(Dictionary<String, CameraSpacePoint> currentPosition, int i)
+        public struct MomentInTime
         {
-            points[i].Add(currentPosition);   
+            public Dictionary<string, CameraSpacePoint> hand;
+            public float time;
+        }
+
+        private Command[] commands;
+
+
+        public Commands()
+        {
+            commands = new Command[3];
+            commands[0].points = new List<MomentInTime>();
+            commands[1].points = new List<MomentInTime>();
+            commands[2].points = new List<MomentInTime>();
+            commands[0].totalTime = new float();
+            commands[1].totalTime = new float();
+            commands[2].totalTime = new float();
+        }
+
+        public void addDictionary(MomentInTime currentPosition, int i)
+        {
+            commands[i].points.Add(currentPosition);   
+        }
+
+        public void setTime(float t, int i)
+        {
+            commands[i].totalTime = t;
+        }
+        
+        public Command standardization(Command com)
+        {
+            Command newCommand = new Command();
+            newCommand.points = new List<MomentInTime>();
+           
+            for (int i=0; i<=com.points.Count;i++)
+            {
+                newCommand.points[i] = com.points[i];
+                newCommand.points[i].time = (float) com.points[i].time / com.totalTime;
+            }
+            return newCommand;
         }
 
     }
