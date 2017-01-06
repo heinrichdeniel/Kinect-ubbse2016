@@ -83,11 +83,11 @@ namespace FileManager
             movement.AppendChild(totalTime);
             movement.AppendChild(moments);
             kinnectXMLCommands.DocumentElement.AppendChild(movement);
-            kinnectXMLCommands.Save("/" +  xmlKinectMovementFileName);
+            kinnectXMLCommands.Save("/" + xmlKinectMovementFileName);
         }
 
         //Read a command from the xml file
-        public Commands.Command readCommand(int keyInputID) 
+        public Commands.Command readCommand(int keyInputID)
         {
             Commands.Command command = new Commands.Command();
             XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
@@ -95,10 +95,30 @@ namespace FileManager
             {
                 foreach (XmlNode movement in movements)
                 {
-                    if( Int32.Parse(movement.SelectSingleNode("id").InnerText) == keyInputID)
+                    if (Int32.Parse(movement.SelectSingleNode("id").InnerText) == keyInputID)
                     {
-                        
-                        break;
+
+                        command.keyID = keyInputID;
+                        command.totalTime = float.Parse(movement.SelectSingleNode("total_time").InnerText);
+                        List<Commands.MomentInTime> moments = new List<Commands.MomentInTime>();
+                        foreach (XmlNode moment in movement.SelectSingleNode("moments").SelectNodes("moment"))
+                        {
+                            Commands.MomentInTime cmoment = new Commands.MomentInTime();
+                            cmoment.time = float.Parse(moment.SelectSingleNode("time").InnerText);
+                            Dictionary<int, CameraSpacePoint> cpoints = new Dictionary<int, CameraSpacePoint>();
+
+                            foreach (XmlNode point in moment.SelectSingleNode("points").SelectNodes("point"))
+                            {
+                                CameraSpacePoint cpoint = new CameraSpacePoint();
+                                cpoint.X = Int32.Parse(point.SelectSingleNode("x").InnerText);
+                                cpoint.Y = Int32.Parse(point.SelectSingleNode("y").InnerText);
+                                cpoint.Z = Int32.Parse(point.SelectSingleNode("z").InnerText);
+                                cpoints.Add(Int32.Parse(point.SelectSingleNode("key").InnerText), cpoint);
+                            }
+                            cmoment.hand = cpoints;
+
+                        }
+                        command.points = moments;
                         return command;
                     }
                 }
@@ -108,8 +128,42 @@ namespace FileManager
         }
 
         //Read all commands from the xml file
-        public void readAllCommands()
+        public List<Commands.Command> readAllCommands()
         {
+            List<Commands.Command> commands = new List<Commands.Command>();
+            XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
+            if (movements.Count > 0)
+            {
+                foreach (XmlNode movement in movements)
+                {
+
+                    Commands.Command command = new Commands.Command();
+                    command.keyID = Int32.Parse(movement.SelectSingleNode("id").InnerText);
+                    command.totalTime = float.Parse(movement.SelectSingleNode("total_time").InnerText);
+                    List<Commands.MomentInTime> moments = new List<Commands.MomentInTime>();
+                    foreach (XmlNode moment in movement.SelectSingleNode("moments").SelectNodes("moment"))
+                    {
+                        Commands.MomentInTime cmoment = new Commands.MomentInTime();
+                        cmoment.time = float.Parse(moment.SelectSingleNode("time").InnerText);
+                        Dictionary<int, CameraSpacePoint> cpoints = new Dictionary<int, CameraSpacePoint>();
+
+                        foreach (XmlNode point in moment.SelectSingleNode("points").SelectNodes("point"))
+                        {
+                            CameraSpacePoint cpoint = new CameraSpacePoint();
+                            cpoint.X = Int32.Parse(point.SelectSingleNode("x").InnerText);
+                            cpoint.Y = Int32.Parse(point.SelectSingleNode("y").InnerText);
+                            cpoint.Z = Int32.Parse(point.SelectSingleNode("z").InnerText);
+                            cpoints.Add(Int32.Parse(point.SelectSingleNode("key").InnerText), cpoint);
+                        }
+                        cmoment.hand = cpoints;
+
+                    }
+                    command.points = moments;
+                    commands.Add(command);
+                }
+            }
+
+            return commands;
         }
 
         //check the file (filename) existence
