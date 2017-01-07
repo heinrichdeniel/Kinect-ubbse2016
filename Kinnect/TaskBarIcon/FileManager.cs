@@ -11,7 +11,7 @@ using TaskBarIcon;
 
 namespace FileManager
 {
-    class KeyInput
+    class FileManager
     {
 
         private XDocument keyCommandDoc = null;
@@ -22,7 +22,7 @@ namespace FileManager
 
 
         //Constructor
-        public KeyInput()
+        public FileManager()
         {
 
 
@@ -127,6 +127,79 @@ namespace FileManager
             return command;
         }
 
+
+        //Update command
+        public bool updateCommand(Commands.Command command)
+        {
+
+            XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
+            if (movements.Count > 0)
+            {
+                foreach (XmlNode movement in movements)
+                {
+                    if (Int32.Parse(movement.SelectSingleNode("id").InnerText) == command.keyID)
+                    {
+
+                        movement.SelectSingleNode("total_time").InnerText = command.totalTime.ToString();
+
+                        movement.SelectSingleNode("moments").RemoveAll();
+                        foreach (Commands.MomentInTime moment in command.points)
+                        {
+                            XmlElement cmoment = kinnectXMLCommands.CreateElement("moment");
+                            XmlElement time = kinnectXMLCommands.CreateElement("time");
+                            time.InnerText = moment.time.ToString();
+
+                            XmlElement points = kinnectXMLCommands.CreateElement("points");
+                            foreach (KeyValuePair<int, CameraSpacePoint> pair in moment.hand)
+                            {
+                                XmlElement point = kinnectXMLCommands.CreateElement("point");
+                                XmlElement key = kinnectXMLCommands.CreateElement("key");
+                                XmlElement x = kinnectXMLCommands.CreateElement("x");
+                                XmlElement y = kinnectXMLCommands.CreateElement("y");
+                                XmlElement z = kinnectXMLCommands.CreateElement("z");
+                                key.InnerText = pair.Key.ToString();
+                                x.InnerText = pair.Value.X.ToString();
+                                y.InnerText = pair.Value.Y.ToString();
+                                z.InnerText = pair.Value.Z.ToString();
+                                point.AppendChild(key);
+                                point.AppendChild(x);
+                                point.AppendChild(y);
+                                point.AppendChild(z);
+                                points.AppendChild(point);
+                            }
+                            cmoment.AppendChild(time);
+                            cmoment.AppendChild(points);
+                            movement.SelectSingleNode("moments").AppendChild(cmoment);
+                        }
+                        kinnectXMLCommands.Save("/" + xmlKinectMovementFileName);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        //Remove a command
+        public bool removeCommand(int keyInputID)
+        {
+
+            XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
+            if (movements.Count > 0)
+            {
+                foreach (XmlNode movement in movements)
+                {
+                    if (Int32.Parse(movement.SelectSingleNode("id").InnerText) == keyInputID)
+                    {
+                        movement.RemoveAll();
+                        kinnectXMLCommands.Save("/" + xmlKinectMovementFileName);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         //Read all commands from the xml file
         public List<Commands.Command> readAllCommands()
         {
@@ -178,20 +251,42 @@ namespace FileManager
 
         }
 
+        public KeyInput getKeyInput(int keyInputId)
+        {
+            KeyInput keyInput = new KeyInput();
+            if (keyInputId < 32 && keyInputId > 0)
+            {
+                foreach (XElement xe in keyCommandDoc.Descendants("Item"))
+                {
+                    if (Int32.Parse(xe.Element("ID").Value) == keyInputId)
+                    {
+                        keyInput.id = keyInputId;
+                        keyInput.windowsCommand = xe.Element("Windows_command").Value;
+                        keyInput.description = xe.Element("Description").Value;
+                        keyInput.descriptionLong = xe.Element("Description_long").Value;
+                        return keyInput;
+                    }
+                }
+            }
+            keyInput.id = -1;
+            return keyInput;
+        }
 
         //Based on the ID this method send a key command for the windows
-        public void sendKey(int ID)
+        public List<KeyInput> getAllKeyInput()
         {
+            List<KeyInput> keyList = new List<KeyInput>();
             //searching command 
             foreach (XElement xe in keyCommandDoc.Descendants("Item"))
             {
-                if (xe.Element("ID").Value.Equals(ID + ""))
-                {
-                    //sending the key input
-                    System.Windows.Forms.SendKeys.SendWait(xe.Element("Name").Value);
-                    break;
-                }
+                KeyInput cKeyInput = new KeyInput();
+                cKeyInput.id = Int32.Parse(xe.Element("ID").Value);
+                cKeyInput.windowsCommand = xe.Element("Windows_command").Value;
+                cKeyInput.description = xe.Element("Description").Value;
+                cKeyInput.descriptionLong = xe.Element("Description_long").Value;
+                keyList.Add(cKeyInput);
             }
+            return keyList;
         }
     }
 }

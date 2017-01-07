@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="MyDataTypes.PetData[]">
+    <Item>
+      <ID>1</ID>
+      <Windows_command>{F1}</Windows_command>
+      <Description>F1</Description>
+	  <Description_long>Help</Description_long>
+    </Item>
+    <Item>
+      <ID>2</ID>
+      <Windows_command>^({ESC})</Windows_command>
+      <Description>CTRL + ESC</Description>
+	  <Description_long>Force exit/close</Description_long>
+    </Item>
+    <Item>
+      <ID>3</ID>
+      <Windows_command>%({TAB})</Windows_command>
+      <Description>ALT + TAB</Description>
+	  <Description_long>Task/Application switch</Description_long>
+    </Item>
+    <Item>
+      <ID>4</ID>
+      <Windows_command>%({F4})</Windows_command>
+      <Description>ALT + F5</Description>
+	  <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>5</ID>
+      <Windows_command>+({DELETE})</Windows_command>
+      <Description>SHIFT + DELETE</Description>
+	  <Description_long>Force delete</Description_long>
+    </Item>
+    <Item>
+      <ID>6</ID>
+      <Windows_command>^({C})</Windows_command>
+      <Description>CTRL + C</Description>
+	  <Description_long>Copy</Description_long>
+    </Item>
+    <Item>
+      <ID>7</ID>
+      <Windows_command>^({X})</Windows_command>
+      <Description>CTRL + X</Description>
+	  <Description_long>Cut</Description_long>
+    </Item>
+    <Item>
+      <ID>8</ID>
+      <Windows_command>^({V})</Windows_command>
+      <Description>CTRL + V</Description>
+	  <Description_long>Paste</Description_long> 
+    </Item>
+    <Item>
+      <ID>9</ID>
+      <Windows_command>^({Z})</Windows_command>
+      <Description>CTRL + Z</Description>
+	   <Description_long>Undo</Description_long>
+    </Item>
+    <Item>
+      <ID>10</ID>
+      <Windows_command>^({B})</Windows_command>
+      <Description>CTRL + B</Description>
+	   <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>11</ID>
+      <Windows_command>^({U})</Windows_command>
+      <Description>CTRL + U</Description>
+	  <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>12</ID>
+      <Windows_command>^({I})</Windows_command>
+      <Description>CTRL + I</Description>
+	  <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>13</ID>
+      <Windows_command>^(+({ESC}))</Windows_command>
+      <Description>CTRL + SHIFT + ESC</Description>
+	  <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>14</ID>
+      <Windows_command>%({DOWN})</Windows_command>
+      <Description>ALT + DOWN ARROW</Description>
+	  <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>15</ID>
+      <Windows_command>^({TAB})</Windows_command>
+      <Description>CTRL + TAB</Description>
+	  <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>16</ID>
+      <Windows_command>%({F4})</Windows_command>
+      <Description>ALT + F4</Description>
+	  <Description_long>Force close application</Description_long>
+    </Item>
+    <Item>
+      <ID>17</ID>
+      <Windows_command>%({F6})</Windows_command>
+      <Description>ALT + F6</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>18</ID>
+      <Windows_command>{F2}</Windows_command>
+      <Description>F2</Description>
+	  <Description_long></Description_long>
+    </Item>
+    <Item>
+      <ID>19</ID>
+      <Windows_command>{F3}</Windows_command>
+      <Description>F3</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>20</ID>
+      <Windows_command>%({ENTER})</Windows_command>
+      <Description>ALT + ENTER</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>21</ID>
+      <Windows_command>{F4}</Windows_command>
+      <Description>F4</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>22</ID>
+      <Windows_command>{F5}</Windows_command>
+      <Description>F5</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>23</ID>
+      <Windows_command>{F6}</Windows_command>
+      <Description>F6</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>24</ID>
+      <Windows_command>^(A)</Windows_command>
+      <Description>CTRL + A</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>25</ID>
+      <Windows_command>{BACKSPACE}</Windows_command>
+      <Description>BACKSPACE</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>26</ID>
+      <Windows_command>{RIGHT}</Windows_command>
+      <Description>RIGHT ARROW</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>27</ID>
+      <Windows_command>{LEFT}</Windows_command>
+      <Description>LEFT ARROW</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>28</ID>
+      <Windows_command>+{TAB}</Windows_command>
+      <Description>SHIFT + TAB</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>29</ID>
+      <Windows_command>{TAB}</Windows_command>
+      <Description>TAB</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>30</ID>
+      <Windows_command>{ENTER}</Windows_command>
+      <Description>ENTER</Description>
+	  <Description_long></Description_long>
+    </Item>
+	<Item>
+      <ID>31</ID>
+      <Windows_command>{ESC}</Windows_command>
+      <Description>ESC</Description>
+	  <Description_long></Description_long>
+    </Item>
+  </Asset>
+</XnaContent>
