@@ -17,6 +17,7 @@ namespace KinectControl
         PictureBox pb = null;
         Body[] bodies = null;
         int handpointsnumber = 0;
+        int selectedKeyId = 0;
         long gestureStartedAt = 0;
         int frameWhileNotMoved = 0;
         long lastSendedTime = 0;
@@ -121,6 +122,7 @@ namespace KinectControl
                                         commands[commandNumber].totalTime = stopwatchTime - gestureStartedAt;
                                         if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
                                         {
+
                                             newCommand = new Commands(commands);
                                             btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
                                             btn.BackColor = Color.Green;
@@ -272,6 +274,11 @@ namespace KinectControl
 
                 }
             }
+        }
+
+        public void setSelectedKeyId(int keyId)
+        {
+            selectedKeyId = keyId;
         }
         public void saveNewGesture()
         {
