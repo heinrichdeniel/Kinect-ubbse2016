@@ -38,9 +38,9 @@ namespace KinectControl
             this.Settings = new System.Windows.Forms.NotifyIcon(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.keyCommandsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Service.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -94,7 +94,7 @@ namespace KinectControl
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(803, 827);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(512, 96);
             this.button1.TabIndex = 3;
@@ -102,22 +102,12 @@ namespace KinectControl
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(24, 20);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(480, 964);
-            this.listBox1.TabIndex = 4;
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(16, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1649, 1024);
@@ -125,39 +115,49 @@ namespace KinectControl
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.listBox1);
+            this.tabPage1.Controls.Add(this.keyCommandsPanel);
             this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage1.Size = new System.Drawing.Size(1641, 995);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Billentyűzet";
+            this.tabPage1.Text = "Keyboard";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // keyCommandsPanel
+            // 
+            this.keyCommandsPanel.AutoScroll = true;
+            this.keyCommandsPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.keyCommandsPanel.Location = new System.Drawing.Point(20, 20);
+            this.keyCommandsPanel.Name = "keyCommandsPanel";
+            this.keyCommandsPanel.Size = new System.Drawing.Size(513, 735);
+            this.keyCommandsPanel.TabIndex = 4;
+            this.keyCommandsPanel.WrapContents = false;
             // 
             // tabPage2
             // 
             this.tabPage2.AllowDrop = true;
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage2.Size = new System.Drawing.Size(1641, 995);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Egér";
+            this.tabPage2.Text = "Mouse";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // TaskBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1841, 1045);
+            this.ClientSize = new System.Drawing.Size(1841, 1037);
             this.ContextMenuStrip = this.Service;
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TaskBar";
             this.Text = "TaskBar";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TaskBar_FormClosing);
@@ -182,10 +182,10 @@ namespace KinectControl
         private System.Windows.Forms.NotifyIcon Settings;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.FlowLayoutPanel keyCommandsPanel;
     }
 }
 
