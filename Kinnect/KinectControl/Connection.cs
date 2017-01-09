@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace KinectControl
@@ -16,18 +17,24 @@ namespace KinectControl
         PictureBox pb = null;
         Body[] bodies = null;
         int handpointsnumber = 0;
+        long gestureStartedAt = 0;
+        int frameWhileNotMoved = 0;
+        long lastSendedTime = 0;
         Dictionary<int, CameraSpacePoint> handpoints = new Dictionary<int, CameraSpacePoint>();
         KinectSensor sensor;
+        Stopwatch stopwatch = new Stopwatch();
         BodyFrameReader bodyFrameReader;
-        bool moving = false;
         bool waitingForGesture = false;
-        bool gestureStarted = false;
+        Commands.Command[] commands = new Commands.Command[3];
+        int commandNumber = 0;
+        Commands newCommand; 
 
        // MouseMovementHandler movementHandler;
         MultiSourceFrameReader myReader = null;
 
         public Connection(PictureBox pictureBox, Button btn)
         {
+            stopwatch.Start();
             pb = pictureBox;
             this.btn = btn;
             sensor = KinectSensor.GetDefault();
@@ -46,55 +53,102 @@ namespace KinectControl
 
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
-            
-            using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
+            long stopwatchTime = stopwatch.ElapsedMilliseconds;
+            if ((stopwatchTime - lastSendedTime) / 33 > 0)
             {
-                if (bodyFrame != null)
+                lastSendedTime = stopwatchTime;
+                using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
                 {
-                    if (this.bodies == null)
+                    if (bodyFrame != null)
                     {
-                        this.bodies = new Body[bodyFrame.BodyCount];
-                    }
-
-                    // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
-                    // As long as those body objects are not disposed and not set to null in the array,
-                    // those body objects will be re-used.
-                    bodyFrame.GetAndRefreshBodyData(this.bodies);
-                }
-            }
-            foreach (Body body in this.bodies)
-            {
-                // get first tracked body only, notice there's a break below.
-                if (body.IsTracked)
-                {
-                    //movementHandler.bodyUpdated(body);
-                    // get various skeletal positions
-                    CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
-                    CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
-                    CameraSpacePoint wristRight = body.Joints[JointType.WristRight].Position;
-                    CameraSpacePoint thumbRight = body.Joints[JointType.ThumbRight].Position;
-                    CameraSpacePoint handTipRight = body.Joints[JointType.HandTipRight].Position;
-                    CameraSpacePoint hipLeft = body.Joints[JointType.HipLeft].Position;
-
-                    if (waitingForGesture)
-                    {
-                        if (handpointsnumber > 5)
+                        if (this.bodies == null)
                         {
-                            gestureStarted = true;
-                            waitingForGesture = false;
-                            btn.Text = "Capturing";
-                            btn.BackColor = Color.Green;
+                            this.bodies = new Body[bodyFrame.BodyCount];
                         }
-                        else
+
+                        // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
+                        // As long as those body objects are not disposed and not set to null in the array,
+                        // those body objects will be re-used.
+                        bodyFrame.GetAndRefreshBodyData(this.bodies);
+                    }
+                }
+                foreach (Body body in this.bodies)
+                {
+                    // get first tracked body only, notice there's a break below.
+                    if (body.IsTracked)
+                    {
+                        //movementHandler.bodyUpdated(body);
+                        // get various skeletal positions
+                        CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
+                        CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
+                        CameraSpacePoint wristRight = body.Joints[JointType.WristRight].Position;
+                        CameraSpacePoint thumbRight = body.Joints[JointType.ThumbRight].Position;
+                        CameraSpacePoint handTipRight = body.Joints[JointType.HandTipRight].Position;
+                        CameraSpacePoint hipLeft = body.Joints[JointType.HipLeft].Position;
+
+                        if (waitingForGesture)
                         {
                             compareHands(hipLeft, handRight);
-                        }
-                    }
-          
-                    //Thread.Sleep(100);
-         
+                            if (handpointsnumber == 100)
+                            {
+                                btn.Text = "Capturing";
+                                btn.BackColor = Color.Green;
+                                gestureStartedAt = stopwatchTime;
+                            }
+                            else if (handpointsnumber > 100)
+                            {
+                                Commands.MomentInTime moment = new Commands.MomentInTime();
+                                moment.time = stopwatchTime - gestureStartedAt;
+                                moment.hand[0] = wristRight;
+                                moment.hand[1] = handRight;
+                                moment.hand[2] = thumbRight;
+                                moment.hand[3] = handTipRight;
 
-                    break;
+                                commands[commandNumber].points.Add(moment);
+                            }
+                                
+                            if (frameWhileNotMoved == 50)       //ha vege a mozdulatsornak
+                            {
+           
+                                waitingForGesture = false;
+                                if (commands[commandNumber].points.Count > 5)               //ha minimum 5 kepet kapott a kinect-tol
+                                {
+                                    commands[commandNumber].totalTime = stopwatchTime - gestureStartedAt;
+                                    if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
+                                    {
+                                        newCommand = new Commands(commands);
+                                        btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
+                                        btn.BackColor = Color.Red;
+                                        btn.Enabled = true;
+                                    }
+                                    else
+                                    {
+                                        if (commandNumber == 0)
+                                        {
+                                            btn.Text = "Please push the button to repeat the gesture for a second time!";
+                                        }
+                                        else
+                                        {
+                                            btn.Text = "Please push the button to repeat the gesture for the third time!";
+                                        }
+                                        btn.BackColor = Color.Red;
+                                        btn.Enabled = true;
+                                        commandNumber++;
+                                    }
+                                }
+                                else     //ha a mozdulat tul hamar veget ert
+                                {
+                                    btn.Text = "The gesture was not accepted! Please push the button to repeat!";
+                                    btn.BackColor = Color.Red;
+                                    btn.Enabled = true;
+                                    commands[commandNumber].points.Clear(); 
+                                }
+                            }
+
+                        }
+
+                        break;
+                    }
                 }
             }
         }
@@ -103,24 +157,34 @@ namespace KinectControl
         {
             if (handpointsnumber == 0)
             {
-                handpoints[0] = hand;
+                handpoints.Add(0,hand);
                 handpointsnumber = 1;
             }
             else
             {
-                if (hand.Y - hipLeft.Y > 0 && !handMoved(handpoints[handpointsnumber-1], hand))
+                if (hand.Y - hipLeft.Y > 0 && !handMoved(handpoints[handpointsnumber-1], hand) && handpointsnumber < 100)
                 {
-                    btn.Text = "Capturing in "+ (5 - handpointsnumber) + " sec";
-                    handpoints[handpointsnumber] = hand;
+                    btn.Text = "Capturing in "+ (5 - handpointsnumber/20) + " sec";
+                    handpoints.Add(handpointsnumber, hand);
                     handpointsnumber++;
                 }
-                else
+                else if (hand.Y - hipLeft.Y > 0 && !handMoved(handpoints[handpointsnumber - 1], hand) && handpointsnumber > 100)
                 {
-                    handpoints[0] = hand;
+                    frameWhileNotMoved++;
+                }
+                else if (handMoved(handpoints[handpointsnumber - 1], hand))
+                {
+                    frameWhileNotMoved = 0 ;
+                }
+                else if (hand.Y - hipLeft.Y < 0)
+                {
+                    handpoints.Clear();
+                    handpoints.Add(0, hand);
                     handpointsnumber = 1;
+                    btn.Text = "Please raise up your right hand before starting capture!";
+                    btn.BackColor = Color.Red;
                 }
             }
-            System.Threading.Thread.Sleep(100);
         }
 
         private Boolean handMoved(CameraSpacePoint prevHand, CameraSpacePoint hand)
