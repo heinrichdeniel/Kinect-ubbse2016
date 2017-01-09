@@ -11,7 +11,6 @@ namespace KinectControl
     public class Program
     {
         TaskBar taskbar = null;
-        Boolean started = false;
 
         /// <summary>
         /// The main entry point for the application.
@@ -21,47 +20,35 @@ namespace KinectControl
         {
             new Program().runProgram();
         }
+
         public void runProgram()
         {
-            
-            int i = 0;
-            while ( true )
+
+            while (true)
             {
-                i++;
                 ManagementObjectCollection mbsList = null;
                 ManagementObjectSearcher mbs = new ManagementObjectSearcher("Select * From Win32_USBHub");
                 mbsList = mbs.Get();
 
-                bool isConnected = false;
+                //itarate through USB hubs, until we found Kinect device connected
                 foreach (ManagementObject mo in mbsList)
                 {
-                    // Console.WriteLine("USBHub device Friendly name:{0}", mo["Name"].ToString());
                     if (Convert.ToString(mo["Name"]).IndexOf("SuperSpeed") > -1)
                     {
-                      
-                        isConnected = true;
-                        if (!started)
+                        Console.WriteLine("Connected");
+                        if (taskbar == null)
                         {
-                            started = true;
-                            if (taskbar == null)
-                            {
-                                taskbar = new TaskBar();
-                                Application.Run(taskbar);
+                            taskbar = new TaskBar();
+                            Application.Run(taskbar);
 
-                            }
-                            taskbar.show();
                         }
-                        break;
+                        taskbar.show();
                     }
-                }
-                if (!isConnected && started )
-                {
-                     started = false;
                 }
             }
         }
-      
-
     }
-   
+
+
 }
+

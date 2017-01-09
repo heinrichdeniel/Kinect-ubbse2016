@@ -9,7 +9,7 @@ namespace KinectControl
 {
     class MouseMovementHandler
     {
-       
+
         int screenWidth, screenHeight;
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -39,6 +39,7 @@ namespace KinectControl
 
         bool wasLeftGrip = false;
         bool wasRightGrip = false;
+
 
         public MouseMovementHandler()
         {
@@ -91,7 +92,7 @@ namespace KinectControl
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void bodyUpdated(Body body)
-       {
+        {
             if (body.IsTracked)
             {
                 // get various skeletal positions
@@ -101,20 +102,28 @@ namespace KinectControl
 
                 if (handRight.Z - spineBase.Z < -0.15f) // if right hand lift forward
                 {
-                    /* hand x calculated by this. we don't use shoulder right as a reference cause the shoulder right
+                    float x;
+                    float y;
+
+                    // move cursor only if left hand is behind of spinebase
+                    if (handLeft.Y < spineBase.Y)
+                    {
+
+                        /* hand x calculated by this. we don't use shoulder right as a reference cause the shoulder right
                         * is usually behind the lift right hand, and the position would be inferred and unstable.
                         * because the spine base is on the left of right hand, we plus 0.05f to make it closer to the right. */
-                    float x = handRight.X - spineBase.X + 0.05f;
-                    /* hand y calculated by this. ss spine base is way lower than right hand, we plus 0.51f to make it
-                        * higer, the value 0.51f is worked out by testing for a several times, you can set it as another one you like. */
-                    float y = spineBase.Y - handRight.Y + 0.51f;
-                    // get current cursor position
-                    Point curPos = MouseControl.GetCursorPosition();
-                    // smoothing for using should be 0 - 0.95f. The way we smooth the cusor is: oldPos + (newPos - oldPos) * smoothValue
-                    float smoothing = 1 - cursorSmoothing;
-                    // set cursor position
-                    MouseControl.SetCursorPos((int)(curPos.X + (x * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((y + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
+                        x = handRight.X - spineBase.X + 0.05f;
+                        /* hand y calculated by this. ss spine base is way lower than right hand, we plus 0.51f to make it
+                            * higer, the value 0.51f is worked out by testing for a several times, you can set it as another one you like. */
+                        y = spineBase.Y - handRight.Y + 0.51f;
+                        // get current cursor position
+                        Point curPos = MouseControl.GetCursorPosition();
+                        // smoothing for using should be 0 - 0.95f. The way we smooth the cusor is: oldPos + (newPos - oldPos) * smoothValue
+                        float smoothing = 1 - cursorSmoothing;
+                        // set cursor position
 
+                        MouseControl.SetCursorPos((int)(curPos.X + (x * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((y + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
+                    }
                     alreadyTrackedPos = true;
 
                     // Grip gesture
@@ -138,34 +147,7 @@ namespace KinectControl
                         }
                     }
                 }
-                else if (handLeft.Z - spineBase.Z < -0.15f) // if left hand lift forward
-                {
-                    float x = handLeft.X - spineBase.X + 0.3f;
-                    float y = spineBase.Y - handLeft.Y + 0.51f;
-                    Point curPos = MouseControl.GetCursorPosition();
-                    MouseControl.SetCursorPos((int)(curPos.X + (x * mouseSensitivity * screenWidth - curPos.X)), (int)(curPos.Y + ((y + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) ));
-                    alreadyTrackedPos = true;
 
-                    if (doClick && useGripGesture)
-                    {
-                        if (body.HandLeftState == HandState.Closed)
-                        {
-                            if (!wasLeftGrip)
-                            {
-                                MouseControl.MouseLeftDown();
-                                wasLeftGrip = true;
-                            }
-                        }
-                        else if (body.HandLeftState == HandState.Open)
-                        {
-                            if (wasLeftGrip)
-                            {
-                                MouseControl.MouseLeftUp();
-                                wasLeftGrip = false;
-                            }
-                        }
-                    }
-                }
                 else
                 {
                     wasLeftGrip = true;
