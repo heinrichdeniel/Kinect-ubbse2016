@@ -10,6 +10,9 @@ namespace KinectControl
     class Commands
     {
         public int number = 3;
+        int pointcount = 60;
+        float[][] avg;
+        float[] timePointCount = new float[pointcount];
 
         public class Command
         {
@@ -86,33 +89,104 @@ namespace KinectControl
             return newCommand;
         }
 
-        /*public Command average(Commands coms)
-        {
-            Command newCommand = new Command();
-            newCommand.points = new List<MomentInTime>();
-            newCommand.totalTime = (coms.commands[0].totalTime + coms.commands[1].totalTime + coms.commands[2].totalTime) / 3;
 
-            int min = coms.commands[0].points.Count;
-            int ind = 0;
-            for (int i = 1; i<= 2; i++)
+        //standardization of all 3 commands
+        //spline all 3 standardize commands
+        //get x point from each command function
+        //calculate average function
+        public void average()
+        {
+            int n = commands[0].points.Count;
+            float[] x1 = new float[n];
+            float[] y1 = new float[n];
+            float[] z1 = new float[n];
+            float[] time1 = new float[n];
+            float[] alpha = new float[n];
+            avg = new float[12][];
+            for (int i = 0; i < 12; i++)
             {
-                if (coms.commands[i].points.Count < min)
+                avg[i] = new float[n];
+            }
+
+            for (int j = 0; j < 4; j++)
+            {
+                for (int i = 0; i < n; i++)
                 {
-                    min = coms.commands[i].points.Count;
-                    ind = i;
+                    avg[j][i] = 0;
                 }
             }
 
-            for (int i = 0; i <= min; i++)
-            {                
-                newCommand.points[i].hand = com.points[i].hand;
-                newCommand.points[i].time = (float)com.points[i].time / com.totalTime;
-            }
-            
-            return newCommand;
-        }*/
+            for (int comm = 0; comm < number; ++comm)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    for (int i = 0; i < n; i++)
+                    {
+                        x1[i] = commands[comm].points[i].hand[j].X;
+                        y1[i] = commands[comm].points[i].hand[j].Y;
+                        z1[i] = commands[comm].points[i].hand[j].Z;
+                        time1[i] = commands[comm].points[i].time;
+                    }
 
-        public Dictionary<int, CameraSpacePoint> spline(Commands coms, int t)
+                    Spline s = new Spline(x1, time1, n);
+                    alpha = s.calculateAlpha();
+                    for (int i = 0; i < pointcount; i++)
+                    {
+                        avg[j * 3][i] += s.calculateRes((float)i / pointcount);
+                    }
+                    s.set(y1, time1, n);
+                    alpha = s.calculateAlpha();
+                    for (int i = 0; i < pointcount; i++)
+                    {
+                        avg[j * 3 + 1][i] += s.calculateRes((float)i / pointcount);
+                    }
+                    s.set(z1, time1, n);
+                    alpha = s.calculateAlpha();
+                    for (int i = 0; i < pointcount; i++)
+                    {
+                        avg[j * 3 + 2][i] += s.calculateRes((float)i / pointcount);
+                    }
+                }
+            }
+
+            for (int j = 0; j < 4; j++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    avg[j][i] /= 3f;
+                }
+
+            }
+        }
+
+
+        //spline this average function :)
+        //return the 4 CameraSpacePoint at a given time
+        public CameraSpacePoint[] res(float t)
+        {
+            for (int i = 0; i < pointcount; ++i)
+            {
+                timePointCount[i] = (float)(i / pointcount);
+            }
+            CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
+            for (int i = 0; i < 4; ++i)
+            {
+                Spline s = new Spline(avg[i * 3], timePointCount, pointcount);
+                s.calculateAlpha();
+                returnResult[i].X = s.calculateRes(t);
+
+                s = new Spline(avg[i * 3 + 1], timePointCount, pointcount);
+                s.calculateAlpha();
+                returnResult[i].Y = s.calculateRes(t);
+
+                s = new Spline(avg[i * 3 + 2], timePointCount, pointcount);
+                s.calculateAlpha();
+                returnResult[i].Z = s.calculateRes(t);
+            }
+            return returnResult;
+        }
+
+        public Dictionary<int, CameraSpacePoint> spline(Command com, int t)
         {
             Dictionary<int, CameraSpacePoint> h = new Dictionary<int, CameraSpacePoint>();
 
