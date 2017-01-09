@@ -17,6 +17,7 @@ namespace KinectControl
         PictureBox pb = null;
         Body[] bodies = null;
         int handpointsnumber = 0;
+        int selectedKeyId = 0;
         long gestureStartedAt = 0;
         int frameWhileNotMoved = 0;
         long lastSendedTime = 0;
@@ -49,7 +50,7 @@ namespace KinectControl
             {
                 sensor.Open();
             }
-           // movementHandler = new MouseMovementHandler();
+            movementHandler = new MouseMovementHandler();
         }
 
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
@@ -78,7 +79,7 @@ namespace KinectControl
                     // get first tracked body only, notice there's a break below.
                     if (body.IsTracked)
                     {
-                     //   movementHandler.bodyUpdated(body);
+                        movementHandler.bodyUpdated(body);
                         // get various skeletal positions
                         CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
                         CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
@@ -231,10 +232,10 @@ namespace KinectControl
                      bitmap.UnlockBits(bitmapData);
                      bitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
 
-                     Bitmap b = new Bitmap(800, 600);
+                     Bitmap b = new Bitmap(900, 600);
                      using (Graphics g = Graphics.FromImage((Image)b))
                      {
-                         g.DrawImage(bitmap, 0, 0, 800, 600);
+                         g.DrawImage(bitmap, 0, 0, 900, 600);
                      }
                      pb.Image = b;
 
@@ -273,6 +274,22 @@ namespace KinectControl
                 }
             }
         }
+
+        public void setSelectedKeyId(int keyId)
+        {
+            selectedKeyId = keyId;
+        }
+
+        public void updateMouseSensibility(float sensibility)
+        {
+            movementHandler.updateMouseSensibility(sensibility);
+        }
+
+        public void updatecursorSmoothing(float smoothing)
+        {
+            movementHandler.updateMouseSensibility(smoothing);
+        }
+
         public void saveNewGesture()
         {
             this.waitingForGesture = true;
