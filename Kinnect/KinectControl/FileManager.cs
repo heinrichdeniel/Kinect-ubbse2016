@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 using TaskBarIcon;
 
-namespace FileManager
+namespace KinectControl
 {
     class FileManager
     {
