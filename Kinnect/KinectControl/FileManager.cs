@@ -17,7 +17,6 @@ namespace KinectControl
         private XmlDocument kinnectXMLCommands;
         private String xmlKeyCommandFileName = "KeyCommands.xml"; //this xml document contains all data about saved movements.
         private String xmlKinectMovementFileName = "KinectCommands.xml"; //this xml document contains windows key combination commands.
-        private int id;
 
 
         //Constructor
@@ -35,7 +34,12 @@ namespace KinectControl
             }
             fileExist("/" + xmlKinectMovementFileName, "movements");
             kinnectXMLCommands = new XmlDocument();
-            kinnectXMLCommands.Load("/" + xmlKinectMovementFileName);
+            try {
+                kinnectXMLCommands.Load("/" + xmlKinectMovementFileName);
+            } catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
 
 
         }
@@ -242,8 +246,13 @@ namespace KinectControl
         {
             if (!File.Exists(filename))
             {
-                File.Create(filename);
-                XDocument doc = new XDocument(filename, new XElement(startingTag));
+                File.Create(Environment.CurrentDirectory + "/" +    filename);
+                try {
+                    XDocument doc = new XDocument(filename, new XElement(startingTag));
+                } catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
             }
 
         }
