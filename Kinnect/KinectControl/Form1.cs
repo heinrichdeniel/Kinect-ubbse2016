@@ -159,5 +159,10 @@ namespace KinectControl
         {
             conn.saveNewGesture();
         }
+
+        private void slider_mouseSensibility_Scroll(object sender, EventArgs e)
+        {
+
+        }
     }
 }
