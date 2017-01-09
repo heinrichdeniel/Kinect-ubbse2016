@@ -157,9 +157,10 @@ namespace KinectControl
             this.ClientSize = new System.Drawing.Size(1841, 1037);
             this.ContextMenuStrip = this.Service;
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TaskBar";
-            this.Text = "TaskBar";
+            this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TaskBar_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TaskBar_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
