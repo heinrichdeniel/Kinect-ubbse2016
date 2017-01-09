@@ -18,13 +18,22 @@ namespace KinectControl
         public TaskBar()
         {
             InitializeComponent();
-            LoadCommands();
             conn = new KinectControl.Connection(pictureBox1, button1);
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.TopMost = true;
+            this.WindowState = FormWindowState.Maximized;
+            this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
+            this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width/3, this.Height-100);
+            this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + 200, 100);
+            this.pictureBox1.Size = new System.Drawing.Size(this.Width / 3 * 2, this.Height/3 * 2);
+            this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2-150, this.Height / 3 *2 + 100);
+            this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
+
+            LoadCommands();
         }
 
         public void ButtonClicked(Object sender,
@@ -161,6 +170,18 @@ namespace KinectControl
         }
 
         private void slider_mouseSensibility_Scroll(object sender, EventArgs e)
+        {
+            tb_mouseSensibility.Text = ((float)slider_mouseSensibility.Value/10).ToString();
+            conn.updateMouseSensibility((float)slider_mouseSensibility.Value/10);
+        }
+
+        private void slider_cursorSmoothing_Scroll(object sender, EventArgs e)
+        {
+            tb_cursorSmoothing.Text = ((float)slider_cursorSmoothing.Value / 10).ToString();
+            conn.updatecursorSmoothing((float)slider_cursorSmoothing.Value / 10);
+        }
+
+        private void keyCommandsPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }

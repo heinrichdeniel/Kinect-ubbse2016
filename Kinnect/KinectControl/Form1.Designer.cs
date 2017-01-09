@@ -42,12 +42,12 @@ namespace KinectControl
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.keyCommandsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tb_cursorSmoothing = new System.Windows.Forms.TextBox();
+            this.tb_mouseSensibility = new System.Windows.Forms.TextBox();
             this.slider_cursorSmoothing = new System.Windows.Forms.TrackBar();
             this.slider_mouseSensibility = new System.Windows.Forms.TrackBar();
             this.lb_cursorSmoothing = new System.Windows.Forms.Label();
             this.lb_mouseSensitivity = new System.Windows.Forms.Label();
-            this.tb_mouseSensibility = new System.Windows.Forms.TextBox();
-            this.tb_cursorSmoothing = new System.Windows.Forms.TextBox();
             this.Service.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -119,7 +119,7 @@ namespace KinectControl
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1649, 1024);
+            this.tabControl1.Size = new System.Drawing.Size(1519, 1263);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage1
@@ -132,7 +132,7 @@ namespace KinectControl
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1641, 995);
+            this.tabPage1.Size = new System.Drawing.Size(1511, 1234);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Keyboard";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -146,6 +146,7 @@ namespace KinectControl
             this.keyCommandsPanel.Size = new System.Drawing.Size(513, 735);
             this.keyCommandsPanel.TabIndex = 4;
             this.keyCommandsPanel.WrapContents = false;
+            this.keyCommandsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.keyCommandsPanel_Paint);
             // 
             // tabPage2
             // 
@@ -160,10 +161,32 @@ namespace KinectControl
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(1641, 995);
+            this.tabPage2.Size = new System.Drawing.Size(292, 271);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Mouse";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tb_cursorSmoothing
+            // 
+            this.tb_cursorSmoothing.Enabled = false;
+            this.tb_cursorSmoothing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_cursorSmoothing.Location = new System.Drawing.Point(585, 215);
+            this.tb_cursorSmoothing.Name = "tb_cursorSmoothing";
+            this.tb_cursorSmoothing.Size = new System.Drawing.Size(100, 22);
+            this.tb_cursorSmoothing.TabIndex = 5;
+            this.tb_cursorSmoothing.Text = "0,3";
+            this.tb_cursorSmoothing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb_mouseSensibility
+            // 
+            this.tb_mouseSensibility.Enabled = false;
+            this.tb_mouseSensibility.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_mouseSensibility.Location = new System.Drawing.Point(585, 46);
+            this.tb_mouseSensibility.Name = "tb_mouseSensibility";
+            this.tb_mouseSensibility.Size = new System.Drawing.Size(100, 22);
+            this.tb_mouseSensibility.TabIndex = 4;
+            this.tb_mouseSensibility.Text = "3.5";
+            this.tb_mouseSensibility.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // slider_cursorSmoothing
             // 
@@ -171,54 +194,34 @@ namespace KinectControl
             this.slider_cursorSmoothing.Name = "slider_cursorSmoothing";
             this.slider_cursorSmoothing.Size = new System.Drawing.Size(606, 56);
             this.slider_cursorSmoothing.TabIndex = 3;
-            this.slider_cursorSmoothing.Value = 5;
+            this.slider_cursorSmoothing.Value = 3;
+            this.slider_cursorSmoothing.Scroll += new System.EventHandler(this.slider_cursorSmoothing_Scroll);
             // 
             // slider_mouseSensibility
             // 
             this.slider_mouseSensibility.Location = new System.Drawing.Point(79, 97);
+            this.slider_mouseSensibility.Maximum = 100;
             this.slider_mouseSensibility.Name = "slider_mouseSensibility";
             this.slider_mouseSensibility.Size = new System.Drawing.Size(606, 56);
             this.slider_mouseSensibility.TabIndex = 2;
-            this.slider_mouseSensibility.Value = 5;
+            this.slider_mouseSensibility.Value = 35;
             this.slider_mouseSensibility.Scroll += new System.EventHandler(this.slider_mouseSensibility_Scroll);
             // 
             // lb_cursorSmoothing
             // 
-            this.lb_cursorSmoothing.AutoSize = true;
             this.lb_cursorSmoothing.Location = new System.Drawing.Point(76, 218);
             this.lb_cursorSmoothing.Name = "lb_cursorSmoothing";
-            this.lb_cursorSmoothing.Size = new System.Drawing.Size(121, 17);
+            this.lb_cursorSmoothing.Size = new System.Drawing.Size(201, 34);
             this.lb_cursorSmoothing.TabIndex = 1;
             this.lb_cursorSmoothing.Text = "Cursor Smoothing";
             // 
             // lb_mouseSensitivity
             // 
-            this.lb_mouseSensitivity.AutoSize = true;
             this.lb_mouseSensitivity.Location = new System.Drawing.Point(76, 49);
             this.lb_mouseSensitivity.Name = "lb_mouseSensitivity";
-            this.lb_mouseSensitivity.Size = new System.Drawing.Size(117, 17);
+            this.lb_mouseSensitivity.Size = new System.Drawing.Size(217, 37);
             this.lb_mouseSensitivity.TabIndex = 0;
             this.lb_mouseSensitivity.Text = "Mouse Sensitivity";
-            // 
-            // tb_mouseSensibility
-            // 
-            this.tb_mouseSensibility.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_mouseSensibility.Location = new System.Drawing.Point(585, 46);
-            this.tb_mouseSensibility.Name = "tb_mouseSensibility";
-            this.tb_mouseSensibility.Size = new System.Drawing.Size(100, 22);
-            this.tb_mouseSensibility.TabIndex = 4;
-            this.tb_mouseSensibility.Text = "5";
-            this.tb_mouseSensibility.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb_cursorSmoothing
-            // 
-            this.tb_cursorSmoothing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_cursorSmoothing.Location = new System.Drawing.Point(585, 215);
-            this.tb_cursorSmoothing.Name = "tb_cursorSmoothing";
-            this.tb_cursorSmoothing.Size = new System.Drawing.Size(100, 22);
-            this.tb_cursorSmoothing.TabIndex = 5;
-            this.tb_cursorSmoothing.Text = "5";
-            this.tb_cursorSmoothing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // TaskBar
             // 

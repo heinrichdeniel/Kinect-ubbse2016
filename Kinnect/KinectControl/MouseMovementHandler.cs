@@ -43,7 +43,15 @@ namespace KinectControl
             timer.Start();
         }
 
+        public void updateMouseSensibility(float sensibility)
+        {
+            mouseSensitivity = sensibility;
+        }
 
+        public void updatecursorSmoothing(float smoothing)
+        {
+            cursorSmoothing = smoothing;
+        }
 
         /// <summary>
         /// Read body frames
