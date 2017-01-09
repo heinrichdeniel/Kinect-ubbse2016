@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Kinnect")]
+[assembly: AssemblyTitle("TaskBarIcon")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Kinnect")]
+[assembly: AssemblyProduct("TaskBarIcon")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9d3b7e3b-7c80-4eda-9e29-52caf32a9054")]
+[assembly: Guid("d7e16454-b33c-42b1-9f7d-79558d3c25a1")]
 
 // Version information for an assembly consists of the following four values:
 //

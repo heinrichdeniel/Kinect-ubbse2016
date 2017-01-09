@@ -5,3 +5,6 @@ bin/
 .vs/
 *.csproj
 *.exe
+*.pdb
+
+
