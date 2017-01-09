@@ -57,18 +57,15 @@ namespace KinectControl
                 time.InnerText = moment.time.ToString();
 
                 XmlElement points = kinnectXMLCommands.CreateElement("points");
-                foreach (KeyValuePair<int, CameraSpacePoint> pair in moment.hand)
+                foreach (CameraSpacePoint cameraSpacePoint in moment.hand)
                 {
                     XmlElement point = kinnectXMLCommands.CreateElement("point");
-                    XmlElement key = kinnectXMLCommands.CreateElement("key");
                     XmlElement x = kinnectXMLCommands.CreateElement("x");
                     XmlElement y = kinnectXMLCommands.CreateElement("y");
                     XmlElement z = kinnectXMLCommands.CreateElement("z");
-                    key.InnerText = pair.Key.ToString();
-                    x.InnerText = pair.Value.X.ToString();
-                    y.InnerText = pair.Value.Y.ToString();
-                    z.InnerText = pair.Value.Z.ToString();
-                    point.AppendChild(key);
+                    x.InnerText = cameraSpacePoint.X.ToString();
+                    y.InnerText = cameraSpacePoint.Y.ToString();
+                    z.InnerText = cameraSpacePoint.Z.ToString();
                     point.AppendChild(x);
                     point.AppendChild(y);
                     point.AppendChild(z);
@@ -104,7 +101,8 @@ namespace KinectControl
                         {
                             Commands.MomentInTime cmoment = new Commands.MomentInTime();
                             cmoment.time = float.Parse(moment.SelectSingleNode("time").InnerText);
-                            Dictionary<int, CameraSpacePoint> cpoints = new Dictionary<int, CameraSpacePoint>();
+                            CameraSpacePoint[] cpoints = new CameraSpacePoint[4];
+                            int iter = 0;
 
                             foreach (XmlNode point in moment.SelectSingleNode("points").SelectNodes("point"))
                             {
@@ -112,7 +110,8 @@ namespace KinectControl
                                 cpoint.X = Int32.Parse(point.SelectSingleNode("x").InnerText);
                                 cpoint.Y = Int32.Parse(point.SelectSingleNode("y").InnerText);
                                 cpoint.Z = Int32.Parse(point.SelectSingleNode("z").InnerText);
-                                cpoints.Add(Int32.Parse(point.SelectSingleNode("key").InnerText), cpoint);
+                                cpoints[iter] = cpoint;
+                                iter++;
                             }
                             cmoment.hand = cpoints;
 
@@ -149,18 +148,15 @@ namespace KinectControl
                             time.InnerText = moment.time.ToString();
 
                             XmlElement points = kinnectXMLCommands.CreateElement("points");
-                            foreach (KeyValuePair<int, CameraSpacePoint> pair in moment.hand)
+                            foreach (CameraSpacePoint cameraSpacePoint in moment.hand)
                             {
                                 XmlElement point = kinnectXMLCommands.CreateElement("point");
-                                XmlElement key = kinnectXMLCommands.CreateElement("key");
                                 XmlElement x = kinnectXMLCommands.CreateElement("x");
                                 XmlElement y = kinnectXMLCommands.CreateElement("y");
                                 XmlElement z = kinnectXMLCommands.CreateElement("z");
-                                key.InnerText = pair.Key.ToString();
-                                x.InnerText = pair.Value.X.ToString();
-                                y.InnerText = pair.Value.Y.ToString();
-                                z.InnerText = pair.Value.Z.ToString();
-                                point.AppendChild(key);
+                                x.InnerText = cameraSpacePoint.X.ToString();
+                                y.InnerText = cameraSpacePoint.Y.ToString();
+                                z.InnerText = cameraSpacePoint.Z.ToString();
                                 point.AppendChild(x);
                                 point.AppendChild(y);
                                 point.AppendChild(z);
@@ -217,7 +213,8 @@ namespace KinectControl
                     {
                         Commands.MomentInTime cmoment = new Commands.MomentInTime();
                         cmoment.time = float.Parse(moment.SelectSingleNode("time").InnerText);
-                        Dictionary<int, CameraSpacePoint> cpoints = new Dictionary<int, CameraSpacePoint>();
+                        CameraSpacePoint[] cpoints = new CameraSpacePoint[4];
+                        int iter = 0;
 
                         foreach (XmlNode point in moment.SelectSingleNode("points").SelectNodes("point"))
                         {
@@ -225,7 +222,8 @@ namespace KinectControl
                             cpoint.X = Int32.Parse(point.SelectSingleNode("x").InnerText);
                             cpoint.Y = Int32.Parse(point.SelectSingleNode("y").InnerText);
                             cpoint.Z = Int32.Parse(point.SelectSingleNode("z").InnerText);
-                            cpoints.Add(Int32.Parse(point.SelectSingleNode("key").InnerText), cpoint);
+                            cpoints[iter] = cpoint;
+                            iter++;
                         }
                         cmoment.hand = cpoints;
 
