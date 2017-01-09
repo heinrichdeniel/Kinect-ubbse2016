@@ -69,17 +69,19 @@ namespace KinectControl
             commands[i].totalTime = t;
         }
 
-        public Command standardization(Command com, int keyID)
+        public Command standardization(Command com)
         {
             Command newCommand = new Command();
             newCommand.points = new List<MomentInTime>();
+            newCommand.totalTime = com.totalTime;
+            newCommand.keyID = com.keyID;
 
             for (int i = 0; i <= com.points.Count; i++)
             {                
-                newCommand.points[i] = com.points[i];
+                newCommand.points[i].hand = com.points[i].hand;
                 newCommand.points[i].time = (float)com.points[i].time / com.totalTime;
             }
-            newCommand.keyID = keyID;
+
             return newCommand;
         }
 
