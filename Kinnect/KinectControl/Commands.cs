@@ -12,7 +12,7 @@ namespace KinectControl
         public int number = 3;
         int pointcount = 60;
         float[][] avg;
-        float[] timePointCount = new float[pointcount];
+        float[] timePointCount;
 
         public class Command
         {
@@ -39,6 +39,7 @@ namespace KinectControl
             commands[0].totalTime = new float();
             commands[1].totalTime = new float();
             commands[2].totalTime = new float();
+            timePointCount = new float[pointcount];
         }
 
         public Commands(Command[] command)
