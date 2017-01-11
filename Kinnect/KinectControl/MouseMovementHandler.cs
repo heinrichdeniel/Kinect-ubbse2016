@@ -20,6 +20,7 @@ namespace KinectControl
         public const float MOUSE_SENSITIVITY = 3.5f;
         public const float CURSOR_SMOOTHING = 0.2f;
 
+        private MousePointer pointer;
         /// <summary>
         /// Determine if we have tracked the hand and used it to move the cursor,
         /// If false, meaning the user may not lift their hands, we don't get the last hand position and some actions like pause-to-click won't be executed.
@@ -35,8 +36,10 @@ namespace KinectControl
 
         public MouseMovementHandler()
         {
-            screenWidth = (int)SystemParameters.PrimaryScreenWidth;
-            screenHeight = (int)SystemParameters.PrimaryScreenHeight;
+            pointer = new MousePointer();
+            pointer.pointerVisibility(true);
+            screenWidth = (int)SystemParameters.PrimaryScreenWidth / 3 * 4;
+            screenHeight = (int)SystemParameters.PrimaryScreenHeight / 3 * 4;
 
             // set up timer, execute every 0.1s
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
@@ -46,6 +49,11 @@ namespace KinectControl
         public void updateMouseSensibility(float sensibility)
         {
             mouseSensitivity = sensibility;
+        }
+
+        public void updateMouseVisibility(bool visible)
+        {
+            pointer.pointerVisibility(visible);
         }
 
         public void updatecursorSmoothing(float smoothing)
@@ -92,6 +100,7 @@ namespace KinectControl
                     {
                         if (!wasRightGrip)
                         {
+                            pointer.setAction(true);
                             MouseControl.MouseLeftDown();
                             wasRightGrip = true;
                         }
@@ -100,6 +109,7 @@ namespace KinectControl
                     {
                         if (wasRightGrip)
                         {
+                            pointer.setAction(false);
                             MouseControl.MouseLeftUp();
                             wasRightGrip = false;
                         }

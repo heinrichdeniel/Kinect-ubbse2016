@@ -89,9 +89,9 @@ namespace MatrixInverse
       {
         for (int j = 0; j < n; ++j)
           if (i == perm[j])
-            b[j] = 1.0;
+            b[j] = 1.0f;
           else
-            b[j] = 0.0;
+            b[j] = 0.0f;
  
         float[] x = Helper(lum, b); // 
         for (int j = 0; j < n; ++j)
@@ -258,7 +258,7 @@ namespace MatrixInverse
         for (int j = 0; j < n; ++j)
         {
           if (i == j)
-            result[i][j] = 1.0;
+            result[i][j] = 1.0f;
           else if (i > j)
             result[i][j] = lum[i][j];
         }
