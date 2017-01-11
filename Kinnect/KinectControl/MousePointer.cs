@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -57,7 +57,7 @@ namespace KinectControl
             if (showPointer != visible)
             {
                 showPointer = visible;
-                ToggleDesktopIcons();
+                //ToggleDesktopIcons();
             }
         }
 
@@ -101,7 +101,7 @@ namespace KinectControl
                             if (refresh % 3 == 0)
                             {
                                 refresh = 0;
-                                ToggleDesktopIcons();
+                                //ToggleDesktopIcons();
                             }
                         }
                     }

@@ -20,6 +20,12 @@ namespace KinectControl
         public const float MOUSE_SENSITIVITY = 3.5f;
         public const float CURSOR_SMOOTHING = 0.2f;
 
+        private float kinectLastPositionY = 0;
+        private float kinectLastPositionX = 0;
+
+        private float mousePositionY = 0;
+        private float mousePositionX = 0;
+
         private MousePointer pointer;
         /// <summary>
         /// Determine if we have tracked the hand and used it to move the cursor,
@@ -40,7 +46,11 @@ namespace KinectControl
             pointer.pointerVisibility(true);
             screenWidth = (int)SystemParameters.PrimaryScreenWidth / 3 * 4;
             screenHeight = (int)SystemParameters.PrimaryScreenHeight / 3 * 4;
-
+            Point p = MouseControl.GetCursorPosition();
+            p.X /= 3 * 4;
+            p.Y /= 3 * 4;
+            mousePositionX = (float)((float)p.X * 2.0 / (float)screenWidth * 4.0 / 3.0);
+            mousePositionY = (float)((float)p.Y * 2.0 / (float)screenHeight * 4.0 / 3.0);
             // set up timer, execute every 0.1s
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timer.Start();
@@ -86,13 +96,64 @@ namespace KinectControl
 
                         x = handRight.X - spineBase.X + 0.05f;
                         y = spineBase.Y - handRight.Y + 0.51f;
-                        // get current cursor position
+
+                        float diffx = kinectLastPositionX - x;
+                        if(diffx < 0)
+                        {
+                            diffx = -diffx;
+                        }
+                        if( diffx > 0.1)
+                        {
+                            diffx = 0.0f;
+                        }
+                        
+                        float diffy = kinectLastPositionY - y;
+                        if (diffy < 0)
+                        {
+                            diffy = -diffy;
+                        }
+                        if (diffy > 0.1f)
+                        {
+                            diffy = 0.0f;
+                        }
+
+                        if (x < kinectLastPositionX)
+                        {
+                            mousePositionX -= diffx;
+                        }
+                        else if (x > kinectLastPositionX)
+                        {
+                            mousePositionX += diffx;
+
+                        }
+                        if (y < kinectLastPositionY)
+                        {
+                            mousePositionY -= diffy;
+
+                        }
+                        else if (y > kinectLastPositionY)
+                        {
+                            mousePositionY += diffy;
+                        }
                         Point curPos = MouseControl.GetCursorPosition();
+                        if (mousePositionX > 1.0f || mousePositionX < -1.0f)
+                        {
+                            mousePositionX = (float)((float)curPos.X * 2.0 / (float)screenWidth * 4.0 / 3.0);
+                        }
+                        if (mousePositionY > 1.0f || mousePositionY < -1.0f)
+                        {
+                            mousePositionY = (float)((float)curPos.Y * 2.0 / (float)screenHeight * 4.0 / 3.0);
+                        }
+
+                        kinectLastPositionX = x;
+                        kinectLastPositionY = y;
+                        Console.WriteLine("Kinexct: " + x + " " + y + " Mouse: " + mousePositionX + " " + mousePositionY);
+                        // get current cursor position
                         // smoothing for using should be 0 - 0.95f. The way we smooth the cusor is: oldPos + (newPos - oldPos) * smoothValue
                         float smoothing = 1 - cursorSmoothing;
                         // set cursor position
 
-                        MouseControl.SetCursorPos((int)(curPos.X + (x * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((y + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
+                        MouseControl.SetCursorPos((int)(curPos.X + (mousePositionX * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((mousePositionY + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
                     }
                     alreadyTrackedPos = true;
 
