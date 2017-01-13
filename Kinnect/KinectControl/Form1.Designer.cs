@@ -38,14 +38,23 @@ namespace KinectControl
             this.Settings = new System.Windows.Forms.NotifyIcon(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.keyCommandsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tb_cursorSmoothing = new System.Windows.Forms.TextBox();
+            this.tb_mouseSensibility = new System.Windows.Forms.TextBox();
+            this.slider_cursorSmoothing = new System.Windows.Forms.TrackBar();
+            this.slider_mouseSensibility = new System.Windows.Forms.TrackBar();
+            this.lb_cursorSmoothing = new System.Windows.Forms.Label();
+            this.lb_mouseSensitivity = new System.Windows.Forms.Label();
             this.Service.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_cursorSmoothing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_mouseSensibility)).BeginInit();
             this.SuspendLayout();
             // 
             // Service
@@ -94,7 +103,7 @@ namespace KinectControl
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(803, 827);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(512, 96);
             this.button1.TabIndex = 3;
@@ -102,64 +111,129 @@ namespace KinectControl
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(24, 20);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(480, 964);
-            this.listBox1.TabIndex = 4;
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(16, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1649, 1024);
+            this.tabControl1.Size = new System.Drawing.Size(1519, 1263);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.listBox1);
+            this.tabPage1.Controls.Add(this.keyCommandsPanel);
             this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1641, 995);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Size = new System.Drawing.Size(1511, 1234);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Billentyűzet";
+            this.tabPage1.Text = "Keyboard";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // keyCommandsPanel
+            // 
+            this.keyCommandsPanel.AutoScroll = true;
+            this.keyCommandsPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.keyCommandsPanel.Location = new System.Drawing.Point(20, 20);
+            this.keyCommandsPanel.Name = "keyCommandsPanel";
+            this.keyCommandsPanel.Size = new System.Drawing.Size(513, 735);
+            this.keyCommandsPanel.TabIndex = 4;
+            this.keyCommandsPanel.WrapContents = false;
+            this.keyCommandsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.keyCommandsPanel_Paint);
             // 
             // tabPage2
             // 
             this.tabPage2.AllowDrop = true;
+            this.tabPage2.Controls.Add(this.tb_cursorSmoothing);
+            this.tabPage2.Controls.Add(this.tb_mouseSensibility);
+            this.tabPage2.Controls.Add(this.slider_cursorSmoothing);
+            this.tabPage2.Controls.Add(this.slider_mouseSensibility);
+            this.tabPage2.Controls.Add(this.lb_cursorSmoothing);
+            this.tabPage2.Controls.Add(this.lb_mouseSensitivity);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage2.Size = new System.Drawing.Size(1641, 995);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Size = new System.Drawing.Size(292, 271);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Egér";
+            this.tabPage2.Text = "Mouse";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tb_cursorSmoothing
+            // 
+            this.tb_cursorSmoothing.Enabled = false;
+            this.tb_cursorSmoothing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_cursorSmoothing.Location = new System.Drawing.Point(585, 215);
+            this.tb_cursorSmoothing.Name = "tb_cursorSmoothing";
+            this.tb_cursorSmoothing.Size = new System.Drawing.Size(100, 22);
+            this.tb_cursorSmoothing.TabIndex = 5;
+            this.tb_cursorSmoothing.Text = "0,3";
+            this.tb_cursorSmoothing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb_mouseSensibility
+            // 
+            this.tb_mouseSensibility.Enabled = false;
+            this.tb_mouseSensibility.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_mouseSensibility.Location = new System.Drawing.Point(585, 46);
+            this.tb_mouseSensibility.Name = "tb_mouseSensibility";
+            this.tb_mouseSensibility.Size = new System.Drawing.Size(100, 22);
+            this.tb_mouseSensibility.TabIndex = 4;
+            this.tb_mouseSensibility.Text = "3.5";
+            this.tb_mouseSensibility.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // slider_cursorSmoothing
+            // 
+            this.slider_cursorSmoothing.Location = new System.Drawing.Point(79, 265);
+            this.slider_cursorSmoothing.Name = "slider_cursorSmoothing";
+            this.slider_cursorSmoothing.Size = new System.Drawing.Size(606, 56);
+            this.slider_cursorSmoothing.TabIndex = 3;
+            this.slider_cursorSmoothing.Value = 3;
+            this.slider_cursorSmoothing.Scroll += new System.EventHandler(this.slider_cursorSmoothing_Scroll);
+            // 
+            // slider_mouseSensibility
+            // 
+            this.slider_mouseSensibility.Location = new System.Drawing.Point(79, 97);
+            this.slider_mouseSensibility.Maximum = 100;
+            this.slider_mouseSensibility.Name = "slider_mouseSensibility";
+            this.slider_mouseSensibility.Size = new System.Drawing.Size(606, 56);
+            this.slider_mouseSensibility.TabIndex = 2;
+            this.slider_mouseSensibility.Value = 35;
+            this.slider_mouseSensibility.Scroll += new System.EventHandler(this.slider_mouseSensibility_Scroll);
+            // 
+            // lb_cursorSmoothing
+            // 
+            this.lb_cursorSmoothing.Location = new System.Drawing.Point(76, 218);
+            this.lb_cursorSmoothing.Name = "lb_cursorSmoothing";
+            this.lb_cursorSmoothing.Size = new System.Drawing.Size(201, 34);
+            this.lb_cursorSmoothing.TabIndex = 1;
+            this.lb_cursorSmoothing.Text = "Cursor Smoothing";
+            // 
+            // lb_mouseSensitivity
+            // 
+            this.lb_mouseSensitivity.Location = new System.Drawing.Point(76, 49);
+            this.lb_mouseSensitivity.Name = "lb_mouseSensitivity";
+            this.lb_mouseSensitivity.Size = new System.Drawing.Size(217, 37);
+            this.lb_mouseSensitivity.TabIndex = 0;
+            this.lb_mouseSensitivity.Text = "Mouse Sensitivity";
             // 
             // TaskBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1841, 1045);
+            this.ClientSize = new System.Drawing.Size(1841, 1037);
             this.ContextMenuStrip = this.Service;
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TaskBar";
-            this.Text = "TaskBar";
+            this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TaskBar_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TaskBar_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -170,6 +244,10 @@ namespace KinectControl
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_cursorSmoothing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_mouseSensibility)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -182,10 +260,16 @@ namespace KinectControl
         private System.Windows.Forms.NotifyIcon Settings;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.FlowLayoutPanel keyCommandsPanel;
+        private System.Windows.Forms.TrackBar slider_cursorSmoothing;
+        private System.Windows.Forms.TrackBar slider_mouseSensibility;
+        private System.Windows.Forms.Label lb_cursorSmoothing;
+        private System.Windows.Forms.Label lb_mouseSensitivity;
+        private System.Windows.Forms.TextBox tb_cursorSmoothing;
+        private System.Windows.Forms.TextBox tb_mouseSensibility;
     }
 }
 

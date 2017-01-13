@@ -10,6 +10,28 @@ namespace KinectControl
     class Commands
     {
         public int number = 3;
+        int pointcount = 60;
+        float[][] avg;
+        float[] timePointCount;
+
+
+        public class Average
+        {
+            public int pointcount;
+            public float[][] avg;
+            public float[] timePointCount;
+            public Average(int n)
+            {
+                pointcount = n;
+                timePointCount = new float[n];
+                avg = new float[12][];
+                for (int i = 0; i < 12; i++)
+                {
+                    avg[i] = new float[n];
+                }
+            }
+        }
+
 
         public class Command
         {
@@ -36,6 +58,7 @@ namespace KinectControl
             commands[0].totalTime = new float();
             commands[1].totalTime = new float();
             commands[2].totalTime = new float();
+            timePointCount = new float[pointcount];
         }
 
         public Commands(Command[] command)
@@ -86,40 +109,109 @@ namespace KinectControl
             return newCommand;
         }
 
-        /*public Command average(Commands coms)
-        {
-            Command newCommand = new Command();
-            newCommand.points = new List<MomentInTime>();
-            newCommand.totalTime = (coms.commands[0].totalTime + coms.commands[1].totalTime + coms.commands[2].totalTime) / 3;
 
-            int min = coms.commands[0].points.Count;
-            int ind = 0;
-            for (int i = 1; i<= 2; i++)
+        //standardization of all 3 commands
+        //spline all 3 standardize commands
+        //get x point from each command function
+        //calculate average function
+        public Average averageCommand()
+        {
+  
+            int n = Math.Max(Math.Max(commands[0].points.Count, commands[1].points.Count), commands[2].points.Count);
+
+            Average average = new Average(n);
+            float[] x1;
+            float[] y1;
+            float[] z1;
+            float[] time1;
+            float[] alpha;
+            
+
+            for (int j = 0; j < 4; j++)
             {
-                if (coms.commands[i].points.Count < min)
+                for (int i = 0; i < n; i++)
                 {
-                    min = coms.commands[i].points.Count;
-                    ind = i;
+                    average.avg[j][i] = 0;
                 }
             }
 
-            for (int i = 0; i <= min; i++)
-            {                
-                newCommand.points[i].hand = com.points[i].hand;
-                newCommand.points[i].time = (float)com.points[i].time / com.totalTime;
+            for (int comm = 0; comm < number; ++comm)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    n = commands[comm].points.Count;
+                    x1 = new float[n];
+                    y1 = new float[n];
+                    z1 = new float[n];
+                    time1 = new float[n];
+                    alpha = new float[n];
+                    for (int i = 0; i < n; i++)
+                    {
+                        x1[i] = commands[comm].points[i].hand[j].X;
+                        y1[i] = commands[comm].points[i].hand[j].Y;
+                        z1[i] = commands[comm].points[i].hand[j].Z;
+                        time1[i] = commands[comm].points[i].time;
+                    }
+
+                    Spline s = new Spline(x1, time1, n);
+                    alpha = s.calculateAlpha();
+                    for (int i = 0; i < average.pointcount; i++)
+                    {
+                        average.avg[j * 3][i] += s.calculateRes((float)i / average.pointcount);
+                    }
+                    s.set(y1, time1, n);
+                    alpha = s.calculateAlpha();
+                    for (int i = 0; i < average.pointcount; i++)
+                    {
+                        average.avg[j * 3 + 1][i] += s.calculateRes((float)i / average.pointcount);
+                    }
+                    s.set(z1, time1, n);
+                    alpha = s.calculateAlpha();
+                    for (int i = 0; i < average.pointcount; i++)
+                    {
+                        average.avg[j * 3 + 2][i] += s.calculateRes((float)i / average.pointcount);
+                    }
+                }
             }
-            
-            return newCommand;
-        }*/
 
-        public Dictionary<int, CameraSpacePoint> spline(Commands coms, int t)
-        {
-            Dictionary<int, CameraSpacePoint> h = new Dictionary<int, CameraSpacePoint>();
-
-            //calculate points coordinates of a given Command at a given time... ??? 
-
-            return h;
+            for (int j = 0; j < 4; j++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    average.avg[j][i] /= 3f;
+                }
+            }
+            return average;
         }
+
+
+        //spline this average function :)
+        //return the 4 CameraSpacePoint at a given 
+
+        public CameraSpacePoint[] spline(float t, Average average)
+        {
+            for (int i = 0; i < average.pointcount; ++i)
+            {
+                average.timePointCount[i] = (float)(i / average.pointcount);
+            }
+            CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
+            for (int i = 0; i < 4; ++i)
+            {
+                Spline s = new Spline(average.avg[i * 3], average.timePointCount, average.pointcount);
+                s.calculateAlpha();
+                returnResult[i].X = s.calculateRes(t);
+
+                s = new Spline(average.avg[i * 3 + 1], average.timePointCount, average.pointcount);
+                s.calculateAlpha();
+                returnResult[i].Y = s.calculateRes(t);
+
+                s = new Spline(average.avg[i * 3 + 2], average.timePointCount, average.pointcount);
+                s.calculateAlpha();
+                returnResult[i].Z = s.calculateRes(t);
+            }
+            return returnResult;
+        }
+
 
     }
 }
