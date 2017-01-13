@@ -37,6 +37,7 @@ namespace KinectControl
                 this.pictureBox1.Size = new System.Drawing.Size(this.Width / 3 * 2, this.Height / 3 * 2);
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
                 this.button2.BackColor = Color.Green;
+                this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
                 this.button2.Text = "Mouse On";
                 this.isWorking = true;
                 this.showToolStripMenuItem.Text = "Stop";
@@ -150,6 +151,7 @@ namespace KinectControl
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
                 this.showToolStripMenuItem.Text = "Stop";
+                this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
                 this.conn.sensor.Open();
                 this.isWorking = true;
                 this.conn.startStop(isWorking);
@@ -161,6 +163,7 @@ namespace KinectControl
             {
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
+                this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings.Icon")));
                 this.showToolStripMenuItem.Text = "Start";
                 this.isWorking = false;
                 this.conn.startStop(isWorking);
