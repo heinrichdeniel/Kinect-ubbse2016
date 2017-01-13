@@ -22,7 +22,7 @@ namespace KinectControl
         int frameWhileNotMoved = 0;
         long lastSendedTime = 0;
         CameraSpacePoint prevHand = new CameraSpacePoint();
-        KinectSensor sensor;
+        public KinectSensor sensor;
         Stopwatch stopwatch = new Stopwatch();
         BodyFrameReader bodyFrameReader;
         bool waitingForGesture = false;
@@ -48,10 +48,26 @@ namespace KinectControl
 
             if (sensor != null)
             {
-                sensor.Open();
+                //sensor.Open();
             }
             movementHandler = new MouseMovementHandler();
+            
         }
+
+        public void startStop(Boolean can)
+        {
+            if (can==false)
+            {
+                movementHandler.canMove = false;
+                movementHandler.pointer.pointerVisibility(false);
+            }
+            else
+            {
+                movementHandler.canMove = true;
+                movementHandler.pointer.pointerVisibility(true);
+            }
+        }
+
 
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {

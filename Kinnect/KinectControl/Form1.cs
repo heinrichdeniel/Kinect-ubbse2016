@@ -14,24 +14,48 @@ namespace KinectControl
         int selectedKeyCommand;
         List<Button> keyButtons;
         List<int> selectedKeys;
+        Boolean isWorking;
 
         public TaskBar()
         {
             InitializeComponent();
+
             conn = new KinectControl.Connection(pictureBox1, button1);
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.TopMost = true;
-            this.WindowState = FormWindowState.Maximized;
-            this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
-            this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width/3, this.Height-100);
-            this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + 200, 100);
-            this.pictureBox1.Size = new System.Drawing.Size(this.Width / 3 * 2, this.Height/3 * 2);
-            this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2-150, this.Height / 3 *2 + 100);
-            this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
+            DialogResult dialogResult = MessageBox.Show("Do you want to start working with the Kinect device?", "Are you ready?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                this.TopMost = true;
+                this.WindowState = FormWindowState.Maximized;
+                this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
+                this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - 100);
+                this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + 200, 100);
+                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 3 * 2, this.Height / 3 * 2);
+                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
+                this.button2.BackColor = Color.Green;
+                this.button2.Text = "Mouse On";
+                this.isWorking = true;
+                this.showToolStripMenuItem.Text = "Stop";
+                this.conn.startStop(isWorking);
+                this.conn.sensor.Open();
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                this.button2.BackColor = Color.Red;
+                this.button2.Text = "Mouse Off";
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
+                this.isWorking = false;
+                this.showToolStripMenuItem.Text = "Start";
+                this.conn.startStop(isWorking);
+                this.conn.sensor.Close();
+
+            }
 
             LoadCommands();
         }
@@ -96,9 +120,7 @@ namespace KinectControl
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.Show();
-            WindowState = FormWindowState.Normal;
-            this.BringToFront();
+            this.show();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -113,17 +135,43 @@ namespace KinectControl
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            show();
+            this.show();
         }
         public void show()
         {
-            this.Show();
-            WindowState = FormWindowState.Normal;
-            this.BringToFront();
+            if (showToolStripMenuItem.Text == "Start")
+            {
+                this.ShowInTaskbar = true;
+                this.WindowState = FormWindowState.Maximized;
+                this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
+                this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - 100);
+                this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + 200, 100);
+                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 3 * 2, this.Height / 3 * 2);
+                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
+                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
+                this.showToolStripMenuItem.Text = "Stop";
+                this.conn.sensor.Open();
+                this.isWorking = true;
+                this.conn.startStop(isWorking);
+                this.button2.BackColor = Color.Green;
+                this.button2.Text = "Mouse On";
+                this.BringToFront();
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
+                this.showToolStripMenuItem.Text = "Start";
+                this.isWorking = false;
+                this.conn.startStop(isWorking);
+                this.conn.sensor.Close();
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            conn.sensor.Close();
+            this.Close();
             Application.Exit();
         }
 
@@ -184,6 +232,29 @@ namespace KinectControl
         private void keyCommandsPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (isWorking == true)
+            {
+                isWorking = false;
+                conn.startStop(isWorking);
+                button2.BackColor = Color.Red;
+                button2.Text = "Mouse Off";
+            }
+            else
+            {
+                isWorking = true;
+                conn.startStop(isWorking);
+                button2.BackColor = Color.Green;
+                button2.Text = "Mouse On";
+            }
         }
     }
 }

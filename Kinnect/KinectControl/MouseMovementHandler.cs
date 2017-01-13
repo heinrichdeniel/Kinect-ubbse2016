@@ -26,7 +26,9 @@ namespace KinectControl
         private float mousePositionY = 0;
         private float mousePositionX = 0;
 
-        private MousePointer pointer;
+        public Boolean canMove;
+
+        public MousePointer pointer;
         /// <summary>
         /// Determine if we have tracked the hand and used it to move the cursor,
         /// If false, meaning the user may not lift their hands, we don't get the last hand position and some actions like pause-to-click won't be executed.
@@ -43,7 +45,7 @@ namespace KinectControl
         public MouseMovementHandler()
         {
             pointer = new MousePointer();
-            pointer.pointerVisibility(true);
+            pointer.pointerVisibility(false);
             screenWidth = (int)SystemParameters.PrimaryScreenWidth / 3 * 4;
             screenHeight = (int)SystemParameters.PrimaryScreenHeight / 3 * 4;
             Point p = MouseControl.GetCursorPosition();
@@ -53,8 +55,11 @@ namespace KinectControl
             mousePositionY = (float)((float)p.Y * 2.0 / (float)screenHeight * 4.0 / 3.0);
             // set up timer, execute every 0.1s
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            canMove = true;
             timer.Start();
+
         }
+        
 
         public void updateMouseSensibility(float sensibility)
         {
@@ -63,6 +68,7 @@ namespace KinectControl
 
         public void updateMouseVisibility(bool visible)
         {
+            if (canMove)
             pointer.pointerVisibility(visible);
         }
 
@@ -152,8 +158,10 @@ namespace KinectControl
                         // smoothing for using should be 0 - 0.95f. The way we smooth the cusor is: oldPos + (newPos - oldPos) * smoothValue
                         float smoothing = 1 - cursorSmoothing;
                         // set cursor position
-
-                        MouseControl.SetCursorPos((int)(curPos.X + (mousePositionX * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((mousePositionY + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
+                        if (canMove)
+                        {
+                            MouseControl.SetCursorPos((int)(curPos.X + (mousePositionX * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((mousePositionY + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
+                        }
                     }
                     alreadyTrackedPos = true;
 
@@ -161,18 +169,24 @@ namespace KinectControl
                     {
                         if (!wasRightGrip)
                         {
-                            pointer.setAction(true);
-                            MouseControl.MouseLeftDown();
-                            wasRightGrip = true;
+                            if (canMove)
+                            {
+                                pointer.setAction(true);
+                                MouseControl.MouseLeftDown();
+                                wasRightGrip = true;
+                            }
                         }
                     }
                     else if (body.HandRightState == HandState.Open)
                     {
                         if (wasRightGrip)
                         {
-                            pointer.setAction(false);
-                            MouseControl.MouseLeftUp();
-                            wasRightGrip = false;
+                            if (canMove)
+                            {
+                                pointer.setAction(false);
+                                MouseControl.MouseLeftUp();
+                                wasRightGrip = false;
+                            }
                         }
                     }
                 }
