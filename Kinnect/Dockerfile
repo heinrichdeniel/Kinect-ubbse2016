@@ -7,4 +7,4 @@ FROM microsoft/dotnet
 # local folder will become /usr/src/kinect on Docker image
 
 RUN mkdir /usr/src/kinect
-COPY KinectControl/bin/Release/"Any CPU" /usr/src/kinect
+COPY KinectControl/bin/Release/ /usr/src/kinect
