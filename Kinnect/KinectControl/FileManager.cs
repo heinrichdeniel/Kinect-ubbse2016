@@ -55,50 +55,44 @@ namespace KinectControl
 
 
         //Write a command into the xml file
-        public void writeCommand(Commands.Command command)
+        public void writeCommand(Commands.Average average)
         {
             XmlElement movement = kinnectXMLCommands.CreateElement("command");
             XmlElement id = kinnectXMLCommands.CreateElement("id");
-            id.InnerText = command.keyID.ToString();
-            XmlElement totalTime = kinnectXMLCommands.CreateElement("total_time");
-            totalTime.InnerText = command.totalTime.ToString();
-            XmlElement moments = kinnectXMLCommands.CreateElement("moments");
-            foreach (Commands.MomentInTime moment in command.points)
+            id.InnerText = average.keyID.ToString();
+            XmlElement pointCount = kinnectXMLCommands.CreateElement("point_count");
+            pointCount.InnerText = average.pointcount.ToString();
+            XmlElement timePoints = kinnectXMLCommands.CreateElement("time_points_count");
+            foreach (float ctime in average.timePointCount)
             {
-                XmlElement cmoment = kinnectXMLCommands.CreateElement("moment");
-                XmlElement time = kinnectXMLCommands.CreateElement("time");
-                time.InnerText = moment.time.ToString();
+                XmlElement timePoint = kinnectXMLCommands.CreateElement("time_point");
+                timePoint.InnerText = ctime.ToString();
+                timePoints.AppendChild(timePoint);
+            }
 
-                XmlElement points = kinnectXMLCommands.CreateElement("points");
-                foreach (CameraSpacePoint cameraSpacePoint in moment.hand)
+            XmlElement avg = kinnectXMLCommands.CreateElement("avg");
+            int i = 0;
+            foreach (float []ctime in average.avg)
+            {
+                foreach (float cctime in ctime)
                 {
-                    XmlElement point = kinnectXMLCommands.CreateElement("point");
-                    XmlElement x = kinnectXMLCommands.CreateElement("x");
-                    XmlElement y = kinnectXMLCommands.CreateElement("y");
-                    XmlElement z = kinnectXMLCommands.CreateElement("z");
-                    x.InnerText = cameraSpacePoint.X.ToString();
-                    y.InnerText = cameraSpacePoint.Y.ToString();
-                    z.InnerText = cameraSpacePoint.Z.ToString();
-                    point.AppendChild(x);
-                    point.AppendChild(y);
-                    point.AppendChild(z);
-                    points.AppendChild(point);
+                    XmlElement avg_point = kinnectXMLCommands.CreateElement("avg_point");
+                    avg_point.InnerText = cctime.ToString();
+                    avg.AppendChild(avg_point);
                 }
-                cmoment.AppendChild(time);
-                cmoment.AppendChild(points);
-                moments.AppendChild(cmoment);
             }
             movement.AppendChild(id);
-            movement.AppendChild(totalTime);
-            movement.AppendChild(moments);
+            movement.AppendChild(pointCount);
+            movement.AppendChild(timePoints);
+            movement.AppendChild(avg);
             kinnectXMLCommands.DocumentElement.AppendChild(movement);
             kinnectXMLCommands.Save("/" + xmlKinectMovementFileName);
         }
 
         //Read a command from the xml file
-        public Commands.Command readCommand(int keyInputID)
+        public Commands.Average readCommand(int keyInputID)
         {
-            Commands.Command command = new Commands.Command();
+            Commands.Average command = new Commands.Average();
             XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
             if (movements.Count > 0)
             {
@@ -108,28 +102,36 @@ namespace KinectControl
                     {
 
                         command.keyID = keyInputID;
-                        command.totalTime = float.Parse(movement.SelectSingleNode("total_time").InnerText);
-                        List<Commands.MomentInTime> moments = new List<Commands.MomentInTime>();
-                        foreach (XmlNode moment in movement.SelectSingleNode("moments").SelectNodes("moment"))
+                        command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
+                        float[] timePoints = new float[60];
+                        int i = 0;
+                        foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
                         {
-                            Commands.MomentInTime cmoment = new Commands.MomentInTime();
-                            cmoment.time = float.Parse(moment.SelectSingleNode("time").InnerText);
-                            CameraSpacePoint[] cpoints = new CameraSpacePoint[4];
-                            int iter = 0;
-
-                            foreach (XmlNode point in moment.SelectSingleNode("points").SelectNodes("point"))
-                            {
-                                CameraSpacePoint cpoint = new CameraSpacePoint();
-                                cpoint.X = Int32.Parse(point.SelectSingleNode("x").InnerText);
-                                cpoint.Y = Int32.Parse(point.SelectSingleNode("y").InnerText);
-                                cpoint.Z = Int32.Parse(point.SelectSingleNode("z").InnerText);
-                                cpoints[iter] = cpoint;
-                                iter++;
-                            }
-                            cmoment.hand = cpoints;
-
+                            timePoints[i] = float.Parse(moment.InnerText);
+                            ++i;
                         }
-                        command.points = moments;
+                        command.timePointCount = timePoints;
+
+                        float[][] avg = new float[12][];
+                        i = 0;
+                        int j = 0;
+                        foreach (XmlNode moment in movement.SelectSingleNode("avg").SelectNodes("avg_point"))
+                        {
+                            if(j == 0)
+                            {
+                                avg[i] = new float[60];
+                            }
+                            if(j >= 60)
+                            {
+                                j = 0;
+                                ++i;
+
+                            }
+                            avg[i][j] = float.Parse(moment.InnerText);
+                            ++i;
+                        }
+                        command.avg = avg;
+
                         return command;
                     }
                 }
@@ -140,7 +142,7 @@ namespace KinectControl
 
 
         //Update command
-        public bool updateCommand(Commands.Command command)
+        public bool updateCommand(Commands.Average command)
         {
 
             XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
@@ -151,34 +153,27 @@ namespace KinectControl
                     if (Int32.Parse(movement.SelectSingleNode("id").InnerText) == command.keyID)
                     {
 
-                        movement.SelectSingleNode("total_time").InnerText = command.totalTime.ToString();
+                        movement.SelectSingleNode("point_count").InnerText = command.pointcount.ToString();
 
-                        movement.SelectSingleNode("moments").RemoveAll();
-                        foreach (Commands.MomentInTime moment in command.points)
+                        movement.SelectSingleNode("time_points_count").RemoveAll();
+                        foreach (float moment in command.timePointCount)
                         {
-                            XmlElement cmoment = kinnectXMLCommands.CreateElement("moment");
-                            XmlElement time = kinnectXMLCommands.CreateElement("time");
-                            time.InnerText = moment.time.ToString();
-
-                            XmlElement points = kinnectXMLCommands.CreateElement("points");
-                            foreach (CameraSpacePoint cameraSpacePoint in moment.hand)
-                            {
-                                XmlElement point = kinnectXMLCommands.CreateElement("point");
-                                XmlElement x = kinnectXMLCommands.CreateElement("x");
-                                XmlElement y = kinnectXMLCommands.CreateElement("y");
-                                XmlElement z = kinnectXMLCommands.CreateElement("z");
-                                x.InnerText = cameraSpacePoint.X.ToString();
-                                y.InnerText = cameraSpacePoint.Y.ToString();
-                                z.InnerText = cameraSpacePoint.Z.ToString();
-                                point.AppendChild(x);
-                                point.AppendChild(y);
-                                point.AppendChild(z);
-                                points.AppendChild(point);
-                            }
-                            cmoment.AppendChild(time);
-                            cmoment.AppendChild(points);
-                            movement.SelectSingleNode("moments").AppendChild(cmoment);
+                            XmlElement timePoint = kinnectXMLCommands.CreateElement("time_point");
+                            timePoint.InnerText = moment.ToString();
+                            movement.SelectSingleNode("time_point_count").AppendChild(timePoint);
                         }
+
+                        movement.SelectSingleNode("avg").RemoveAll();
+                        foreach (float []moment in command.avg)
+                        {
+                            foreach (float cmoment in moment)
+                            {
+                                XmlElement timePoint = kinnectXMLCommands.CreateElement("avg_point");
+                                timePoint.InnerText = cmoment.ToString();
+                                movement.SelectSingleNode("time_point_count").AppendChild(timePoint);
+                            }
+                        }
+                        kinnectXMLCommands.DocumentElement.AppendChild(movement);
                         kinnectXMLCommands.Save("\\" + xmlKinectMovementFileName);
                         return true;
                     }
@@ -209,39 +204,46 @@ namespace KinectControl
         }
 
         //Read all commands from the xml file
-        public List<Commands.Command> readAllCommands()
+        public List<Commands.Average> readAllCommands()
         {
-            List<Commands.Command> commands = new List<Commands.Command>();
+            List<Commands.Average> commands = new List<Commands.Average>();
             XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
             if (movements.Count > 0)
             {
                 foreach (XmlNode movement in movements)
                 {
 
-                    Commands.Command command = new Commands.Command();
+                    Commands.Average command = new Commands.Average();
                     command.keyID = Int32.Parse(movement.SelectSingleNode("id").InnerText);
-                    command.totalTime = float.Parse(movement.SelectSingleNode("total_time").InnerText);
-                    List<Commands.MomentInTime> moments = new List<Commands.MomentInTime>();
-                    foreach (XmlNode moment in movement.SelectSingleNode("moments").SelectNodes("moment"))
+                    command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
+                    float[] timePoints = new float[60];
+                    int i = 0;
+                    foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
                     {
-                        Commands.MomentInTime cmoment = new Commands.MomentInTime();
-                        cmoment.time = float.Parse(moment.SelectSingleNode("time").InnerText);
-                        CameraSpacePoint[] cpoints = new CameraSpacePoint[4];
-                        int iter = 0;
-
-                        foreach (XmlNode point in moment.SelectSingleNode("points").SelectNodes("point"))
-                        {
-                            CameraSpacePoint cpoint = new CameraSpacePoint();
-                            cpoint.X = Int32.Parse(point.SelectSingleNode("x").InnerText);
-                            cpoint.Y = Int32.Parse(point.SelectSingleNode("y").InnerText);
-                            cpoint.Z = Int32.Parse(point.SelectSingleNode("z").InnerText);
-                            cpoints[iter] = cpoint;
-                            iter++;
-                        }
-                        cmoment.hand = cpoints;
-
+                        timePoints[i] = float.Parse(moment.InnerText);
+                        ++i;
                     }
-                    command.points = moments;
+                    command.timePointCount = timePoints;
+
+                    float[][] avg = new float[12][];
+                    i = 0;
+                    int j = 0;
+                    foreach (XmlNode moment in movement.SelectSingleNode("avg").SelectNodes("avg_point"))
+                    {
+                        if (j == 0)
+                        {
+                            avg[i] = new float[60];
+                        }
+                        if (j >= 60)
+                        {
+                            j = 0;
+                            ++i;
+
+                        }
+                        avg[i][j] = float.Parse(moment.InnerText);
+                        ++i;
+                    }
+                    command.avg = avg;
                     commands.Add(command);
                 }
             }
