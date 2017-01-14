@@ -11,7 +11,7 @@
       <ID>2</ID>
       <Windows_command>^({ESC})</Windows_command>
       <Description>CTRL + ESC</Description>
-	  <Description_long>Force exit/close</Description_long>
+	  <Description_long>Open Start Menu</Description_long>
     </Item>
     <Item>
       <ID>3</ID>
@@ -23,7 +23,7 @@
       <ID>4</ID>
       <Windows_command>%({F4})</Windows_command>
       <Description>ALT + F5</Description>
-	  <Description_long></Description_long>
+	  <Description_long>Restore the program window size(Text editor)</Description_long>
     </Item>
     <Item>
       <ID>5</ID>
@@ -59,133 +59,98 @@
       <ID>10</ID>
       <Windows_command>^({B})</Windows_command>
       <Description>CTRL + B</Description>
-	   <Description_long></Description_long>
+	   <Description_long>Bold(Text editor)</Description_long>
     </Item>
     <Item>
       <ID>11</ID>
       <Windows_command>^({U})</Windows_command>
       <Description>CTRL + U</Description>
-	  <Description_long></Description_long>
+	  <Description_long>Underline(Text editor)</Description_long>
     </Item>
     <Item>
       <ID>12</ID>
       <Windows_command>^({I})</Windows_command>
       <Description>CTRL + I</Description>
-	  <Description_long></Description_long>
+	  <Description_long>Italic(Text editor)</Description_long>
     </Item>
     <Item>
       <ID>13</ID>
       <Windows_command>^(+({ESC}))</Windows_command>
       <Description>CTRL + SHIFT + ESC</Description>
-	  <Description_long></Description_long>
+	  <Description_long>Open Task Manager</Description_long>
     </Item>
     <Item>
       <ID>14</ID>
-      <Windows_command>%({DOWN})</Windows_command>
-      <Description>ALT + DOWN ARROW</Description>
-	  <Description_long></Description_long>
+      <Windows_command>^({TAB})</Windows_command>
+      <Description>CTRL + TAB</Description>
+	  <Description_long>Switch between open files(Text Editor)</Description_long>
     </Item>
     <Item>
       <ID>15</ID>
-      <Windows_command>^({TAB})</Windows_command>
-      <Description>CTRL + TAB</Description>
-	  <Description_long></Description_long>
-    </Item>
-    <Item>
-      <ID>16</ID>
       <Windows_command>%({F4})</Windows_command>
       <Description>ALT + F4</Description>
 	  <Description_long>Force close application</Description_long>
     </Item>
-    <Item>
-      <ID>17</ID>
-      <Windows_command>%({F6})</Windows_command>
-      <Description>ALT + F6</Description>
-	  <Description_long></Description_long>
+	<Item>
+      <ID>16</ID>
+      <Windows_command>%({ENTER})</Windows_command>
+      <Description>ALT + ENTER</Description>
+	  <Description_long>Open the Properties dialog box for the selected item</Description_long>
     </Item>
 	<Item>
-      <ID>18</ID>
-      <Windows_command>{F2}</Windows_command>
-      <Description>F2</Description>
-	  <Description_long></Description_long>
+      <ID>17</ID>
+      <Windows_command>{F5}</Windows_command>
+      <Description>F5</Description>
+	  <Description_long>Refresh the active window</Description_long>
     </Item>
-    <Item>
+
+	<Item>
+      <ID>18</ID>
+      <Windows_command>^(A)</Windows_command>
+      <Description>CTRL + A</Description>
+	  <Description_long>Select all</Description_long>
+    </Item>
+	<Item>
       <ID>19</ID>
-      <Windows_command>{F3}</Windows_command>
-      <Description>F3</Description>
-	  <Description_long></Description_long>
+      <Windows_command>{BACKSPACE}</Windows_command>
+      <Description>BACKSPACE</Description>
+	  <Description_long>Delete a character(Text editor)/Go back</Description_long>
     </Item>
 	<Item>
       <ID>20</ID>
-      <Windows_command>%({ENTER})</Windows_command>
-      <Description>ALT + ENTER</Description>
-	  <Description_long></Description_long>
+      <Windows_command>{RIGHT}</Windows_command>
+      <Description>RIGHT ARROW</Description>
+	  <Description_long>Go right</Description_long>
     </Item>
 	<Item>
       <ID>21</ID>
-      <Windows_command>{F4}</Windows_command>
-      <Description>F4</Description>
-	  <Description_long></Description_long>
+      <Windows_command>{LEFT}</Windows_command>
+      <Description>LEFT ARROW</Description>
+	  <Description_long>Go left</Description_long>
     </Item>
 	<Item>
       <ID>22</ID>
-      <Windows_command>{F5}</Windows_command>
-      <Description>F5</Description>
-	  <Description_long></Description_long>
+      <Windows_command>+{TAB}</Windows_command>
+      <Description>SHIFT + TAB</Description>
+	  <Description_long>Move back through options(Dialog Box)</Description_long>
     </Item>
 	<Item>
       <ID>23</ID>
-      <Windows_command>{F6}</Windows_command>
-      <Description>F6</Description>
-	  <Description_long></Description_long>
+      <Windows_command>{TAB}</Windows_command>
+      <Description>TAB</Description>
+	  <Description_long>Tab(Text editor)</Description_long>
     </Item>
 	<Item>
       <ID>24</ID>
-      <Windows_command>^(A)</Windows_command>
-      <Description>CTRL + A</Description>
-	  <Description_long></Description_long>
+      <Windows_command>{ENTER}</Windows_command>
+      <Description>ENTER</Description>
+	  <Description_long>New line(Text editor)/Open selected</Description_long>
     </Item>
 	<Item>
       <ID>25</ID>
-      <Windows_command>{BACKSPACE}</Windows_command>
-      <Description>BACKSPACE</Description>
-	  <Description_long></Description_long>
-    </Item>
-	<Item>
-      <ID>26</ID>
-      <Windows_command>{RIGHT}</Windows_command>
-      <Description>RIGHT ARROW</Description>
-	  <Description_long></Description_long>
-    </Item>
-	<Item>
-      <ID>27</ID>
-      <Windows_command>{LEFT}</Windows_command>
-      <Description>LEFT ARROW</Description>
-	  <Description_long></Description_long>
-    </Item>
-	<Item>
-      <ID>28</ID>
-      <Windows_command>+{TAB}</Windows_command>
-      <Description>SHIFT + TAB</Description>
-	  <Description_long></Description_long>
-    </Item>
-	<Item>
-      <ID>29</ID>
-      <Windows_command>{TAB}</Windows_command>
-      <Description>TAB</Description>
-	  <Description_long></Description_long>
-    </Item>
-	<Item>
-      <ID>30</ID>
-      <Windows_command>{ENTER}</Windows_command>
-      <Description>ENTER</Description>
-	  <Description_long></Description_long>
-    </Item>
-	<Item>
-      <ID>31</ID>
       <Windows_command>{ESC}</Windows_command>
       <Description>ESC</Description>
-	  <Description_long></Description_long>
+	  <Description_long>Close</Description_long>
     </Item>
   </Asset>
 </XnaContent>
