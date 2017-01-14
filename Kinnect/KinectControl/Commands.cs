@@ -17,6 +17,7 @@ namespace KinectControl
             public int pointcount;
             public float[][] avg;
             public int keyID;
+            public float time;
             public float[] timePointCount;
 
             public Average()
@@ -134,12 +135,16 @@ namespace KinectControl
         public Average averageCommand(int k)
         {
 
+            float t = 0;
             for (int i = 0;  i < number; i++)
             {
                 commands[i] = standardization(commands[i]);
+                t += commands[i].totalTime;
             }
+            t /= (float)number;
 
             Average average = new Average(k);
+            average.time = t;
             float[] x1;
             float[] y1;
             float[] z1; 
