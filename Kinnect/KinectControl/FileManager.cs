@@ -18,9 +18,18 @@ namespace KinectControl
         private String xmlKeyCommandFileName = "KeyCommands.xml"; //this xml document contains all data about saved movements.
         private String xmlKinectMovementFileName = "KinectCommands.xml"; //this xml document contains windows key combination commands.
 
+        private static FileManager INSTANCE;
 
+        public static FileManager getInstance()
+        {
+            if(INSTANCE == null)
+            {
+                INSTANCE = new FileManager();
+            }
+            return INSTANCE;
+        }
         //Constructor
-        public FileManager()
+        private FileManager()
         {
 
 

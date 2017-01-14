@@ -62,6 +62,10 @@ namespace KinectControl
             if (showPointer != visible)
             {
                 showPointer = visible;
+                if (showPointer)
+                {
+                    new Thread(moveCursor).Start();
+                }
             }
         }
 
@@ -77,7 +81,9 @@ namespace KinectControl
             if (action && this.action != 2)
             {
                 this.action = 2;
-            } else if (!action && this.action == 2){
+            }
+            else if (!action && this.action == 2)
+            {
                 this.action = 0;
             }
         }
@@ -88,7 +94,8 @@ namespace KinectControl
             {
                 this.action = 1;
             }
-            else if(!action && this.action == 1){
+            else if (!action && this.action == 1)
+            {
                 this.action = 0;
             }
         }
@@ -96,45 +103,39 @@ namespace KinectControl
         public void moveCursor()
         {
 
-            while (true)
+            while (showPointer)
             {
-                if (showPointer)
+
+                System.Windows.Point pMouse = MouseControl.GetCursorPosition();
+                if (pMouse != null)
                 {
-                    System.Windows.Point pMouse = MouseControl.GetCursorPosition();
-                    if (pMouse != null)
+                    if ((this.x != (int)pMouse.X || this.y != (int)pMouse.Y) && refresh % 2 == 0)
                     {
-                        if ((this.x != (int)pMouse.X || this.y != (int)pMouse.Y) && refresh % 2 == 0)
+                        this.x = (int)pMouse.X;
+                        this.y = (int)pMouse.Y;
+
+
+                        using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
                         {
-                            this.x = (int)pMouse.X;
-                            this.y = (int)pMouse.Y;
-                            
-                           
-                            using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
-                            {
-                                g.FillEllipse(action == 0 ? Brushes.Red: action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x * screen - 27 / 2), (int)(y * screen - 27 / 2), (int)(27 * screen), (int)(27 * screen));
-                            }
-                            
-                            ++refresh;
+                            g.FillEllipse(action == 0 ? Brushes.Red : action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x * screen - 27 / 2), (int)(y * screen - 27 / 2), (int)(27 * screen), (int)(27 * screen));
+                        }
+
+                        ++refresh;
 
 
-                            if (refresh % 3 == 0)
-                            {
-
-                                InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
-                                refresh = 0;
-                            } 
-                        }else
+                        if (refresh % 3 == 0)
                         {
-                            ++refresh;
+
+                            InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
+                            refresh = 0;
                         }
                     }
-                    Thread.Sleep(50);
-
+                    else
+                    {
+                        ++refresh;
+                    }
                 }
-                else
-                {
-                    Thread.Sleep(500);
-                }
+                Thread.Sleep(50);
             }
         }
     }

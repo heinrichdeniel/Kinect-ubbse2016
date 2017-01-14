@@ -84,7 +84,7 @@ namespace KinectControl
         }
         public void LoadCommands()
         {
-            FileManager fileManager = new FileManager();
+            FileManager fileManager = FileManager.getInstance();
             keyInputs = fileManager.getAllKeyInput();
             keyButtons = new List<Button>();
             selectedKeys = new List<int>();
@@ -112,6 +112,12 @@ namespace KinectControl
                 ++i;
             }
             keyCommandsPanel.ResumeLayout();
+        }
+
+        private void Form_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+                Service.Hide();
         }
 
         private void Service_Opening(object sender, CancelEventArgs e)

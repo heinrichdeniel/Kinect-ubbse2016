@@ -19,7 +19,7 @@ namespace KinectControl
         public static void Main()
         {
             new Program().runProgram();
-            //new Log();
+          //  new Log();
         }
 
         public void runProgram()

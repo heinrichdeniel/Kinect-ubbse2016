@@ -36,6 +36,7 @@ namespace KinectControl
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Settings = new System.Windows.Forms.NotifyIcon(this.components);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form_MouseClick);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
