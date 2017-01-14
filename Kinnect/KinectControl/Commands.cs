@@ -1,6 +1,7 @@
 ﻿using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace KinectControl
 
         public class Average
         {
-            public int pointcount;
+            public int pointcount = 60;
             public float[][] avg;
             public int keyID;
             public float time;
@@ -22,7 +23,7 @@ namespace KinectControl
 
             public Average()
             {
-                timePointCount = new float[60];
+                timePointCount = new float[pointcount];
                 avg = new float[12][];
                 for (int i = 0; i < 12; i++)
                 {
@@ -31,9 +32,8 @@ namespace KinectControl
             }
             public Average(int k)
             {
-                pointcount = 60;
                 keyID = k;
-                timePointCount = new float[60];
+                timePointCount = new float[pointcount];
                 avg = new float[12][];
                 for (int i = 0; i < 12; i++)
                 {
@@ -116,11 +116,11 @@ namespace KinectControl
         {
             Command newCommand = new Command();
             newCommand.points = new List<MomentInTime>();
+            newCommand.points = com.points;
             newCommand.totalTime = com.totalTime;
 
-            for (int i = 0; i <= com.points.Count; i++)
+            for (int i = 0; i < com.points.Count; i++)
             {
-                newCommand.points[i].hand = com.points[i].hand;
                 newCommand.points[i].time = (float)com.points[i].time / com.totalTime;
             }
 
@@ -206,6 +206,12 @@ namespace KinectControl
                     average.avg[j][i] /= (float)number;
                 }
             }
+
+            for (int i = 0; i < average.pointcount; ++i)
+            {
+                average.timePointCount[i] = (float)((float)i / average.pointcount);
+            }
+
             return average;
         }
 
@@ -215,10 +221,6 @@ namespace KinectControl
 
         public CameraSpacePoint[] spline(float t, Average average)
         {
-            for (int i = 0; i < average.pointcount; ++i)
-            {
-                average.timePointCount[i] = (float)(i / average.pointcount);
-            }
             CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
             for (int i = 0; i < 4; ++i)
             {
@@ -235,6 +237,65 @@ namespace KinectControl
                 returnResult[i].Z = s.calculateRes(t);
             }
             return returnResult;
+        }
+
+        public void test()
+        {
+            float a = 1.24f;
+            int n = 40;
+            Random rnd = new Random();
+            Commands comms = new Commands();
+            List<MomentInTime> p;
+            for (int i = 0; i < 3; i++)
+            {
+                Command com = new Command();
+                com.totalTime = a + 0.01f;
+                p = new List<MomentInTime>();
+                float[] prev = new float[4];
+                for (int j = 0; j < 4; j++)
+                {
+                    prev[j] = 0;
+                }
+
+                for (int j = 0; j < n + i * 4; j++)
+                {
+                    MomentInTime mit = new MomentInTime();
+
+                    for (int t = 0; t < 4; t++)
+                    {
+                        float something = (((float)rnd.NextDouble()) / 100f);
+                        mit.hand[t].X = prev[t] + something;
+                        prev[t] = mit.hand[t].X;
+                        mit.hand[t].Y = 0f + ((float)(rnd.NextDouble() * 2.0 - 1.0) / 1000f);
+                        mit.hand[t].Z = 0f + ((float)(rnd.NextDouble() * 2.0 - 1.0) / 1000f);
+                    }
+                    mit.time = (com.totalTime / (n + i * 4)) * j;
+                    p.Add(mit);
+                }
+                com.points = p;
+                comms.setCommandByIndex(i, com);
+            }
+            Average average = new Average();
+            average = comms.averageCommand(2);
+
+            Debug.Write("Time: ");
+            for (int j = 0; j < average.pointcount; j++)
+            {
+                Debug.Write(average.timePointCount[j]);
+                Debug.Write(", ");
+            }
+            Debug.Write("\n\n");
+            for (int i = 0; i < 12; i++)
+            {
+                Debug.Write(i);
+                Debug.Write(": ");
+                for (int j = 0; j < average.pointcount; j++)
+                {
+                    Debug.Write(average.avg[i][j]);
+                    Debug.Write(", ");
+                }
+                Debug.Write("\n\n");
+            }
         }
 
 
