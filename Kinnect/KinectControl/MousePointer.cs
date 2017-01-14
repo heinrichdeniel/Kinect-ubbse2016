@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -17,7 +17,7 @@ namespace KinectControl
     {
         private Brush b;
         private int x = 0, y = 0;
-        private bool action = false;
+        private byte action = 0;
         private double screen = 0;
         private int refresh;
         private bool showPointer = false;
@@ -39,12 +39,17 @@ namespace KinectControl
         [DllImport("User32.dll")]
         public static extern IntPtr GetDC(IntPtr hwnd);
 
-
         [DllImport("User32.dll")]
         public static extern void ReleaseDC(IntPtr hwnd, IntPtr dc);
 
+        [DllImport("User32.dll")]
+        public static extern void ReleaseDC(IntPtr dc);
+
         [DllImport("user32.dll", EntryPoint = "GetDesktopWindow")]
         public static extern IntPtr GetDesktopWindow();
+
+        [DllImport("user32.dll")]
+        public static extern bool InvalidateRect(IntPtr hwnd, IntPtr lpRect, bool bErase);
 
         public void setMouseLocation(int x, int y)
         {
@@ -57,7 +62,10 @@ namespace KinectControl
             if (showPointer != visible)
             {
                 showPointer = visible;
-                //ToggleDesktopIcons();
+                if (showPointer)
+                {
+                    new Thread(moveCursor).Start();
+                }
             }
         }
 
@@ -68,145 +76,67 @@ namespace KinectControl
 
 
         }
-        public void setAction(bool action)
+        public void setLeftClick(bool action)
         {
-            if (this.action != action)
+            if (action && this.action != 2)
             {
-                this.action = action;
+                this.action = 2;
+            }
+            else if (!action && this.action == 2)
+            {
+                this.action = 0;
+            }
+        }
+
+        public void setRightClick(bool action)
+        {
+            if (action && this.action != 1)
+            {
+                this.action = 1;
+            }
+            else if (!action && this.action == 1)
+            {
+                this.action = 0;
             }
         }
 
         public void moveCursor()
         {
 
-            while (true)
+            while (showPointer)
             {
-                if (showPointer)
+
+                System.Windows.Point pMouse = MouseControl.GetCursorPosition();
+                if (pMouse != null)
                 {
-                    System.Windows.Point pMouse = MouseControl.GetCursorPosition();
-                    if (pMouse != null)
+                    if ((this.x != (int)pMouse.X || this.y != (int)pMouse.Y) && refresh % 2 == 0)
                     {
-                        if (this.x != (int)pMouse.X || this.y != (int)pMouse.Y)
+                        this.x = (int)pMouse.X;
+                        this.y = (int)pMouse.Y;
+
+
+                        using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
                         {
-                            this.x = (int)pMouse.X;
-                            this.y = (int)pMouse.Y;
-                            using (Graphics g = Graphics.FromHwndInternal(IntPtr.Zero))
-                            {
-                                g.FillEllipse(action ? Brushes.Blue : Brushes.Red, (int)(x * screen - 27 / 2), (int)(y * screen - 27 / 2), (int)(27 * screen), (int)(27 * screen));
+                            g.FillEllipse(action == 0 ? Brushes.Red : action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x * screen - 27 / 2), (int)(y * screen - 27 / 2), (int)(27 * screen), (int)(27 * screen));
+                        }
 
-                            }
-                            ++refresh;
+                        ++refresh;
 
 
-                            if (refresh % 3 == 0)
-                            {
-                                refresh = 0;
-                                //ToggleDesktopIcons();
-                            }
+                        if (refresh % 3 == 0)
+                        {
+
+                            InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
+                            refresh = 0;
                         }
                     }
-                    Thread.Sleep(50);
+                    else
+                    {
+                        ++refresh;
+                    }
                 }
-                else
-                {
-                    Thread.Sleep(200);
-                }
+                Thread.Sleep(50);
             }
-        }
-
-
-
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr GetWindow(IntPtr hWnd, GetWindow_Cmd uCmd);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
-
-        enum GetWindow_Cmd : uint
-        {
-            GW_HWNDFIRST = 0,
-            GW_HWNDLAST = 1,
-            GW_HWNDNEXT = 2,
-            GW_HWNDPREV = 3,
-            GW_OWNER = 4,
-            GW_CHILD = 5,
-            GW_ENABLEDPOPUP = 6
-        }
-
-        private const int WM_COMMAND = 0x111;
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
-
-        private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetWindowText(IntPtr hWnd, StringBuilder strText, int maxCount);
-
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetWindowTextLength(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
-
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-
-
-        public static string GetWindowText(IntPtr hWnd)
-        {
-            int size = GetWindowTextLength(hWnd);
-            if (size++ > 0)
-            {
-                var builder = new StringBuilder(size);
-                GetWindowText(hWnd, builder, builder.Capacity);
-                return builder.ToString();
-            }
-
-            return String.Empty;
-        }
-
-        public static IEnumerable<IntPtr> FindWindowsWithClass(string className)
-        {
-            IntPtr found = IntPtr.Zero;
-            List<IntPtr> windows = new List<IntPtr>();
-
-            EnumWindows(delegate (IntPtr wnd, IntPtr param)
-            {
-                StringBuilder cl = new StringBuilder(256);
-                GetClassName(wnd, cl, cl.Capacity);
-                if (cl.ToString() == className && (GetWindowText(wnd) == "" || GetWindowText(wnd) == null))
-                {
-                    windows.Add(wnd);
-                }
-                return true;
-            },
-                        IntPtr.Zero);
-
-            return windows;
-        }
-
-        static void ToggleDesktopIcons()
-        {
-            var toggleDesktopCommand = new IntPtr(0x7402);
-            IntPtr hWnd = IntPtr.Zero;
-            if (Environment.OSVersion.Version.Major < 6 || Environment.OSVersion.Version.Minor < 2) //7 and -
-                hWnd = GetWindow(FindWindow("Progman", "Program Manager"), GetWindow_Cmd.GW_CHILD);
-            else
-            {
-                var ptrs = FindWindowsWithClass("WorkerW");
-                int i = 0;
-                while (hWnd == IntPtr.Zero && i < ptrs.Count())
-                {
-                    hWnd = FindWindowEx(ptrs.ElementAt(i), IntPtr.Zero, "SHELLDLL_DefView", null);
-                    i++;
-                }
-            }
-            SendMessage(hWnd, WM_COMMAND, toggleDesktopCommand, IntPtr.Zero);
         }
     }
 }

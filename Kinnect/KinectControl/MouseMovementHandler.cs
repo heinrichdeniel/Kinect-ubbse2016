@@ -26,7 +26,9 @@ namespace KinectControl
         private float mousePositionY = 0;
         private float mousePositionX = 0;
 
-        private MousePointer pointer;
+        public Boolean canMove = true;
+
+        public MousePointer pointer;
         /// <summary>
         /// Determine if we have tracked the hand and used it to move the cursor,
         /// If false, meaning the user may not lift their hands, we don't get the last hand position and some actions like pause-to-click won't be executed.
@@ -43,18 +45,19 @@ namespace KinectControl
         public MouseMovementHandler()
         {
             pointer = new MousePointer();
-            pointer.pointerVisibility(true);
-            screenWidth = (int)SystemParameters.PrimaryScreenWidth / 3 * 4;
-            screenHeight = (int)SystemParameters.PrimaryScreenHeight / 3 * 4;
-            Point p = MouseControl.GetCursorPosition();
-            p.X /= 3 * 4;
-            p.Y /= 3 * 4;
-            mousePositionX = (float)((float)p.X * 2.0 / (float)screenWidth * 4.0 / 3.0);
-            mousePositionY = (float)((float)p.Y * 2.0 / (float)screenHeight * 4.0 / 3.0);
+            pointer.pointerVisibility(false);
+            screenWidth = (int)SystemParameters.PrimaryScreenWidth / 4 * 5;
+            screenHeight = (int)SystemParameters.PrimaryScreenHeight / 4 * 5;
+            mousePositionX = 0.0f;
+            mousePositionY = 0.0f;
+
             // set up timer, execute every 0.1s
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            canMove = true;
             timer.Start();
+
         }
+
 
         public void updateMouseSensibility(float sensibility)
         {
@@ -63,7 +66,8 @@ namespace KinectControl
 
         public void updateMouseVisibility(bool visible)
         {
-            pointer.pointerVisibility(visible);
+            if (canMove)
+                pointer.pointerVisibility(visible);
         }
 
         public void updatecursorSmoothing(float smoothing)
@@ -78,111 +82,144 @@ namespace KinectControl
         /// <param name="e"></param>
         public void bodyUpdated(Body body)
         {
-            if (body.IsTracked)
+            if (canMove)
             {
-                // get various skeletal positions
-                CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
-                CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
-                CameraSpacePoint spineBase = body.Joints[JointType.SpineBase].Position;
-
-                if (handRight.Z - spineBase.Z < -0.15f) // if right hand lift forward
+                if (body.IsTracked)
                 {
-                    float x;
-                    float y;
+                    // get various skeletal positions
+                    CameraSpacePoint handLeft = body.Joints[JointType.HandLeft].Position;
+                    CameraSpacePoint handRight = body.Joints[JointType.HandRight].Position;
+                    CameraSpacePoint spineBase = body.Joints[JointType.SpineBase].Position;
 
-                    // move cursor only if left hand is behind of spinebase
-                    if (handLeft.Y < spineBase.Y)
+                    if (handRight.Z - spineBase.Z < -0.15f) // if right hand lift forward
                     {
+                        float x;
+                        float y;
 
-                        x = handRight.X - spineBase.X + 0.05f;
-                        y = spineBase.Y - handRight.Y + 0.51f;
+                        // move cursor only if left hand is behind of spinebase
+                        if (handLeft.Y < spineBase.Y)
+                        {
 
-                        float diffx = kinectLastPositionX - x;
-                        if(diffx < 0)
-                        {
-                            diffx = -diffx;
-                        }
-                        if( diffx > 0.1)
-                        {
-                            diffx = 0.0f;
-                        }
-                        
-                        float diffy = kinectLastPositionY - y;
-                        if (diffy < 0)
-                        {
-                            diffy = -diffy;
-                        }
-                        if (diffy > 0.1f)
-                        {
-                            diffy = 0.0f;
-                        }
+                            x = handRight.X - spineBase.X + 0.05f;
+                            y = spineBase.Y - handRight.Y + 0.51f;
 
-                        if (x < kinectLastPositionX)
-                        {
-                            mousePositionX -= diffx;
-                        }
-                        else if (x > kinectLastPositionX)
-                        {
-                            mousePositionX += diffx;
+                            float diffx = kinectLastPositionX - x;
+                            if (diffx < 0)
+                            {
+                                diffx = -diffx;
+                            }
+                            if (diffx > 0.1)
+                            {
+                                diffx = 0.0f;
+                            }
+
+                            float diffy = kinectLastPositionY - y;
+                            if (diffy < 0)
+                            {
+                                diffy = -diffy;
+                            }
+                            if (diffy > 0.1f)
+                            {
+                                diffy = 0.0f;
+                            }
+
+                            if (x < kinectLastPositionX)
+                            {
+                                mousePositionX -= diffx;
+                                if (mousePositionX < -1.0f)
+                                {
+                                    mousePositionX = -1.0f;
+                                }
+                            }
+                            else if (x > kinectLastPositionX)
+                            {
+                                mousePositionX += diffx;
+                                if (mousePositionX > 1.0f)
+                                {
+                                    mousePositionX = 1.0f;
+                                }
+                            }
+                            if (y < kinectLastPositionY)
+                            {
+                                mousePositionY -= diffy;
+                                if (mousePositionY < -1.0f)
+                                {
+                                    mousePositionY = -1.0f;
+                                }
+                            }
+                            else if (y > kinectLastPositionY)
+                            {
+                                mousePositionY += diffy;
+                                if (mousePositionY > 1.0f)
+                                {
+                                    mousePositionY = 1.0f;
+                                }
+                            }
+                            Point curPos = MouseControl.GetCursorPosition();
+
+                            kinectLastPositionX = x;
+                            kinectLastPositionY = y;
+                            // get current cursor position
+                            // smoothing for using should be 0 - 0.95f. The way we smooth the cusor is: oldPos + (newPos - oldPos) * smoothValue
+                            float smoothing = 1 - cursorSmoothing;
+                            // set cursor position
+
+                            MouseControl.SetCursorPos((int)(curPos.X + (mousePositionX * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((mousePositionY + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
 
                         }
-                        if (y < kinectLastPositionY)
-                        {
-                            mousePositionY -= diffy;
+                        alreadyTrackedPos = true;
 
-                        }
-                        else if (y > kinectLastPositionY)
+                        if (body.HandRightState == HandState.Closed && !wasRightGrip)
                         {
-                            mousePositionY += diffy;
-                        }
-                        Point curPos = MouseControl.GetCursorPosition();
-                        if (mousePositionX > 1.0f || mousePositionX < -1.0f)
-                        {
-                            mousePositionX = (float)((float)curPos.X * 2.0 / (float)screenWidth * 4.0 / 3.0);
-                        }
-                        if (mousePositionY > 1.0f || mousePositionY < -1.0f)
-                        {
-                            mousePositionY = (float)((float)curPos.Y * 2.0 / (float)screenHeight * 4.0 / 3.0);
-                        }
+                            if (!wasLeftGrip)
+                            {
 
-                        kinectLastPositionX = x;
-                        kinectLastPositionY = y;
-                        Console.WriteLine("Kinexct: " + x + " " + y + " Mouse: " + mousePositionX + " " + mousePositionY);
-                        // get current cursor position
-                        // smoothing for using should be 0 - 0.95f. The way we smooth the cusor is: oldPos + (newPos - oldPos) * smoothValue
-                        float smoothing = 1 - cursorSmoothing;
-                        // set cursor position
+                                pointer.setLeftClick(true);
+                                MouseControl.MouseLeftDown();
+                                wasLeftGrip = true;
 
-                        MouseControl.SetCursorPos((int)(curPos.X + (mousePositionX * mouseSensitivity * screenWidth - curPos.X) * smoothing), (int)(curPos.Y + ((mousePositionY + 0.25f) * mouseSensitivity * screenHeight - curPos.Y) * smoothing));
+                            }
+                        }
+                        if(body.HandRightState == HandState.Lasso && !wasLeftGrip)
+                        {
+                            if (!wasRightGrip)
+                            {
+
+                                pointer.setRightClick(true);
+                                MouseControl.MouseRightDown();
+                                wasRightGrip = true;
+
+                            }
+                        }
+                        else if (body.HandRightState == HandState.Open)
+                        {
+                            if (wasLeftGrip)
+                            {
+
+                                pointer.setLeftClick(false);
+                                MouseControl.MouseLeftUp();
+                                wasLeftGrip = false;
+
+                            }
+
+                            if (wasRightGrip)
+                            {
+
+                                pointer.setRightClick(false);
+                                MouseControl.MouseRightUp();
+                                wasRightGrip = false;
+
+                            }
+                        }
                     }
-                    alreadyTrackedPos = true;
-
-                    if (body.HandRightState == HandState.Closed)
+                    else
                     {
-                        if (!wasRightGrip)
-                        {
-                            pointer.setAction(true);
-                            MouseControl.MouseLeftDown();
-                            wasRightGrip = true;
-                        }
+                        wasLeftGrip = true;
+                        wasRightGrip = true;
+                        alreadyTrackedPos = false;
                     }
-                    else if (body.HandRightState == HandState.Open)
-                    {
-                        if (wasRightGrip)
-                        {
-                            pointer.setAction(false);
-                            MouseControl.MouseLeftUp();
-                            wasRightGrip = false;
-                        }
-                    }
+
                 }
-                else
-                {
-                    wasLeftGrip = true;
-                    wasRightGrip = true;
-                    alreadyTrackedPos = false;
-                }
-
             }
         }
 

@@ -36,12 +36,14 @@ namespace KinectControl
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Settings = new System.Windows.Forms.NotifyIcon(this.components);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form_MouseClick);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.keyCommandsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.tb_cursorSmoothing = new System.Windows.Forms.TextBox();
             this.tb_mouseSensibility = new System.Windows.Forms.TextBox();
             this.slider_cursorSmoothing = new System.Windows.Forms.TrackBar();
@@ -87,7 +89,7 @@ namespace KinectControl
             // 
             this.Settings.ContextMenuStrip = this.Service;
             this.Settings.Icon = ((System.Drawing.Icon)(resources.GetObject("Settings.Icon")));
-            this.Settings.Text = "Settings";
+            this.Settings.Text = "KinectControl";
             this.Settings.Visible = true;
             this.Settings.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
@@ -103,7 +105,7 @@ namespace KinectControl
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(803, 827);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(512, 96);
             this.button1.TabIndex = 3;
@@ -116,7 +118,7 @@ namespace KinectControl
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(16, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1519, 1263);
@@ -129,9 +131,9 @@ namespace KinectControl
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Size = new System.Drawing.Size(1511, 1234);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Keyboard";
@@ -142,6 +144,7 @@ namespace KinectControl
             this.keyCommandsPanel.AutoScroll = true;
             this.keyCommandsPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.keyCommandsPanel.Location = new System.Drawing.Point(20, 20);
+            this.keyCommandsPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.keyCommandsPanel.Name = "keyCommandsPanel";
             this.keyCommandsPanel.Size = new System.Drawing.Size(513, 735);
             this.keyCommandsPanel.TabIndex = 4;
@@ -151,6 +154,7 @@ namespace KinectControl
             // tabPage2
             // 
             this.tabPage2.AllowDrop = true;
+            this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.tb_cursorSmoothing);
             this.tabPage2.Controls.Add(this.tb_mouseSensibility);
             this.tabPage2.Controls.Add(this.slider_cursorSmoothing);
@@ -158,19 +162,31 @@ namespace KinectControl
             this.tabPage2.Controls.Add(this.lb_cursorSmoothing);
             this.tabPage2.Controls.Add(this.lb_mouseSensitivity);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(292, 271);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(1511, 1234);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Mouse";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(235, 378);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(308, 96);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "Mouse On";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // tb_cursorSmoothing
             // 
             this.tb_cursorSmoothing.Enabled = false;
             this.tb_cursorSmoothing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_cursorSmoothing.Location = new System.Drawing.Point(585, 215);
+            this.tb_cursorSmoothing.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb_cursorSmoothing.Name = "tb_cursorSmoothing";
             this.tb_cursorSmoothing.Size = new System.Drawing.Size(100, 22);
             this.tb_cursorSmoothing.TabIndex = 5;
@@ -182,6 +198,7 @@ namespace KinectControl
             this.tb_mouseSensibility.Enabled = false;
             this.tb_mouseSensibility.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_mouseSensibility.Location = new System.Drawing.Point(585, 46);
+            this.tb_mouseSensibility.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb_mouseSensibility.Name = "tb_mouseSensibility";
             this.tb_mouseSensibility.Size = new System.Drawing.Size(100, 22);
             this.tb_mouseSensibility.TabIndex = 4;
@@ -191,8 +208,9 @@ namespace KinectControl
             // slider_cursorSmoothing
             // 
             this.slider_cursorSmoothing.Location = new System.Drawing.Point(79, 265);
+            this.slider_cursorSmoothing.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.slider_cursorSmoothing.Name = "slider_cursorSmoothing";
-            this.slider_cursorSmoothing.Size = new System.Drawing.Size(606, 56);
+            this.slider_cursorSmoothing.Size = new System.Drawing.Size(605, 56);
             this.slider_cursorSmoothing.TabIndex = 3;
             this.slider_cursorSmoothing.Value = 3;
             this.slider_cursorSmoothing.Scroll += new System.EventHandler(this.slider_cursorSmoothing_Scroll);
@@ -200,9 +218,10 @@ namespace KinectControl
             // slider_mouseSensibility
             // 
             this.slider_mouseSensibility.Location = new System.Drawing.Point(79, 97);
+            this.slider_mouseSensibility.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.slider_mouseSensibility.Maximum = 100;
             this.slider_mouseSensibility.Name = "slider_mouseSensibility";
-            this.slider_mouseSensibility.Size = new System.Drawing.Size(606, 56);
+            this.slider_mouseSensibility.Size = new System.Drawing.Size(605, 56);
             this.slider_mouseSensibility.TabIndex = 2;
             this.slider_mouseSensibility.Value = 35;
             this.slider_mouseSensibility.Scroll += new System.EventHandler(this.slider_mouseSensibility_Scroll);
@@ -231,7 +250,7 @@ namespace KinectControl
             this.ContextMenuStrip = this.Service;
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "TaskBar";
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TaskBar_FormClosing);
@@ -270,6 +289,7 @@ namespace KinectControl
         private System.Windows.Forms.Label lb_mouseSensitivity;
         private System.Windows.Forms.TextBox tb_cursorSmoothing;
         private System.Windows.Forms.TextBox tb_mouseSensibility;
+        private System.Windows.Forms.Button button2;
     }
 }
 
