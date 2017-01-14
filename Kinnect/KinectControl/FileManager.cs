@@ -32,10 +32,10 @@ namespace KinectControl
             {
                 Console.WriteLine(xmlKeyCommandFileName + " not found");
             }
-            fileExist("/" + xmlKinectMovementFileName, "movements");
+            fileExist(xmlKinectMovementFileName, "movements");
             kinnectXMLCommands = new XmlDocument();
             try {
-                kinnectXMLCommands.Load("/" + xmlKinectMovementFileName);
+                kinnectXMLCommands.Load(xmlKinectMovementFileName);
             } catch (FileNotFoundException e)
             {
                 Console.WriteLine(e.ToString());
@@ -170,7 +170,7 @@ namespace KinectControl
                             cmoment.AppendChild(points);
                             movement.SelectSingleNode("moments").AppendChild(cmoment);
                         }
-                        kinnectXMLCommands.Save("/" + xmlKinectMovementFileName);
+                        kinnectXMLCommands.Save("\\" + xmlKinectMovementFileName);
                         return true;
                     }
                 }
@@ -191,7 +191,7 @@ namespace KinectControl
                     if (Int32.Parse(movement.SelectSingleNode("id").InnerText) == keyInputID)
                     {
                         movement.RemoveAll();
-                        kinnectXMLCommands.Save("/" + xmlKinectMovementFileName);
+                        kinnectXMLCommands.Save("\\" + xmlKinectMovementFileName);
                         return true;
                     }
                 }
@@ -244,14 +244,18 @@ namespace KinectControl
         //and if the file does not exist, create the file
         private void fileExist(String filename, String startingTag)
         {
-            if (!File.Exists(filename))
+            if (!File.Exists(Environment.CurrentDirectory + "\\" + filename))
             {
-                File.Create(Environment.CurrentDirectory + "/" +    filename);
                 try {
-                    XDocument doc = new XDocument(filename, new XElement(startingTag));
+                    XmlDocument doc = new XmlDocument();
+                    XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+                    XmlElement root = doc.DocumentElement;
+                    doc.InsertBefore(xmlDeclaration, root);
+                    doc.AppendChild(doc.CreateElement(string.Empty, startingTag, string.Empty));
+                    doc.Save(Environment.CurrentDirectory + "\\" + filename);
                 } catch (ArgumentException e)
                 {
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(filename + " not found: " + e.ToString());
                 }
             }
 

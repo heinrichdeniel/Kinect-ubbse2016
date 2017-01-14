@@ -48,13 +48,8 @@ namespace KinectControl
             pointer.pointerVisibility(false);
             screenWidth = (int)SystemParameters.PrimaryScreenWidth / 4 * 5;
             screenHeight = (int)SystemParameters.PrimaryScreenHeight / 4 * 5;
-            Point p = MouseControl.GetCursorPosition();
-            p.X = p.X / 4 * 5;
-            p.Y = p.Y / 4 * 5;
-            Console.WriteLine("Screen: " + screenWidth+ "w, " + screenHeight + "h " + p.X + "mx " + p.Y + "ym");
-            mousePositionX = 0.0f;// (float)((((float)p.X * 2.0) / (float)screenWidth)) - 1.0f;
-            mousePositionY = 0.0f;// 1.0f - (float)((((float)p.Y * 2.0) / (float)screenHeight));
-            Console.WriteLine("Mouse: " + mousePositionX + " " + mousePositionY);
+            mousePositionX = 0.0f;
+            mousePositionY = 0.0f;
 
             // set up timer, execute every 0.1s
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
@@ -106,7 +101,7 @@ namespace KinectControl
                         {
 
                             x = handRight.X - spineBase.X + 0.05f;
-                            y = spineBase.Y - handRight.Y + 0.05f;
+                            y = spineBase.Y - handRight.Y + 0.51f;
 
                             float diffx = kinectLastPositionX - x;
                             if (diffx < 0)
@@ -155,7 +150,7 @@ namespace KinectControl
                             else if (y > kinectLastPositionY)
                             {
                                 mousePositionY += diffy;
-                                if(mousePositionY > 1.0f)
+                                if (mousePositionY > 1.0f)
                                 {
                                     mousePositionY = 1.0f;
                                 }
@@ -164,7 +159,6 @@ namespace KinectControl
 
                             kinectLastPositionX = x;
                             kinectLastPositionY = y;
-                            Console.WriteLine("Kinect: " + x + " " + y + " Mouse: " + mousePositionX + " " + mousePositionY);
                             // get current cursor position
                             // smoothing for using should be 0 - 0.95f. The way we smooth the cusor is: oldPos + (newPos - oldPos) * smoothValue
                             float smoothing = 1 - cursorSmoothing;
@@ -175,24 +169,44 @@ namespace KinectControl
                         }
                         alreadyTrackedPos = true;
 
-                        if (body.HandRightState == HandState.Closed)
+                        if (body.HandRightState == HandState.Closed && !wasRightGrip)
+                        {
+                            if (!wasLeftGrip)
+                            {
+
+                                pointer.setLeftClick(true);
+                                MouseControl.MouseLeftDown();
+                                wasLeftGrip = true;
+
+                            }
+                        }
+                        if(body.HandRightState == HandState.Lasso && !wasLeftGrip)
                         {
                             if (!wasRightGrip)
                             {
 
-                                pointer.setAction(true);
-                                MouseControl.MouseLeftDown();
+                                pointer.setRightClick(true);
+                                MouseControl.MouseRightDown();
                                 wasRightGrip = true;
 
                             }
                         }
                         else if (body.HandRightState == HandState.Open)
                         {
+                            if (wasLeftGrip)
+                            {
+
+                                pointer.setLeftClick(false);
+                                MouseControl.MouseLeftUp();
+                                wasLeftGrip = false;
+
+                            }
+
                             if (wasRightGrip)
                             {
 
-                                pointer.setAction(false);
-                                MouseControl.MouseLeftUp();
+                                pointer.setRightClick(false);
+                                MouseControl.MouseRightUp();
                                 wasRightGrip = false;
 
                             }

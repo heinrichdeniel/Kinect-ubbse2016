@@ -16,6 +16,16 @@ namespace KinectControl
             mouse_event(MouseEventFlag.LeftUp, 0, 0, 0, UIntPtr.Zero);
         }
 
+        public static void MouseRightDown()
+        {
+            mouse_event(MouseEventFlag.RightDown, 0, 0, 0, UIntPtr.Zero);
+        }
+
+        public static void MouseRightUp()
+        {
+            mouse_event(MouseEventFlag.RightUp, 0, 0, 0, UIntPtr.Zero);
+        }
+
         public static void DoMouseClick()
         {
             mouse_event(MouseEventFlag.LeftDown | MouseEventFlag.LeftUp, 0, 0, 0, UIntPtr.Zero);
