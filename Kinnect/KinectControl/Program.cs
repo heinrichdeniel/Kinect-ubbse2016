@@ -19,11 +19,7 @@ namespace KinectControl
         public static void Main()
         {
             new Program().runProgram();
-            /*float[] x = { 1, 4, 9, 16, 25 };
-            float[] time = { 1, 2, 3, 4, 5 };
-            float t = 2.2f;
-            Spline s = new Spline(x, time, 5);
-            Console.WriteLine(s.calculateRes(t));*/
+            //new Log();
         }
 
         public void runProgram()
