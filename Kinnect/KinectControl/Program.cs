@@ -18,8 +18,8 @@ namespace KinectControl
         [STAThread]
         public static void Main()
         {
+            Log.log.Info("Application Started");
             new Program().runProgram();
-          //  new Log();
         }
 
         public void runProgram()
@@ -37,6 +37,7 @@ namespace KinectControl
                     if (Convert.ToString(mo["Name"]).IndexOf("SuperSpeed") > -1)
                     {
                         Console.WriteLine("Connected");
+                        Log.log.Info("Kinect connected");
                         if (taskbar == null)
                         {
                             taskbar = new TaskBar();
