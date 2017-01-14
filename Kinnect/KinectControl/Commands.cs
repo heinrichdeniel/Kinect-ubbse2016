@@ -9,25 +9,34 @@ namespace KinectControl
 {
     class Commands
     {
-        public int number = 3;
-        int pointcount = 60;
-        float[][] avg;
-        float[] timePointCount;
 
+        //used classes
 
         public class Average
         {
             public int pointcount;
             public float[][] avg;
+            public int keyID;
             public float[] timePointCount;
-            public Average(int n)
+
+            public Average()
             {
-                pointcount = n;
-                timePointCount = new float[n];
+                timePointCount = new float[60];
                 avg = new float[12][];
                 for (int i = 0; i < 12; i++)
                 {
-                    avg[i] = new float[n];
+                    avg[i] = new float[pointcount];
+                }
+            }
+            public Average(int k)
+            {
+                pointcount = 60;
+                keyID = k;
+                timePointCount = new float[60];
+                avg = new float[12][];
+                for (int i = 0; i < 12; i++)
+                {
+                    avg[i] = new float[pointcount];
                 }
             }
         }
@@ -37,7 +46,11 @@ namespace KinectControl
         {
             public float totalTime;
             public List<MomentInTime> points;
-            public int keyID;
+
+            public Command()
+            {
+                points = new List<MomentInTime>();
+            }
         }
 
         public class MomentInTime
@@ -46,26 +59,41 @@ namespace KinectControl
             public float time;
         }
 
+        //data members
+
+        public int number = 3;
         private Command[] commands;
 
+        //Constructors
 
         public Commands()
         {
             commands = new Command[number];
-            commands[0].points = new List<MomentInTime>();
-            commands[1].points = new List<MomentInTime>();
-            commands[2].points = new List<MomentInTime>();
-            commands[0].totalTime = new float();
-            commands[1].totalTime = new float();
-            commands[2].totalTime = new float();
-            timePointCount = new float[pointcount];
+
+            for (int i = 0; i < number; i++)
+            {
+                commands[i] = new Command();
+                commands[i].points = new List<MomentInTime>();
+                commands[i].totalTime = new float();
+            }
         }
 
         public Commands(Command[] command)
         {
+            commands = new Command[number];
+
+            for (int i = 0; i < number; i++)
+            {
+                commands[i] = new Command();
+                commands[i].points = new List<MomentInTime>();
+                commands[i].totalTime = new float();
+            }
             this.commands = command;
         }
 
+
+
+        //function members
         public void setCommandByIndex(int index, Command command)
         {
             if (index < number && index >= 0)
@@ -83,22 +111,11 @@ namespace KinectControl
             return new Command();
         }
 
-        public void addDictionary(MomentInTime currentPosition, int i)
-        {
-            commands[i].points.Add(currentPosition);
-        }
-
-        public void setTime(float t, int i)
-        {
-            commands[i].totalTime = t;
-        }
-
         public Command standardization(Command com)
         {
             Command newCommand = new Command();
             newCommand.points = new List<MomentInTime>();
             newCommand.totalTime = com.totalTime;
-            newCommand.keyID = com.keyID;
 
             for (int i = 0; i <= com.points.Count; i++)
             {
@@ -114,22 +131,25 @@ namespace KinectControl
         //spline all 3 standardize commands
         //get x point from each command function
         //calculate average function
-        public Average averageCommand()
+        public Average averageCommand(int k)
         {
-  
-            int n = Math.Max(Math.Max(commands[0].points.Count, commands[1].points.Count), commands[2].points.Count);
 
-            Average average = new Average(n);
+            for (int i = 0;  i < number; i++)
+            {
+                commands[i] = standardization(commands[i]);
+            }
+
+            Average average = new Average(k);
             float[] x1;
             float[] y1;
-            float[] z1;
+            float[] z1; 
             float[] time1;
             float[] alpha;
             
 
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 4 * number; j++)
             {
-                for (int i = 0; i < n; i++)
+                for (int i = 0; i < average.pointcount; i++)
                 {
                     average.avg[j][i] = 0;
                 }
@@ -139,7 +159,7 @@ namespace KinectControl
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    n = commands[comm].points.Count;
+                    int n = commands[comm].points.Count;
                     x1 = new float[n];
                     y1 = new float[n];
                     z1 = new float[n];
@@ -157,28 +177,28 @@ namespace KinectControl
                     alpha = s.calculateAlpha();
                     for (int i = 0; i < average.pointcount; i++)
                     {
-                        average.avg[j * 3][i] += s.calculateRes((float)i / average.pointcount);
+                        average.avg[j * number][i] += s.calculateRes((float)i / average.pointcount);
                     }
                     s.set(y1, time1, n);
                     alpha = s.calculateAlpha();
                     for (int i = 0; i < average.pointcount; i++)
                     {
-                        average.avg[j * 3 + 1][i] += s.calculateRes((float)i / average.pointcount);
+                        average.avg[j * number + 1][i] += s.calculateRes((float)i / average.pointcount);
                     }
                     s.set(z1, time1, n);
                     alpha = s.calculateAlpha();
                     for (int i = 0; i < average.pointcount; i++)
                     {
-                        average.avg[j * 3 + 2][i] += s.calculateRes((float)i / average.pointcount);
+                        average.avg[j * number + 2][i] += s.calculateRes((float)i / average.pointcount);
                     }
                 }
             }
 
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 4 * number; j++)
             {
-                for (int i = 0; i < n; i++)
+                for (int i = 0; i < average.pointcount; i++)
                 {
-                    average.avg[j][i] /= 3f;
+                    average.avg[j][i] /= (float)number;
                 }
             }
             return average;
@@ -197,15 +217,15 @@ namespace KinectControl
             CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
             for (int i = 0; i < 4; ++i)
             {
-                Spline s = new Spline(average.avg[i * 3], average.timePointCount, average.pointcount);
+                Spline s = new Spline(average.avg[i * number], average.timePointCount, average.pointcount);
                 s.calculateAlpha();
                 returnResult[i].X = s.calculateRes(t);
 
-                s = new Spline(average.avg[i * 3 + 1], average.timePointCount, average.pointcount);
+                s = new Spline(average.avg[i * number + 1], average.timePointCount, average.pointcount);
                 s.calculateAlpha();
                 returnResult[i].Y = s.calculateRes(t);
 
-                s = new Spline(average.avg[i * 3 + 2], average.timePointCount, average.pointcount);
+                s = new Spline(average.avg[i * number + 2], average.timePointCount, average.pointcount);
                 s.calculateAlpha();
                 returnResult[i].Z = s.calculateRes(t);
             }
