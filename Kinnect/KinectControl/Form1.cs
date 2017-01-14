@@ -89,8 +89,8 @@ namespace KinectControl
             keyInputs = fileManager.getAllKeyInput();
             keyButtons = new List<Button>();
             selectedKeys = new List<int>();
-            List<Commands.Command> commands = fileManager.readAllCommands();
-            foreach (Commands.Command cm in commands)
+            List<Commands.Average> commands = fileManager.readAllCommands();
+            foreach (Commands.Average cm in commands)
             {
                 selectedKeys.Add(cm.keyID);
             }
