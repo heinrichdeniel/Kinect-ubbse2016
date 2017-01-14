@@ -72,8 +72,9 @@ namespace KinectControl
                 if (keyInput.description.Equals(buttonText))
                 {
                     selectedKeyCommand = keyInput.id;
-                   
-                } else
+
+                }
+                else
                 {
                     keyButtons[i].BackColor = selectedKeys.Exists(element => element == keyInput.id) ? Color.LightBlue : default(Color);
 
@@ -89,7 +90,7 @@ namespace KinectControl
             keyButtons = new List<Button>();
             selectedKeys = new List<int>();
             List<Commands.Command> commands = fileManager.readAllCommands();
-            foreach(Commands.Command cm in commands)
+            foreach (Commands.Command cm in commands)
             {
                 selectedKeys.Add(cm.keyID);
             }
@@ -146,7 +147,7 @@ namespace KinectControl
         }
         public void show()
         {
-            if (showToolStripMenuItem.Text == "Start")
+            if (showToolStripMenuItem.Text.Equals("Start"))
             {
                 this.ShowInTaskbar = true;
                 this.WindowState = FormWindowState.Maximized;
@@ -157,7 +158,14 @@ namespace KinectControl
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
                 this.showToolStripMenuItem.Text = "Stop";
-                this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
+                try
+                {
+                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
+                }
+                catch (NullReferenceException e)
+                {
+
+                }
                 this.conn.sensor.Open();
                 this.isWorking = true;
                 this.conn.startStop(isWorking);
@@ -165,11 +173,18 @@ namespace KinectControl
                 this.button2.Text = "Mouse On";
                 this.BringToFront();
             }
-            else
+            else if (showToolStripMenuItem.Text.Equals("Stop"))
             {
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
-                this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings.Icon")));
+                try
+                {
+                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings.Icon")));
+                }
+                catch (NullReferenceException e)
+                {
+
+                }
                 this.showToolStripMenuItem.Text = "Start";
                 this.isWorking = false;
                 this.conn.startStop(isWorking);
@@ -182,6 +197,7 @@ namespace KinectControl
             conn.sensor.Close();
             this.Close();
             Application.Exit();
+            System.Environment.Exit(1);
         }
 
         private void Service_MouseClick(object sender, MouseEventArgs e)
@@ -228,8 +244,8 @@ namespace KinectControl
 
         private void slider_mouseSensibility_Scroll(object sender, EventArgs e)
         {
-            tb_mouseSensibility.Text = ((float)slider_mouseSensibility.Value/10).ToString();
-            conn.updateMouseSensibility((float)slider_mouseSensibility.Value/10);
+            tb_mouseSensibility.Text = ((float)slider_mouseSensibility.Value / 10).ToString();
+            conn.updateMouseSensibility((float)slider_mouseSensibility.Value / 10);
         }
 
         private void slider_cursorSmoothing_Scroll(object sender, EventArgs e)
