@@ -123,13 +123,17 @@ namespace KinectControl
                                 {
                                     Commands.MomentInTime moment = new Commands.MomentInTime();
                                     moment.time = stopwatchTime - gestureStartedAt;
+
                                     moment.hand[0] = wristRight;
                                     moment.hand[1] = handRight;
                                     moment.hand[2] = thumbRight;
                                     moment.hand[3] = handTipRight;
 
-
-                                    commands[commandNumber].points.Add(moment);
+                                    if (frameWhileNotMoved == 0)
+                                    {
+                                        commands[commandNumber].points.Add(moment);
+                                        commands[commandNumber].totalTime = stopwatchTime - gestureStartedAt;
+                                    }
 
                                     if (frameWhileNotMoved == WAITINGTIME / 2)       //ha vege a mozdulatsornak
                                     {
@@ -137,7 +141,6 @@ namespace KinectControl
                                         waitingForGesture = false;
                                         if (commands[commandNumber].points.Count > 5)               //ha minimum 5 kepet kapott a kinect-tol
                                         {
-                                            commands[commandNumber].totalTime = stopwatchTime - gestureStartedAt;
                                             if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
                                             {
                                                 newCommand = new Commands(commands);

@@ -201,9 +201,11 @@ namespace KinectControl
 
             for (int j = 0; j < 4 * number; j++)
             {
+                float avg_j_0 = average.avg[j][0]/ (float) number; 
                 for (int i = 0; i < average.pointcount; i++)
                 {
                     average.avg[j][i] /= (float)number;
+                    average.avg[j][i] -= avg_j_0;
                 }
             }
 
