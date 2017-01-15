@@ -34,6 +34,7 @@ namespace KinectControl
         MouseMovementHandler movementHandler;
         MultiSourceFrameReader myReader = null;
 
+
         public Connection(PictureBox pictureBox, Button btn)
         {
             stopwatch.Start();
@@ -94,6 +95,7 @@ namespace KinectControl
                 {
                     foreach (Body body in this.bodies)
                     {
+
                         // get first tracked body only, notice there's a break below.
                         if (body.IsTracked)
                         {
@@ -116,7 +118,6 @@ namespace KinectControl
                                     gestureStartedAt = stopwatchTime;
                                     handpointsnumber = WAITINGTIME + 1;
                                     commands[commandNumber] = new Commands.Command();
-                                    commands[commandNumber].points = new List<Commands.MomentInTime>();
                                 }
                                 else if (gestureStarted)
                                 {
@@ -134,13 +135,15 @@ namespace KinectControl
                                     {
                                         gestureStarted = false;
                                         waitingForGesture = false;
-                                        btn.Text = commands[commandNumber].points.Count + "AS";
                                         if (commands[commandNumber].points.Count > 5)               //ha minimum 5 kepet kapott a kinect-tol
                                         {
                                             commands[commandNumber].totalTime = stopwatchTime - gestureStartedAt;
                                             if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
                                             {
                                                 newCommand = new Commands(commands);
+                                                FileManager fileManager = FileManager.getInstance();
+                                                fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
+                                             
                                                 btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
                                                 btn.BackColor = Color.Green;
                                                 btn.Enabled = true;
@@ -167,7 +170,7 @@ namespace KinectControl
                                         }
                                         else     //ha a mozdulat tul hamar veget ert
                                         {
-                                            btn.Text = commands[commandNumber].points.Count + "AS";
+                                            btn.Text = commands[commandNumber].points.Count.ToString();
                                             btn.BackColor = Color.Red;
                                             btn.Enabled = true;
                                             commands[commandNumber].points.Clear();

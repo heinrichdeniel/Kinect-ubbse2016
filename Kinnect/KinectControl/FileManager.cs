@@ -77,6 +77,7 @@ namespace KinectControl
                 foreach (float cctime in ctime)
                 {
                     XmlElement avg_point = kinnectXMLCommands.CreateElement("avg_point");
+
                     avg_point.InnerText = cctime.ToString();
                     avg.AppendChild(avg_point);
                 }
@@ -85,8 +86,9 @@ namespace KinectControl
             movement.AppendChild(pointCount);
             movement.AppendChild(timePoints);
             movement.AppendChild(avg);
+
             kinnectXMLCommands.DocumentElement.AppendChild(movement);
-            kinnectXMLCommands.Save("/" + xmlKinectMovementFileName);
+            kinnectXMLCommands.Save(xmlKinectMovementFileName);
         }
 
         //Read a command from the xml file
@@ -154,7 +156,6 @@ namespace KinectControl
                     {
 
                         movement.SelectSingleNode("point_count").InnerText = command.pointcount.ToString();
-
                         movement.SelectSingleNode("time_points_count").RemoveAll();
                         foreach (float moment in command.timePointCount)
                         {
@@ -174,7 +175,7 @@ namespace KinectControl
                             }
                         }
                         kinnectXMLCommands.DocumentElement.AppendChild(movement);
-                        kinnectXMLCommands.Save("\\" + xmlKinectMovementFileName);
+                        kinnectXMLCommands.Save(xmlKinectMovementFileName);
                         return true;
                     }
                 }
@@ -195,7 +196,7 @@ namespace KinectControl
                     if (Int32.Parse(movement.SelectSingleNode("id").InnerText) == keyInputID)
                     {
                         movement.RemoveAll();
-                        kinnectXMLCommands.Save("\\" + xmlKinectMovementFileName);
+                        kinnectXMLCommands.Save(xmlKinectMovementFileName);
                         return true;
                     }
                 }
@@ -216,7 +217,7 @@ namespace KinectControl
                     Commands.Average command = new Commands.Average();
                     command.keyID = Int32.Parse(movement.SelectSingleNode("id").InnerText);
                     command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
-                    float[] timePoints = new float[60];
+                    float[] timePoints = new float[command.pointcount];
                     int i = 0;
                     foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
                     {
@@ -230,24 +231,25 @@ namespace KinectControl
                     int j = 0;
                     foreach (XmlNode moment in movement.SelectSingleNode("avg").SelectNodes("avg_point"))
                     {
-                        if (j == 0)
-                        {
-                            avg[i] = new float[60];
-                        }
-                        if (j >= 60)
+                       
+                        if (j >= command.pointcount)
                         {
                             j = 0;
                             ++i;
 
                         }
+                        if (j == 0)
+                        {
+                            avg[i] = new float[command.pointcount];
+                        }
                         avg[i][j] = float.Parse(moment.InnerText);
-                        ++i;
+                        ++j;
                     }
                     command.avg = avg;
                     commands.Add(command);
                 }
             }
-
+            
             return commands;
         }
 

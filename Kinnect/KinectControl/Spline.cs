@@ -31,7 +31,7 @@ namespace KinectControl
 
         public float kernelK2(float i, float j)
         {
-            return (float) (1 + i * j + Math.Pow(Math.Min(i, j),3) / 3 + (Math.Pow(Math.Min(i,j),2) * Math.Abs(i-j)) / 2 ) ;
+            return (float)(1f + i * j + (float)Math.Pow((float)Math.Min(i, j), 3f) / 3f + ((float)Math.Pow((float)Math.Min(i, j), 2f) * (float)Math.Abs(i - j)) / 2f);
         }
 
         public void calculateKernel()
@@ -46,6 +46,8 @@ namespace KinectControl
                 for (int j = 0; j < n; j++)
                 {
                     kernel[i][j] = kernelK2(time[i], time[j]);
+                    Log.log.Info(kernel[i][j]);
+
                 }
             }
         }
@@ -73,6 +75,7 @@ namespace KinectControl
             {
                 kernelInv[i] = new float[n];
             }
+
             kernelInv = MatrixInverseProgram.MatrixInverse(kernel);
 
             alpha = multiply(kernelInv, x);
@@ -84,6 +87,7 @@ namespace KinectControl
             float res = 0;
             for (int i=0; i < n; i++)
             {
+                       // Log.log.Info(kernelK2(t, time[i]) + "alpha:" + alpha[i]);
                 res += alpha[i] * kernelK2(t, time[i]);
             }
             return res;
