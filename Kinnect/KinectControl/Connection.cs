@@ -149,15 +149,17 @@ namespace KinectControl
                                             {
                                                 if (commandNumber == 0)
                                                 {
+                                                    btn.BackColor = Color.Transparent;
                                                     btn.Text = "Please push the button to repeat the gesture for a second time!";
-                                                    btn.BackColor = Color.Gray;
+                                                    
                                                 }
                                                 else
                                                 {
+                                                    btn.BackColor = Color.Transparent;
                                                     btn.Text = "Please push the button to repeat the gesture for the third time!";
-                                                    btn.BackColor = Color.Gray;
+                                                    
                                                 }
-                                                btn.BackColor = Color.Red;
+                                                //btn.BackColor = Color.Red;
                                                 btn.Enabled = true;
                                                 commandNumber++;
                                                 handpointsnumber = 1;
@@ -193,7 +195,7 @@ namespace KinectControl
 
                 if (hand.Y - hipRight.Y > 0 && !isHandMoved && handpointsnumber < WAITINGTIME)
                 {
-                    btn.Text = "Capturing in " + (5 - handpointsnumber / 10) + " sec" + handpointsnumber;
+                    btn.Text = "Capturing in " + (5 - handpointsnumber / 10) + " sec";
                     handpointsnumber++;
                 }
                 else if (hand.Y - hipRight.Y > 0 && !isHandMoved && gestureStarted)
