@@ -11,6 +11,12 @@ namespace KinectControl
     class Commands
     {
 
+        //data members
+
+        public static int number = 3;
+        private Command[] commands;
+
+
         //used classes
 
         public class Average
@@ -20,6 +26,7 @@ namespace KinectControl
             public int keyID;
             public float time;
             public float[] timePointCount;
+            private Spline s;
 
             public Average()
             {
@@ -29,6 +36,7 @@ namespace KinectControl
                 {
                     avg[i] = new float[pointcount];
                 }
+                s = new Spline(pointcount);
             }
             public Average(int k)
             {
@@ -39,6 +47,31 @@ namespace KinectControl
                 {
                     avg[i] = new float[pointcount];
                 }
+                s = new Spline(pointcount);
+            }
+
+
+            //spline this average function :)
+            //return the 4 CameraSpacePoint at a given 
+
+            public CameraSpacePoint[] spline(float t)
+            {
+                CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
+                for (int i = 0; i < 4; ++i)
+                {
+                    s.set(avg[i * number], timePointCount, pointcount);
+                    s.calculateAlpha();
+                    returnResult[i].X = s.calculateRes(t);
+
+                    s.set(avg[i * number + 1], timePointCount, pointcount);
+                    s.calculateAlpha();
+                    returnResult[i].Y = s.calculateRes(t);
+
+                    s.set(avg[i * number + 2], timePointCount, pointcount);
+                    s.calculateAlpha();
+                    returnResult[i].Z = s.calculateRes(t);
+                }
+                return returnResult;
             }
         }
 
@@ -60,10 +93,6 @@ namespace KinectControl
             public float time;
         }
 
-        //data members
-
-        public int number = 3;
-        private Command[] commands;
 
         //Constructors
 
@@ -216,90 +245,5 @@ namespace KinectControl
 
             return average;
         }
-
-
-        //spline this average function :)
-        //return the 4 CameraSpacePoint at a given 
-
-        public CameraSpacePoint[] spline(float t, Average average)
-        {
-            CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
-            for (int i = 0; i < 4; ++i)
-            {
-                Spline s = new Spline(average.avg[i * number], average.timePointCount, average.pointcount);
-                s.calculateAlpha();
-                returnResult[i].X = s.calculateRes(t);
-
-                s = new Spline(average.avg[i * number + 1], average.timePointCount, average.pointcount);
-                s.calculateAlpha();
-                returnResult[i].Y = s.calculateRes(t);
-
-                s = new Spline(average.avg[i * number + 2], average.timePointCount, average.pointcount);
-                s.calculateAlpha();
-                returnResult[i].Z = s.calculateRes(t);
-            }
-            return returnResult;
-        }
-
-        public void test()
-        {
-            float a = 1.24f;
-            int n = 40;
-            Random rnd = new Random();
-            Commands comms = new Commands();
-            List<MomentInTime> p;
-            for (int i = 0; i < 3; i++)
-            {
-                Command com = new Command();
-                com.totalTime = a + 0.01f;
-                p = new List<MomentInTime>();
-                float[] prev = new float[4];
-                for (int j = 0; j < 4; j++)
-                {
-                    prev[j] = 0;
-                }
-
-                for (int j = 0; j < n + i * 4; j++)
-                {
-                    MomentInTime mit = new MomentInTime();
-
-                    for (int t = 0; t < 4; t++)
-                    {
-                        float something = (((float)rnd.NextDouble()) / 100f);
-                        mit.hand[t].X = prev[t] + something;
-                        prev[t] = mit.hand[t].X;
-                        mit.hand[t].Y = 0f + ((float)(rnd.NextDouble() * 2.0 - 1.0) / 1000f);
-                        mit.hand[t].Z = 0f + ((float)(rnd.NextDouble() * 2.0 - 1.0) / 1000f);
-                    }
-                    mit.time = (com.totalTime / (n + i * 4)) * j;
-                    p.Add(mit);
-                }
-                com.points = p;
-                comms.setCommandByIndex(i, com);
-            }
-            Average average = new Average();
-            average = comms.averageCommand(2);
-
-            Debug.Write("Time: ");
-            for (int j = 0; j < average.pointcount; j++)
-            {
-                Debug.Write(average.timePointCount[j]);
-                Debug.Write(", ");
-            }
-            Debug.Write("\n\n");
-            for (int i = 0; i < 12; i++)
-            {
-                Debug.Write(i);
-                Debug.Write(": ");
-                for (int j = 0; j < average.pointcount; j++)
-                {
-                    Debug.Write(average.avg[i][j]);
-                    Debug.Write(", ");
-                }
-                Debug.Write("\n\n");
-            }
-        }
-
-
     }
 }
