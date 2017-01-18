@@ -119,18 +119,18 @@ namespace KinectControl
                         int j = 0;
                         foreach (XmlNode moment in movement.SelectSingleNode("avg").SelectNodes("avg_point"))
                         {
-                            if(j == 0)
-                            {
-                                avg[i] = new float[60];
-                            }
-                            if(j >= 60)
+                            if (j >= command.pointcount)
                             {
                                 j = 0;
                                 ++i;
 
                             }
+                            if (j == 0)
+                            {
+                                avg[i] = new float[command.pointcount];
+                            }
                             avg[i][j] = float.Parse(moment.InnerText);
-                            ++i;
+                            ++j;
                         }
                         command.avg = avg;
 

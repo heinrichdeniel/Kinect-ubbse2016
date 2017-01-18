@@ -33,6 +33,7 @@ namespace KinectControl
         int WAITINGTIME = 50;
         MouseMovementHandler movementHandler;
         MultiSourceFrameReader myReader = null;
+        private Boolean enabledKinnectImage = true;
 
 
         public Connection(PictureBox pictureBox, Button btn)
@@ -53,6 +54,18 @@ namespace KinectControl
             }
             movementHandler = new MouseMovementHandler();
 
+        }
+
+        public bool kinnectImage
+        {
+            get { return enabledKinnectImage; }
+            set
+            {
+                if (enabledKinnectImage != value)
+                {
+                    enabledKinnectImage = value;
+                }
+            }
         }
 
         public void startStop(Boolean can)
@@ -240,32 +253,35 @@ namespace KinectControl
 
         private void myReader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {
-            var reference = e.FrameReference.AcquireFrame();
-
-            using (var frame = reference.ColorFrameReference.AcquireFrame())
+            if (enabledKinnectImage)
             {
-                if (frame != null)
+                var reference = e.FrameReference.AcquireFrame();
+
+                using (var frame = reference.ColorFrameReference.AcquireFrame())
                 {
-                    var width = frame.FrameDescription.Width;
-                    var height = frame.FrameDescription.Height;
-                    var data = new byte[width * height * 32 / 8];
-                    frame.CopyConvertedFrameDataToArray(data, ColorImageFormat.Bgra);
-
-                    var bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
-
-                    var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
-
-                    Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
-                    bitmap.UnlockBits(bitmapData);
-                    bitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
-
-                    Bitmap b = new Bitmap(900, 600);
-                    using (Graphics g = Graphics.FromImage((Image)b))
+                    if (frame != null)
                     {
-                        g.DrawImage(bitmap, 0, 0, 900, 600);
-                    }
-                    pb.Image = b;
+                        var width = frame.FrameDescription.Width;
+                        var height = frame.FrameDescription.Height;
+                        var data = new byte[width * height * 32 / 8];
+                        frame.CopyConvertedFrameDataToArray(data, ColorImageFormat.Bgra);
 
+                        var bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
+
+                        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+
+                        Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
+                        bitmap.UnlockBits(bitmapData);
+                        bitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
+
+                        Bitmap b = new Bitmap(900, 600);
+                        using (Graphics g = Graphics.FromImage((Image)b))
+                        {
+                            g.DrawImage(bitmap, 0, 0, 900, 600);
+                        }
+                        pb.Image = b;
+
+                    }
                 }
             }
         }

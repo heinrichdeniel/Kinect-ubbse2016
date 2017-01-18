@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace KinectControl
@@ -15,9 +16,14 @@ namespace KinectControl
         List<Button> keyButtons;
         List<int> selectedKeys;
         Boolean isWorking;
+        private Commands.Average selectedCommand;
+        private float pos = 0.0f;
+        private FileManager fileManager;
+        private Thread drawCountThread;
 
         public TaskBar()
         {
+            fileManager = FileManager.getInstance();
             InitializeComponent();
 
             conn = new KinectControl.Connection(pictureBox1, button1);
@@ -62,7 +68,7 @@ namespace KinectControl
         }
 
         public void ButtonClicked(Object sender,
-                           EventArgs e)
+                    EventArgs e)
         {
             String buttonText = ((Button)sender).Text.Split('\n')[0];
             ((Button)sender).BackColor = Color.Green;
@@ -72,7 +78,23 @@ namespace KinectControl
                 if (keyInput.description.Equals(buttonText))
                 {
                     selectedKeyCommand = keyInput.id;
+                    conn.setSelectedKeyId(selectedKeyCommand);
+                    if (selectedKeys.Exists(element => element == keyInput.id))
+                    {
 
+                        selectedCommand = fileManager.readCommand(keyInput.id);
+                        if (selectedCommand.keyID != -1)
+                        {
+                            conn.kinnectImage = false;
+                            drawCountThread = new Thread(Paint_Thread);
+                            drawCountThread.Start();
+                            pictureBox1.Refresh();
+                        }
+                    }
+                    else
+                    {
+                        conn.kinnectImage = true;
+                    }
                 }
                 else
                 {
@@ -83,6 +105,7 @@ namespace KinectControl
             }
 
         }
+
         public void LoadCommands()
         {
             FileManager fileManager = FileManager.getInstance();
@@ -257,6 +280,36 @@ namespace KinectControl
         private void keyCommandsPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void Paint_Thread()
+        {
+            pos = 0;
+            int keyInputID = selectedCommand.keyID;
+            while (pos < selectedCommand.time)
+            {
+                pos += 30;
+                Thread.Sleep(30);
+                if (selectedCommand.keyID != keyInputID || selectedCommand.keyID == -1)
+                {
+                    break;
+                }
+                pictureBox1.Refresh();
+            }
+        }
+
+        private void pictureBox1_Paint_Selected_Command(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            if (selectedCommand != null)
+            {
+                if (!conn.kinnectImage)
+                {
+                    // Create a local version of the graphics object for the PictureBox.
+                    CameraSpacePoint point = selectedCommand.spline(pos/selectedCommand.time)[0];
+                    Graphics g = e.Graphics;
+                    g.DrawEllipse(Pens.Azure, point.X + 50, point.Y + 50, 50, 50);
+                }
+            }
         }
 
         private void button2_Click_1(object sender, EventArgs e)
