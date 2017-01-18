@@ -15,6 +15,10 @@ namespace KinectControl
         private float[][] kernel;
         private int n;
 
+        public Spline(int n)
+        {
+            alpha = new float[n];
+        }
         public Spline(float[] x1, float[] time1, int n1)
         {
             x = x1;
