@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KinectControl
 {
-    class Spline
+    public class Spline
     {
         private float[] x;
         private float[] time;

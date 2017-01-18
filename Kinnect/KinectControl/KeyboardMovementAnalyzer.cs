@@ -11,9 +11,9 @@ namespace KinectControl
     class KeyboardMovementAnalyzer
     {
         private List<Commands.Average> existingCommands;
-        private Dictionary<int, Commands.Average> goodCommands;
-        private Dictionary<int, CameraSpacePoint> firstPoints;
-        private Dictionary<int, float> startTime;
+        private Dictionary<int, Commands.Average> goodCommands = new Dictionary<int, Commands.Average>();
+        private Dictionary<int, CameraSpacePoint> firstPoints = new Dictionary<int, CameraSpacePoint>();
+        private Dictionary<int, float> startTime = new Dictionary<int, float>();
 
         public KeyboardMovementAnalyzer(List<Commands.Average> commands)
         {
@@ -23,23 +23,26 @@ namespace KinectControl
 
         public void AnalyzeFrames(DateTime time, List<CameraSpacePoint> handpoints)
         {
-            compareWithExistingCommands(handpoints,(float)time.Millisecond/1000f);
 
-            compareWithGoodCommands(handpoints, (float)time.Millisecond / 1000f);
+            compareWithExistingCommands(handpoints,(float)time.Millisecond);
+
+            compareWithGoodCommands(handpoints, (float)time.Millisecond);
         }
 
         private void compareWithGoodCommands(List<CameraSpacePoint> handpoints, float time)
         {
+
             for (int i = 0; i < goodCommands.Count; i++)
             {
                 float[][] handPoints = new float[handpoints.Count][];
-                for (int j = 0; j < handpoints.Count; j++)
+                   for (int j = 0; j < handpoints.Count; j++)
                 {
                     handPoints[j] = new float[3];
                     handPoints[j][0] = handpoints[j].X - firstPoints[i].X;
                     handPoints[j][1] = handpoints[j].Y - firstPoints[i].Y;
                     handPoints[j][2] = handpoints[j].Z - firstPoints[i].Z;
                 }
+                Log.log.Info(time - startTime[i]);
                 CameraSpacePoint[] csp = goodCommands[i].spline(time-startTime[i]);
                 
                 if (goodCommands[i].time < time - startTime[i])
@@ -109,6 +112,10 @@ namespace KinectControl
 
         private bool compareSpacePoints(float[] handpoint, CameraSpacePoint commandpoint)
         {
+            Log.log.Info("kez: "+handpoint[0]);
+            Log.log.Info("command: " + commandpoint.X);
+
+
             if (Math.Abs(handpoint[0] - commandpoint.X) < 0.05)
             {
                 return false;
