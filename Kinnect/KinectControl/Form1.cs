@@ -290,14 +290,13 @@ namespace KinectControl
             int keyInputID = selectedCommand.keyID;
             while (selectedCommand.keyID > -1 && pos < selectedCommand.time)
             {
-                pos += 0.033f;
+                pos += 33.3333f;
                 point = selectedCommand.spline(pos)[0];
-                Thread.Sleep(30);
+                Thread.Sleep(33);
                 if (selectedCommand.keyID != keyInputID)
                 {
                     break;
                 }
-                Log.log.Info("Postion: " + pos);
                 pictureBox1.Invoke(new MethodInvoker(
                     delegate ()
                     {
@@ -318,7 +317,7 @@ namespace KinectControl
                     Graphics g = e.Graphics;
 
                     g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 900, 600));
-                    g.FillEllipse(new SolidBrush(Color.Red), point.X * 100 + 300, point.Y * 100 + 300, 50, 50);
+                    g.FillEllipse(new SolidBrush(Color.Red), point.X + 300, point.Y + 300, 50, 50);
                 }
             }
         }
