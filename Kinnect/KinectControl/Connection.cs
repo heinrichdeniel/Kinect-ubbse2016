@@ -35,6 +35,7 @@ namespace KinectControl
         MultiSourceFrameReader myReader = null;
         private Boolean enabledKinnectImage = true;
         KeyboardMovementAnalyzer recognizer;
+        private ClickInterface commandSaved;
 
         public Connection(PictureBox pictureBox, Button btn)
         {
@@ -57,6 +58,9 @@ namespace KinectControl
 
         }
 
+        public void setCommandSaveInterface(ClickInterface commandinterface){
+            this.commandSaved = commandinterface;
+        }
         public bool kinnectImage
         {
             get { return enabledKinnectImage; }
@@ -164,6 +168,7 @@ namespace KinectControl
                                         {
                                             if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
                                             {
+                                                commandSaved.CommandSaved(selectedKeyId);
                                                 btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
                                                 btn.BackColor = Color.Green;
                                                 btn.Enabled = true;

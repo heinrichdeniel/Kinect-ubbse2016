@@ -11,16 +11,26 @@ namespace KinectControl
     public partial class TaskBar : Form
     {
         KinectControl.Connection conn;
-        List<KeyInput> keyInputs;
+         List<KeyInput> keyInputs;
         int selectedKeyCommand;
         List<Button> keyButtons;
-        List<int> selectedKeys;
+        static List<int> selectedKeys;
         Boolean isWorking;
         List<Commands.Average> commands;
         private Commands.Average selectedCommand;
-        private CameraSpacePoint point;
+        private CameraSpacePoint []point = new CameraSpacePoint[4];
         private FileManager fileManager;
         private Thread drawCountThread;
+        private float drawSize = 50.0f;
+        private bool drawed = true;
+
+        public class CommandSaved : ClickInterface
+        {
+            void ClickInterface.CommandSaved(int keyID)
+            {
+                selectedKeys.Add(keyID); 
+            }
+        }
 
         public TaskBar()
         {
@@ -28,6 +38,7 @@ namespace KinectControl
             InitializeComponent();
 
             conn = new KinectControl.Connection(pictureBox1, button1);
+            conn.setCommandSaveInterface(new CommandSaved());
 
         }
 
@@ -41,7 +52,7 @@ namespace KinectControl
                 this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
                 this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - 100);
                 this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + 200, 100);
-                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 3 * 2, this.Height / 3 * 2);
+                this.pictureBox1.Size = new System.Drawing.Size(900, 600);// this.Width / 3 * 2, this.Height / 3 * 2);
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 250, this.Height / 3 * 2 + 100);
                 this.button2.BackColor = Color.Green;
                 this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
@@ -264,6 +275,7 @@ namespace KinectControl
 
         private void button1_Click(object sender, EventArgs e)
         {
+            conn.kinnectImage = true;
             conn.saveNewGesture();
         }
 
@@ -287,22 +299,46 @@ namespace KinectControl
         private void Paint_Thread()
         {
             float pos = 0.0f;
+            drawSize = 30.0f;
+            CameraSpacePoint p = selectedCommand.spline(pos)[0];
             int keyInputID = selectedCommand.keyID;
             while (selectedCommand.keyID > -1 && pos < selectedCommand.time)
             {
-                pos += 33.3333f;
-                point = selectedCommand.spline(pos)[0];
-                Thread.Sleep(33);
-                if (selectedCommand.keyID != keyInputID)
+
+                if (drawed)
                 {
-                    break;
-                }
-                pictureBox1.Invoke(new MethodInvoker(
-                    delegate ()
+                    drawed = false;
+                    pos += 33.3333f;
+                    CameraSpacePoint []pnt = selectedCommand.spline(pos);
+                    for (int i = 0; i < 4; ++i)
                     {
-                        pictureBox1.Refresh();
-                    })
-                );
+                        point[i] = pnt[i];
+                    }
+                    
+                    if (p.Z < point[0].Z)
+                    {
+                        drawSize += 0.5f;
+                    }
+                    else if (p.Z > point[0].Z)
+                    {
+                        drawSize -= 0.5f;
+                    }
+                    p = point[0];
+                    Thread.Sleep(33);
+                    if (selectedCommand.keyID != keyInputID)
+                    {
+                        break;
+                    }
+                    pictureBox1.Invoke(new MethodInvoker(
+                        delegate ()
+                        {
+                            pictureBox1.Refresh();
+                        })
+                    );
+                } else
+                {
+                    Thread.Sleep(5);
+                }
 
             }
         }
@@ -313,11 +349,12 @@ namespace KinectControl
             {
                 if (!conn.kinnectImage)
                 {
+                    
                     // Create a local version of the graphics object for the PictureBox.
                     Graphics g = e.Graphics;
-
                     g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 900, 600));
-                    g.FillEllipse(new SolidBrush(Color.Red), point.X + 300, point.Y + 300, 50, 50);
+                    g.FillEllipse(new SolidBrush(Color.Red), point[0].X + 300, point[0].Y + 300, drawSize, drawSize);
+                    drawed = true;
                 }
             }
         }
