@@ -57,8 +57,7 @@ namespace KinectControl
                 for (int j = 0; j < n; j++)
                 {
                     kernel[i][j] = kernelK2(time[i], time[j]);
-                    Log.log.Info(kernel[i][j]);
-
+                    //Log.log.Info(kernel[i][j]);
                 }
             }
         }
