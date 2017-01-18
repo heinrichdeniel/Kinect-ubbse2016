@@ -15,6 +15,7 @@ namespace KinectControl
         List<Button> keyButtons;
         List<int> selectedKeys;
         Boolean isWorking;
+        List<Commands.Average> commands;
 
         public TaskBar()
         {
@@ -89,7 +90,8 @@ namespace KinectControl
             keyInputs = fileManager.getAllKeyInput();
             keyButtons = new List<Button>();
             selectedKeys = new List<int>();
-            List<Commands.Average> commands = fileManager.readAllCommands();
+            commands = fileManager.readAllCommands();
+            conn.setExistingCommands(commands);
             foreach (Commands.Average cm in commands)
             {
                 selectedKeys.Add(cm.keyID);

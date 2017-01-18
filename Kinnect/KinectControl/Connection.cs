@@ -33,6 +33,8 @@ namespace KinectControl
         int WAITINGTIME = 50;
         MouseMovementHandler movementHandler;
         MultiSourceFrameReader myReader = null;
+        List<Commands.Average> existingCommands;
+
 
 
         public Connection(PictureBox pictureBox, Button btn)
@@ -67,6 +69,12 @@ namespace KinectControl
                 movementHandler.canMove = true;
                 movementHandler.pointer.pointerVisibility(true);
             }
+        }
+
+        public void setExistingCommands(List<Commands.Average> commands)
+        {
+            existingCommands = commands;
+
         }
 
 
@@ -143,13 +151,12 @@ namespace KinectControl
                                         {
                                             if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
                                             {
-                                                newCommand = new Commands(commands);
-                                                FileManager fileManager = FileManager.getInstance();
-                                                fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
-                                             
                                                 btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
                                                 btn.BackColor = Color.Green;
                                                 btn.Enabled = true;
+                                                newCommand = new Commands(commands);
+                                                FileManager fileManager = FileManager.getInstance();
+                                                fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
                                             }
                                             else
                                             {
@@ -180,6 +187,11 @@ namespace KinectControl
                                         }
                                     }
                                 }
+                            }
+                            else            //innen inditjuk a threadet a felismereshez
+                            {
+                             //   Thread oThread = new Thread(new ThreadStart(oAlpha.Beta));
+
                             }
                             break;
                         }
