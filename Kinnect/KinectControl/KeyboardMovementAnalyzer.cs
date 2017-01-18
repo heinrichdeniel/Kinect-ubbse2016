@@ -88,9 +88,9 @@ namespace KinectControl
 
                 if (isGoodCommand(handPoints, csp))         //vizsgalja, hogy megeggyezik az adott command kezdopontjaival
                 {
-                    goodCommands.Add(goodCommands.Count, existingCommands[i]);
                     firstPoints.Add(goodCommands.Count, handpoints[0]);
                     startTime.Add(goodCommands.Count, time);
+                    goodCommands.Add(goodCommands.Count, existingCommands[i]);
                 }
             }
         }
@@ -120,12 +120,15 @@ namespace KinectControl
         private bool compareSpacePoints(float[] handpoint, CameraSpacePoint commandpoint)
         {
 
+            if (Math.Abs(handpoint[0] - commandpoint.X) > 0.1)
             {
                 return false;
             }
+            if (Math.Abs(handpoint[1] - commandpoint.Y) > 0.1)
             {
                 return false;
             }
+            if (Math.Abs(handpoint[2] - commandpoint.Y) > 0.1)
             {
                 return false;
             }
