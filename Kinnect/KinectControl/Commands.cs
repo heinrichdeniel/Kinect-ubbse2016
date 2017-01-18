@@ -37,7 +37,7 @@ namespace KinectControl
         {
             // data members
 
-            private int _pointcount = 60;    //length of the arrays
+            private int _pointcount = 30;    //length of the arrays
             private float[][] _avg;          //coordinates, for the hand in average command
             private int _keyID;              //which command is associated to this movement
             private float _time;             //average time of the 3 commands
@@ -114,15 +114,15 @@ namespace KinectControl
                 CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
                 for (int i = 0; i < 4; ++i)
                 {
-                    s.set(avg[i * _number], timePointCount, pointcount);
+                    s.set(avg[i * _number], timePointCount);
                     s.calculateAlpha();
                     returnResult[i].X = s.calculateRes(t);
 
-                    s.set(avg[i * _number + 1], timePointCount, pointcount);
+                    s.set(avg[i * _number + 1], timePointCount);
                     s.calculateAlpha();
                     returnResult[i].Y = s.calculateRes(t);
 
-                    s.set(avg[i * _number + 2], timePointCount, pointcount);
+                    s.set(avg[i * _number + 2], timePointCount);
                     s.calculateAlpha();
                     returnResult[i].Z = s.calculateRes(t);
                 }

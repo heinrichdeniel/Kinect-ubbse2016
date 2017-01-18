@@ -26,6 +26,13 @@ namespace KinectControl
             n = n1;
             alpha = new float[n];
         }
+
+        public void set(float[] x1, float[] time1)
+        {
+            x = x1;
+            time = time1;
+        }
+
         public void set(float[] x1, float[] time1, int n1)
         {
             x = x1;
