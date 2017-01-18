@@ -18,7 +18,7 @@ namespace KinectControl
         Boolean isWorking;
         List<Commands.Average> commands;
         private Commands.Average selectedCommand;
-        private float pos = 0.0f;
+        private CameraSpacePoint point;
         private FileManager fileManager;
         private Thread drawCountThread;
 
@@ -286,17 +286,25 @@ namespace KinectControl
 
         private void Paint_Thread()
         {
-            pos = 0;
+            float pos = 0.0f;
             int keyInputID = selectedCommand.keyID;
-            while (pos < selectedCommand.time)
+            while (selectedCommand.keyID > -1 && pos < selectedCommand.time)
             {
-                pos += 30;
+                pos += 0.033f;
+                point = selectedCommand.spline(pos)[0];
                 Thread.Sleep(30);
-                if (selectedCommand.keyID != keyInputID || selectedCommand.keyID == -1)
+                if (selectedCommand.keyID != keyInputID)
                 {
                     break;
                 }
-                pictureBox1.Refresh();
+                Log.log.Info("Postion: " + pos);
+                pictureBox1.Invoke(new MethodInvoker(
+                    delegate ()
+                    {
+                        pictureBox1.Refresh();
+                    })
+                );
+
             }
         }
 
@@ -307,9 +315,10 @@ namespace KinectControl
                 if (!conn.kinnectImage)
                 {
                     // Create a local version of the graphics object for the PictureBox.
-                    CameraSpacePoint point = selectedCommand.spline(pos/selectedCommand.time)[0];
                     Graphics g = e.Graphics;
-                    g.DrawEllipse(Pens.Azure, point.X + 50, point.Y + 50, 50, 50);
+
+                    g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 900, 600));
+                    g.FillEllipse(new SolidBrush(Color.Red), point.X * 100 + 300, point.Y * 100 + 300, 50, 50);
                 }
             }
         }

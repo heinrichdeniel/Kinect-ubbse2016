@@ -60,6 +60,8 @@ namespace KinectControl
             XmlElement movement = kinnectXMLCommands.CreateElement("command");
             XmlElement id = kinnectXMLCommands.CreateElement("id");
             id.InnerText = average.keyID.ToString();
+            XmlElement time = kinnectXMLCommands.CreateElement("time");
+            time.InnerText = average.time.ToString();
             XmlElement pointCount = kinnectXMLCommands.CreateElement("point_count");
             pointCount.InnerText = average.pointcount.ToString();
             XmlElement timePoints = kinnectXMLCommands.CreateElement("time_points_count");
@@ -85,6 +87,7 @@ namespace KinectControl
             movement.AppendChild(id);
             movement.AppendChild(pointCount);
             movement.AppendChild(timePoints);
+            movement.AppendChild(time);
             movement.AppendChild(avg);
 
             kinnectXMLCommands.DocumentElement.AppendChild(movement);
@@ -105,6 +108,7 @@ namespace KinectControl
 
                         command.keyID = keyInputID;
                         command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
+                        command.time = float.Parse(movement.SelectSingleNode("time").InnerText);
                         float[] timePoints = new float[60];
                         int i = 0;
                         foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
@@ -216,6 +220,7 @@ namespace KinectControl
 
                     Commands.Average command = new Commands.Average();
                     command.keyID = Int32.Parse(movement.SelectSingleNode("id").InnerText);
+                    command.time = float.Parse(movement.SelectSingleNode("time").InnerText);
                     command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
                     float[] timePoints = new float[command.pointcount];
                     int i = 0;
