@@ -317,14 +317,34 @@ namespace KinectControl
                 }
             }
 
-            //get x point from each command function, and calulate the average coordinates     
+            //get x point from each command function, and calulate the average coordinates  
+            //and make them relative, not absolute  
+            float avg_0_0 = average.avg[0][0] / (float)number;
+            float avg_1_0 = average.avg[1][0] / (float)number;
+            float avg_2_0 = average.avg[2][0] / (float)number;
             for (int j = 0; j < 4 * number; j++)
             {
-                float avg_j_0 = average.avg[j][0]/ (float)number; 
                 for (int i = 0; i < average.pointcount; i++)
                 {
                     average.avg[j][i] /= (float)number;
-                    average.avg[j][i] -= avg_j_0;
+                    if (j % 3 == 0)
+                    {
+                        average.avg[j][i] -= avg_0_0;
+                    }
+                    else
+                    {
+                        if (j % 3 == 1)
+                        {
+                            average.avg[j][i] -= avg_1_0;
+                        }
+                        else
+                        {
+                            if (j % 3 == 2)
+                            {
+                                average.avg[j][i] -= avg_2_0;
+                            }
+                        }
+                    }
                 }
             }
 
