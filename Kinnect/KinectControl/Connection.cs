@@ -33,8 +33,8 @@ namespace KinectControl
         int WAITINGTIME = 50;
         MouseMovementHandler movementHandler;
         MultiSourceFrameReader myReader = null;
-        List<Commands.Average> existingCommands;
         private Boolean enabledKinnectImage = true;
+        KeyboardMovementAnalyzer recognizer;
 
         public Connection(PictureBox pictureBox, Button btn)
         {
@@ -53,6 +53,7 @@ namespace KinectControl
                 //sensor.Open();
             }
             movementHandler = new MouseMovementHandler();
+
 
         }
 
@@ -84,7 +85,8 @@ namespace KinectControl
 
         public void setExistingCommands(List<Commands.Average> commands)
         {
-            existingCommands = commands;
+   
+            recognizer = new KeyboardMovementAnalyzer(commands);
 
         }
 
@@ -201,7 +203,13 @@ namespace KinectControl
                             }
                             else            //innen inditjuk a threadet a felismereshez
                             {
-                             //   Thread oThread = new Thread(new ThreadStart(oAlpha.Beta));
+                                List<CameraSpacePoint> handpoints = new List<CameraSpacePoint>();
+                                handpoints.Add(wristRight);
+                                handpoints.Add(handRight);
+                                handpoints.Add(thumbRight);
+                                handpoints.Add(handTipRight);
+
+                                recognizer.AnalyzeFrames(DateTime.Now, handpoints);
 
                             }
                             break;
