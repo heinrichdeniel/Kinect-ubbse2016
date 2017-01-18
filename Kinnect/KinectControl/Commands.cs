@@ -13,20 +13,76 @@ namespace KinectControl
 
         //data members
 
-        public static int number = 3;
-        private Command[] commands;
+        private static int _number = 3;
+        private Command[] _commands;
+
+        // set, get for the data members
+
+        public int number
+        {
+            get { return _number; }
+            set { _number = value; }
+        }
+
+        public Command[] commands
+        {
+            get { return _commands; }
+            set { _commands = value; }
+        }
 
 
         //used classes
 
         public class Average
         {
-            public int pointcount = 60;
-            public float[][] avg;
-            public int keyID;
-            public float time;
-            public float[] timePointCount;
-            private Spline s;
+            // data members
+
+            private int _pointcount = 60;    //length of the arrays
+            private float[][] _avg;          //coordinates, for the hand in average command
+            private int _keyID;              //which command is associated to this movement
+            private float _time;             //average time of the 3 commands
+            private float[] _timePointCount; //array of time 
+            private Spline _s;              //Spline class associated to this average 
+
+            // set, get for the data members
+
+            public int pointcount
+            {
+                get { return _pointcount; }
+                set { _pointcount = value; }
+            }
+
+            public float[][] avg
+            {
+                get { return _avg; }
+                set { _avg = value; }
+            }
+
+            public int keyID
+            {
+                get { return _keyID; }
+                set { _keyID = value; }
+            }
+
+            public float time
+            {
+                get { return _time; }
+                set { _time = value; }
+            }
+
+            public float[] timePointCount
+            {
+                get { return _timePointCount; }
+                set { _timePointCount = value; }
+            }
+
+            public Spline s
+            {
+                get { return _s; }
+                set { _s = value; }
+            }
+
+            //contructors
 
             public Average()
             {
@@ -51,23 +107,22 @@ namespace KinectControl
             }
 
 
-            //spline this average function :)
-            //return the 4 CameraSpacePoint at a given 
+            //return the 4 CameraSpacePoint of the right hand at a given time
 
             public CameraSpacePoint[] spline(float t)
             {
                 CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
                 for (int i = 0; i < 4; ++i)
                 {
-                    s.set(avg[i * number], timePointCount, pointcount);
+                    s.set(avg[i * _number], timePointCount, pointcount);
                     s.calculateAlpha();
                     returnResult[i].X = s.calculateRes(t);
 
-                    s.set(avg[i * number + 1], timePointCount, pointcount);
+                    s.set(avg[i * _number + 1], timePointCount, pointcount);
                     s.calculateAlpha();
                     returnResult[i].Y = s.calculateRes(t);
 
-                    s.set(avg[i * number + 2], timePointCount, pointcount);
+                    s.set(avg[i * _number + 2], timePointCount, pointcount);
                     s.calculateAlpha();
                     returnResult[i].Z = s.calculateRes(t);
                 }
@@ -78,23 +133,57 @@ namespace KinectControl
 
         public class Command
         {
-            public float totalTime;
-            public List<MomentInTime> points;
+            //data members
+
+            private float _totalTime;
+            private List<MomentInTime> _points;
+
+            // set, get for the data members
+
+            public float totalTime
+            {
+                get { return _totalTime; }
+                set { _totalTime = value; }
+            }
+
+            public List<MomentInTime> points
+            {
+                get { return _points; }
+                set { _points = value; }
+            }
+
+            //constructor
 
             public Command()
             {
-                points = new List<MomentInTime>();
+                _points = new List<MomentInTime>();
             }
         }
 
         public class MomentInTime
         {
-            public CameraSpacePoint[] hand = new CameraSpacePoint[4];
-            public float time;
+            //Data members
+
+            private CameraSpacePoint[] _hand = new CameraSpacePoint[4];
+            private float _time;
+
+            // set, get for the data members
+
+            public CameraSpacePoint[] hand
+            {
+                get { return _hand; }
+                set { _hand = value; }
+            }
+
+            public float time
+            {
+                get { return _time; }
+                set { _time = value; }
+            }
         }
 
 
-        //Constructors
+        //Constructors for Commands class
 
         public Commands()
         {
@@ -157,14 +246,13 @@ namespace KinectControl
         }
 
 
-        //standardization of all 3 commands
-        //spline all 3 standardize commands
-        //get x point from each command function
-        //calculate average function
+        //calculate average coordinated
         public Average averageCommand(int k)
         {
 
             float t = 0;
+
+            //standardization of all 3 commands 
             for (int i = 0;  i < number; i++)
             {
                 commands[i] = standardization(commands[i]);
@@ -189,6 +277,7 @@ namespace KinectControl
                 }
             }
 
+            //get the functions with spline for 3 commands
             for (int comm = 0; comm < number; ++comm)
             {
                 for (int j = 0; j < 4; j++)
@@ -228,9 +317,10 @@ namespace KinectControl
                 }
             }
 
+            //get x point from each command function, and calulate the average coordinates     
             for (int j = 0; j < 4 * number; j++)
             {
-                float avg_j_0 = average.avg[j][0]/ (float) number; 
+                float avg_j_0 = average.avg[j][0]/ (float)number; 
                 for (int i = 0; i < average.pointcount; i++)
                 {
                     average.avg[j][i] /= (float)number;
@@ -238,6 +328,7 @@ namespace KinectControl
                 }
             }
 
+            //set the time array for the average command
             for (int i = 0; i < average.pointcount; ++i)
             {
                 average.timePointCount[i] = (float)((float)i / average.pointcount);
