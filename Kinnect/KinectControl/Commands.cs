@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KinectControl
 {
-    class Commands
+    public class Commands
     {
 
         //data members
