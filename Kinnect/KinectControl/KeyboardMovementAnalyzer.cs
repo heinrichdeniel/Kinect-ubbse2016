@@ -11,9 +11,9 @@ namespace KinectControl
     class KeyboardMovementAnalyzer
     {
         private List<Commands.Average> existingCommands;
-        private Dictionary<int, Commands.Average> goodCommands;
-        private Dictionary<int, CameraSpacePoint> firstPoints;
-        private Dictionary<int, float> startTime;
+        private Dictionary<int, Commands.Average> goodCommands = new Dictionary<int, Commands.Average>();
+        private Dictionary<int, CameraSpacePoint> firstPoints = new Dictionary<int, CameraSpacePoint>();
+        private Dictionary<int, long> startTime = new Dictionary<int, long>();
 
         public KeyboardMovementAnalyzer(List<Commands.Average> commands)
         {
@@ -21,46 +21,56 @@ namespace KinectControl
         }
 
 
-        public void AnalyzeFrames(DateTime time, List<CameraSpacePoint> handpoints)
+        public void AnalyzeFrames(long time, List<CameraSpacePoint> handpoints)
         {
-            compareWithExistingCommands(handpoints,(float)time.Millisecond/1000f);
+            compareWithExistingCommands(handpoints,time);
 
-            compareWithGoodCommands(handpoints, (float)time.Millisecond / 1000f);
+            compareWithGoodCommands(handpoints, time);
         }
 
-        private void compareWithGoodCommands(List<CameraSpacePoint> handpoints, float time)
+        private void compareWithGoodCommands(List<CameraSpacePoint> handpoints, long time)
         {
+
             for (int i = 0; i < goodCommands.Count; i++)
             {
                 float[][] handPoints = new float[handpoints.Count][];
-                for (int j = 0; j < handpoints.Count; j++)
+                   for (int j = 0; j < handpoints.Count; j++)
                 {
                     handPoints[j] = new float[3];
-                    handPoints[j][0] = handpoints[j].X - firstPoints[i].X;
-                    handPoints[j][1] = handpoints[j].Y - firstPoints[i].Y;
-                    handPoints[j][2] = handpoints[j].Z - firstPoints[i].Z;
+                    handPoints[j][0] = handpoints[j].X - firstPoints.ElementAt(i).Value.X;
+                    handPoints[j][1] = handpoints[j].Y - firstPoints.ElementAt(i).Value.Y;
+                    handPoints[j][2] = handpoints[j].Z - firstPoints.ElementAt(i).Value.Z;
                 }
-                CameraSpacePoint[] csp = goodCommands[i].spline(time-startTime[i]);
+
+                CameraSpacePoint[] csp = goodCommands.ElementAt(i).Value.spline(time-startTime.ElementAt(i).Value);
                 
-                if (goodCommands[i].time < time - startTime[i])
+                if (goodCommands[i].time < time - startTime.ElementAt(i).Value)
                 {
                     FileManager.getInstance().getKeyInput(goodCommands[i].keyID).execute();
                     goodCommands.Clear();
-                    startTime.Remove(i);
-                    firstPoints.Remove(i);
+                    startTime.Clear();
+                    firstPoints.Clear();
                 }
-                if (!isGoodCommand(handPoints, csp))         //vizsgalja, hogy megeggyezik az adott command kezdopontjaival
+                else if (!isGoodCommand(handPoints, csp))         //vizsgalja, hogy megeggyezik az adott command kezdopontjaival
                 {
-                    goodCommands.Remove(i);
-                    startTime.Remove(i);
-                    firstPoints.Remove(i);
+                    if (i != goodCommands.Count - 1)
+                    {
+                        goodCommands[i] = goodCommands.ElementAt(goodCommands.Count - 1).Value;
+                        startTime[i] = startTime.ElementAt(goodCommands.Count - 1).Value;
+                        firstPoints[i] = firstPoints.ElementAt(goodCommands.Count - 1).Value;
+                    }
+
+                    startTime.Remove(goodCommands.Count-1);
+                    firstPoints.Remove(goodCommands.Count-1);
+                    goodCommands.Remove(goodCommands.Count-1);
+
                 }
 
             }
            
         }
 
-        private void compareWithExistingCommands(List<CameraSpacePoint> handpoints, float time)   //megvizsgalja, hogy a letezo commandok kozul melyik kezdodik ujra
+        private void compareWithExistingCommands(List<CameraSpacePoint> handpoints, long time)   //megvizsgalja, hogy a letezo commandok kozul melyik kezdodik ujra
         {
             CameraSpacePoint point = handpoints[0];
             float[][] handPoints = new float[handpoints.Count][];
@@ -78,9 +88,9 @@ namespace KinectControl
 
                 if (isGoodCommand(handPoints, csp))         //vizsgalja, hogy megeggyezik az adott command kezdopontjaival
                 {
-                    goodCommands.Add(goodCommands.Count, existingCommands[i]);
                     firstPoints.Add(goodCommands.Count, handpoints[0]);
                     startTime.Add(goodCommands.Count, time);
+                    goodCommands.Add(goodCommands.Count, existingCommands[i]);
                 }
             }
         }
@@ -109,15 +119,16 @@ namespace KinectControl
 
         private bool compareSpacePoints(float[] handpoint, CameraSpacePoint commandpoint)
         {
-            if (Math.Abs(handpoint[0] - commandpoint.X) < 0.05)
+
+            if (Math.Abs(handpoint[0] - commandpoint.X) > 0.1)
             {
                 return false;
             }
-            if (Math.Abs(handpoint[1] - commandpoint.Y) < 0.05)
+            if (Math.Abs(handpoint[1] - commandpoint.Y) > 0.1)
             {
                 return false;
             }
-            if (Math.Abs(handpoint[2] - commandpoint.Y) < 0.05)
+            if (Math.Abs(handpoint[2] - commandpoint.Y) > 0.1)
             {
                 return false;
             }

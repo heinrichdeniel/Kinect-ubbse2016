@@ -44,6 +44,7 @@ namespace KinectControl
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             DialogResult dialogResult = MessageBox.Show("Do you want to start working with the Kinect device?", "Are you ready?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
@@ -120,6 +121,7 @@ namespace KinectControl
 
         public void LoadCommands()
         {
+
             FileManager fileManager = FileManager.getInstance();
             keyInputs = fileManager.getAllKeyInput();
             keyButtons = new List<Button>();
@@ -180,6 +182,7 @@ namespace KinectControl
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.show();
+
         }
         public void show()
         {
@@ -230,6 +233,8 @@ namespace KinectControl
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            conn.enableRecognition = true;
+
             conn.sensor.Close();
             this.Close();
             Application.Exit();
@@ -298,6 +303,7 @@ namespace KinectControl
 
         private void Paint_Thread()
         {
+
             float pos = 0.0f;
             drawSize = 30.0f;
             CameraSpacePoint p = selectedCommand.spline(pos)[0];
@@ -378,6 +384,9 @@ namespace KinectControl
                 isWorking = true;
                 conn.startStop(isWorking);
                 button2.BackColor = Color.Green;
+
+
+
                 button2.Text = "Mouse On";
             }
         }

@@ -277,11 +277,16 @@ namespace KinectControl
                 }
             }
 
+
+            //make the coordinates relative, not absolute  
             //get the functions with spline for 3 commands
             for (int comm = 0; comm < number; ++comm)
             {
                 for (int j = 0; j < 4; j++)
                 {
+                    float avg_0_0 = commands[comm].points[0].hand[j].X; 
+                    float avg_1_0 = commands[comm].points[0].hand[j].Y;
+                    float avg_2_0 = commands[comm].points[0].hand[j].Z;
                     int n = commands[comm].points.Count;
                     x1 = new float[n];
                     y1 = new float[n];
@@ -290,9 +295,9 @@ namespace KinectControl
                     alpha = new float[n];
                     for (int i = 0; i < n; i++)
                     {
-                        x1[i] = commands[comm].points[i].hand[j].X;
-                        y1[i] = commands[comm].points[i].hand[j].Y;
-                        z1[i] = commands[comm].points[i].hand[j].Z;
+                        x1[i] = commands[comm].points[i].hand[j].X - avg_0_0;
+                        y1[i] = commands[comm].points[i].hand[j].Y - avg_1_0;
+                        z1[i] = commands[comm].points[i].hand[j].Z - avg_2_0;
                         time1[i] = commands[comm].points[i].time;
                     }
 
@@ -318,33 +323,11 @@ namespace KinectControl
             }
 
             //get x point from each command function, and calulate the average coordinates  
-            //and make them relative, not absolute  
-            float avg_0_0 = average.avg[0][0] / (float)number;
-            float avg_1_0 = average.avg[1][0] / (float)number;
-            float avg_2_0 = average.avg[2][0] / (float)number;
             for (int j = 0; j < 4 * number; j++)
             {
                 for (int i = 0; i < average.pointcount; i++)
                 {
                     average.avg[j][i] /= (float)number;
-                    if (j % 3 == 0)
-                    {
-                        average.avg[j][i] -= avg_0_0;
-                    }
-                    else
-                    {
-                        if (j % 3 == 1)
-                        {
-                            average.avg[j][i] -= avg_1_0;
-                        }
-                        else
-                        {
-                            if (j % 3 == 2)
-                            {
-                                average.avg[j][i] -= avg_2_0;
-                            }
-                        }
-                    }
                 }
             }
 

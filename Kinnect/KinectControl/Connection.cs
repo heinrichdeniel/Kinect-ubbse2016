@@ -34,6 +34,8 @@ namespace KinectControl
         MouseMovementHandler movementHandler;
         MultiSourceFrameReader myReader = null;
         private Boolean enabledKinnectImage = true;
+        private Boolean recognizing = true;
+
         KeyboardMovementAnalyzer recognizer;
         private ClickInterface commandSaved;
 
@@ -72,6 +74,20 @@ namespace KinectControl
                 }
             }
         }
+
+        public bool enableRecognition
+        {
+            get { return recognizing; }
+            set
+            {
+                if (recognizing != value)
+                {
+                    recognizing = value;
+                }
+            }
+        }
+
+
 
         public void startStop(Boolean can)
         {
@@ -206,15 +222,16 @@ namespace KinectControl
                                     }
                                 }
                             }
-                            else            //innen inditjuk a threadet a felismereshez
+                            else if (recognizing)
                             {
+                                
                                 List<CameraSpacePoint> handpoints = new List<CameraSpacePoint>();
                                 handpoints.Add(wristRight);
                                 handpoints.Add(handRight);
                                 handpoints.Add(thumbRight);
                                 handpoints.Add(handTipRight);
 
-                                recognizer.AnalyzeFrames(DateTime.Now, handpoints);
+                                recognizer.AnalyzeFrames(stopwatchTime, handpoints);
 
                             }
                             break;
