@@ -18,20 +18,24 @@ namespace KinectControl
         private Brush b;
         private int x = 0, y = 0;
         private byte action = 0;
-        private double screen = 0;
+        private double screenx = 0;
+        private double screeny = 0;
         private int refresh;
         private bool showPointer = false;
 
         public MousePointer()
         {
-            screen = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
-            if (screen > 1920)
+            screenx = Screen.PrimaryScreen.Bounds.Width;
+            screeny = Screen.PrimaryScreen.Bounds.Height;
+            if (screenx > 1920)
             {
-                screen = screen / 1920.0;
+                screenx = screenx / 1920.0;
+                screeny = screeny / 1080;
             }
             else
             {
-                screen = 1920 / screen;
+                screeny = 1080 / screeny;
+                screenx = 1920 / screenx;
             }
             new Thread(moveCursor).Start();
         }
@@ -53,8 +57,8 @@ namespace KinectControl
 
         public void setMouseLocation(int x, int y)
         {
-            this.x = (int)(x * screen);
-            this.y = (int)(y * screen);
+            this.x = (int)(x * screenx);
+            this.y = (int)(y * screenx);
         }
 
         public void pointerVisibility(bool visible)
@@ -117,7 +121,7 @@ namespace KinectControl
 
                         using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
                         {
-                            g.FillEllipse(action == 0 ? Brushes.Red : action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x * screen - 27 / 2), (int)(y * screen - 27 / 2), (int)(27 * screen), (int)(27 * screen));
+                            g.FillEllipse(action == 0 ? Brushes.Red : action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x * screenx - 27 / 2), (int)(y * screenx - 27 / 2), (int)(27 * screeny), (int)(27 * screeny));
                         }
 
                         ++refresh;

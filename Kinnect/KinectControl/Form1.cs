@@ -55,6 +55,7 @@ namespace KinectControl
                 this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 10, this.Height / 10);
                 this.pictureBox1.Size = new System.Drawing.Size(this.Width / 100 * 46, this.Height / 100 * 55);
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 20 * 3, this.Height / 100 * 55  + this.Height / 20 * 3);
+                this.button1.Size = new System.Drawing.Size(this.Width / 100 * 35, this.Height / 100 * 15);
                 this.button2.BackColor = Color.Green;
                 this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
                 this.button2.Text = "Mouse On";
