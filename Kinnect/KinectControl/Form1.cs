@@ -48,7 +48,7 @@ namespace KinectControl
             DialogResult dialogResult = MessageBox.Show("Do you want to start working with the Kinect device?", "Are you ready?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                this.TopMost = true;
+                //this.TopMost = true;
                 this.WindowState = FormWindowState.Maximized;
                 this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
                 this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - 100);

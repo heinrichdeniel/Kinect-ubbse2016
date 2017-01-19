@@ -191,6 +191,7 @@ namespace KinectControl
                                                 newCommand = new Commands(commands);
                                                 FileManager fileManager = FileManager.getInstance();
                                                 fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
+                                                selectedKeyId = 0;
                                             }
                                             else
                                             {
@@ -375,10 +376,17 @@ namespace KinectControl
 
         public void saveNewGesture()
         {
-            this.waitingForGesture = true;
-            btn.Text = "Please raise up your right hand before starting capture!";
-            btn.BackColor = Color.Red;
-            btn.Enabled = false;
+            if (selectedKeyId != 0)
+            {
+                this.waitingForGesture = true;
+                btn.Text = "Please raise up your right hand before starting capture!";
+                btn.BackColor = Color.Red;
+                btn.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Please select a command first!");
+            }
         }
     }
 
