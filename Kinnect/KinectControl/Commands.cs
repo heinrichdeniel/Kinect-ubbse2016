@@ -233,7 +233,6 @@ namespace KinectControl
         public Command standardization(Command com)
         {
             Command newCommand = new Command();
-            newCommand.points = new List<MomentInTime>();
             newCommand.points = com.points;
             newCommand.totalTime = com.totalTime;
 
@@ -253,7 +252,7 @@ namespace KinectControl
             float t = 0;
 
             //standardization of all 3 commands 
-            for (int i = 0;  i < number; i++)
+            for (int i = 0; i < number; i++)
             {
                 commands[i] = standardization(commands[i]);
                 t += commands[i].totalTime;
@@ -264,10 +263,10 @@ namespace KinectControl
             average.time = t;
             float[] x1;
             float[] y1;
-            float[] z1; 
+            float[] z1;
             float[] time1;
             float[] alpha;
-            
+
 
             for (int j = 0; j < 4 * number; j++)
             {
@@ -284,9 +283,10 @@ namespace KinectControl
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    float avg_0_0 = commands[comm].points[0].hand[j].X; 
+                    float avg_0_0 = commands[comm].points[0].hand[j].X;
                     float avg_1_0 = commands[comm].points[0].hand[j].Y;
                     float avg_2_0 = commands[comm].points[0].hand[j].Z;
+
                     int n = commands[comm].points.Count;
                     x1 = new float[n];
                     y1 = new float[n];
@@ -322,12 +322,37 @@ namespace KinectControl
                 }
             }
 
-            //get x point from each command function, and calulate the average coordinates  
+            //get x point from each command function, and calulate the average coordinates 
+            //and make the average relative
+
+            float avg_0 = average.avg[0][0] / (float)number;
+            float avg_1 = average.avg[1][0] / (float)number;
+            float avg_2 = average.avg[2][0] / (float)number;
+
             for (int j = 0; j < 4 * number; j++)
             {
                 for (int i = 0; i < average.pointcount; i++)
                 {
                     average.avg[j][i] /= (float)number;
+                    if (j % 3 == 0)
+                    {
+                        average.avg[j][i] -= avg_0;
+                    }
+                    else
+                    {
+                        if (j % 3 == 1)
+                        {
+                            average.avg[j][i] -= avg_1;
+                        }
+                        else
+                        {
+                            if (j % 3 == 2)
+                            {
+                                average.avg[j][i] -= avg_2;
+                            }
+                        }
+                    }
+
                 }
             }
 
