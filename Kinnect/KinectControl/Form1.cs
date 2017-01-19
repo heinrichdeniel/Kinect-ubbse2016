@@ -53,8 +53,8 @@ namespace KinectControl
                 this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
                 this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - this.Height / 10);
                 this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 10, this.Height / 10);
-                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 100 * 46, this.Height / 100 * 55);// this.Width / 3 * 2, this.Height / 3 * 2);
-                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - this.Width / 100 * 13, this.Height / 3 * 2 + this.Height / 100);
+                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 100 * 46, this.Height / 100 * 55);
+                this.button1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 20 * 3, this.Height / 100 * 55  + this.Height / 20 * 3);
                 this.button2.BackColor = Color.Green;
                 this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
                 this.button2.Text = "Mouse On";
@@ -147,7 +147,7 @@ namespace KinectControl
                 Button newButton = new Button();
                 newButton.Text = keyInput.description + "\n\n" + keyInput.descriptionLong;
                 int y = keyCommandsPanel.Height / 10;
-                newButton.Size = new System.Drawing.Size(keyCommandsPanel.Width, y);
+                newButton.Size = new System.Drawing.Size(this.Width / 3 - this.Width / 100 * 2, y);
                 newButton.Tag = i;
                 newButton.Click += new EventHandler(this.ButtonClicked);
                 newButton.BackColor = selectedKeys.Exists(element => element == keyInput.id) ? Color.LightBlue : default(Color);
