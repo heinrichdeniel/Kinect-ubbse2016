@@ -45,17 +45,16 @@ namespace KinectControl
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             DialogResult dialogResult = MessageBox.Show("Do you want to start working with the Kinect device?", "Are you ready?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 //this.TopMost = true;
                 this.WindowState = FormWindowState.Maximized;
                 this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
-                this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - 100);
-                this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + 200, 100);
-                this.pictureBox1.Size = new System.Drawing.Size(900, 600);// this.Width / 3 * 2, this.Height / 3 * 2);
-                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 250, this.Height / 3 * 2 + 100);
+                this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - this.Height / 10);
+                this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 10, this.Height / 10);
+                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 100 * 46, this.Height / 100 * 55);// this.Width / 3 * 2, this.Height / 3 * 2);
+                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - this.Width / 100 * 13, this.Height / 3 * 2 + this.Height / 100);
                 this.button2.BackColor = Color.Green;
                 this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
                 this.button2.Text = "Mouse On";
