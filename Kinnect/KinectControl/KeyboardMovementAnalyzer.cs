@@ -42,14 +42,16 @@ namespace KinectControl
                     handPoints[j][2] = handpoints[j].Z - firstPoints.ElementAt(i).Value.Z;
                 }
 
-                CameraSpacePoint[] csp = goodCommands.ElementAt(i).Value.spline(time-startTime.ElementAt(i).Value);
-                
+                CameraSpacePoint[] csp = goodCommands.ElementAt(i).Value.spline((float)(time-startTime.ElementAt(i).Value)/ (float)goodCommands[i].time );
+                Log.log.Info("time:   " + (float)(time - startTime.ElementAt(i).Value) / (float)goodCommands[i].time);
+
                 if (goodCommands[i].time < time - startTime.ElementAt(i).Value)
                 {
-                    FileManager.getInstance().getKeyInput(goodCommands[i].keyID).execute();
-                    goodCommands.Clear();
-                    startTime.Clear();
-                    firstPoints.Clear();
+                        FileManager.getInstance().getKeyInput(goodCommands[i].keyID).execute();
+                        goodCommands.Clear();
+                        startTime.Clear();
+                        firstPoints.Clear();
+               
                 }
                 else if (!isGoodCommand(handPoints, csp))         //vizsgalja, hogy megeggyezik az adott command kezdopontjaival
                 {
@@ -73,6 +75,11 @@ namespace KinectControl
         private void compareWithExistingCommands(List<CameraSpacePoint> handpoints, long time)   //megvizsgalja, hogy a letezo commandok kozul melyik kezdodik ujra
         {
             CameraSpacePoint point = handpoints[0];
+
+            /*Log.log.Info("X: " + handpoints[0].X);
+            Log.log.Info("Y: " + handpoints[0].Y);
+            Log.log.Info("Z: " + handpoints[0].Z);*/
+
             float[][] handPoints = new float[handpoints.Count][];
             for (int i = 0; i < handpoints.Count; i++)
             {
@@ -80,14 +87,17 @@ namespace KinectControl
                 handPoints[i][0] = handpoints[i].X - point.X;
                 handPoints[i][1] = handpoints[i].Y - point.Y;
                 handPoints[i][2] = handpoints[i].Z - point.Z;
+
             }
 
             for (int i = 0; i < existingCommands.Count; i++)
             {
                 CameraSpacePoint[] csp = existingCommands[i].spline(0.0f);
 
+
                 if (isGoodCommand(handPoints, csp))         //vizsgalja, hogy megeggyezik az adott command kezdopontjaival
                 {
+
                     firstPoints.Add(goodCommands.Count, handpoints[0]);
                     startTime.Add(goodCommands.Count, time);
                     goodCommands.Add(goodCommands.Count, existingCommands[i]);
@@ -120,15 +130,16 @@ namespace KinectControl
         private bool compareSpacePoints(float[] handpoint, CameraSpacePoint commandpoint)
         {
 
-            if (Math.Abs(handpoint[0] - commandpoint.X) > 0.1)
+
+            if (Math.Abs(handpoint[0] - commandpoint.X) > 0.05)
             {
                 return false;
             }
-            if (Math.Abs(handpoint[1] - commandpoint.Y) > 0.1)
+            if (Math.Abs(handpoint[1] - commandpoint.Y) > 0.05)
             {
                 return false;
             }
-            if (Math.Abs(handpoint[2] - commandpoint.Y) > 0.1)
+            if (Math.Abs(handpoint[2] - commandpoint.Z) > 0.05)
             {
                 return false;
             }
