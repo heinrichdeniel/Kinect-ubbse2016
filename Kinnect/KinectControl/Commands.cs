@@ -233,7 +233,6 @@ namespace KinectControl
         public Command standardization(Command com)
         {
             Command newCommand = new Command();
-            newCommand.points = new List<MomentInTime>();
             newCommand.points = com.points;
             newCommand.totalTime = com.totalTime;
 
@@ -287,6 +286,7 @@ namespace KinectControl
                     float avg_0_0 = commands[comm].points[0].hand[j].X; 
                     float avg_1_0 = commands[comm].points[0].hand[j].Y;
                     float avg_2_0 = commands[comm].points[0].hand[j].Z;
+
                     int n = commands[comm].points.Count;
                     x1 = new float[n];
                     y1 = new float[n];
@@ -322,12 +322,35 @@ namespace KinectControl
                 }
             }
 
-            //get x point from each command function, and calulate the average coordinates  
+            //get x point from each command function, and calulate the average coordinates 
+            //and make the average relative
+
+            float avg_0 = average.avg[0][0] / (float)number;
+            float avg_1 = average.avg[1][0] / (float)number;
+            float avg_2 = average.avg[2][0] / (float)number;
+
+
             for (int j = 0; j < 4 * number; j++)
             {
                 for (int i = 0; i < average.pointcount; i++)
                 {
                     average.avg[j][i] /= (float)number;
+                    if (j % 3 == 0)
+                    {
+                        average.avg[j][i] -= avg_0;
+                    }
+                    else
+                    {
+                        if (j % 3 == 1)
+                        {
+                            average.avg[j][i] -= avg_1;
+                        }
+                        else
+                        {
+                            average.avg[j][i] -= avg_2;
+                        }
+                    }
+
                 }
             }
 
@@ -339,5 +362,89 @@ namespace KinectControl
 
             return average;
         }
+
+        public void test()
+        {
+            /*float a = 1.24f;
+            int n = 40;
+            Random rnd = new Random();
+            Commands comms = new Commands();
+            List<MomentInTime> p;
+            for (int i = 0; i < 3; i++)
+            {
+                Command com = new Command();
+                com.totalTime = a + 0.01f;
+                p = new List<MomentInTime>();
+                float[] prev = new float[4];
+                for (int j = 0; j < 4; j++)
+                {
+                    prev[j] = 0;
+                }
+
+                for (int j = 0; j < n + i * 4; j++)
+                {
+                    MomentInTime mit = new MomentInTime();
+
+                    for (int t = 0; t < 4; t++)
+                    {
+                        float something = (((float)rnd.NextDouble()) / 100f);
+                        mit.hand[t].X = prev[t] + something;
+                        prev[t] = mit.hand[t].X;
+                        mit.hand[t].Y = 0f + ((float)(rnd.NextDouble() * 2.0 - 1.0) / 1000f);
+                        mit.hand[t].Z = 0f + ((float)(rnd.NextDouble() * 2.0 - 1.0) / 1000f);
+                    }
+                    mit.time = (com.totalTime / (n + i * 4)) * j;
+                    p.Add(mit);
+                }
+                com.points = p;
+                comms.setCommandByIndex(i, com);
+            }
+            Average average = new Average();
+            average = comms.averageCommand(2);
+
+            Debug.Write("Time: ");
+            for (int j = 0; j < average.pointcount; j++)
+            {
+                Debug.Write(average.timePointCount[j]);
+                Debug.Write(", ");
+            }
+            Debug.Write("\n\n");
+            for (int i = 0; i < 12; i++)
+            {
+                Debug.Write(i);
+                Debug.Write(": ");
+                for (int j = 0; j < average.pointcount; j++)
+                {
+                    Debug.Write(average.avg[i][j]);
+                    Debug.Write(", ");
+                }
+                Debug.Write("\n\n");
+            }*/
+
+            float[] x = { 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f };
+            float[] y = { 0.2f, 0.9f, 1.3f, 2.5f, 0.7f, 3.4f, 1.6f, 1.5f, 0.01f, 1.4f };
+            //float[] y = { 1f, 4f, 9f, 16f, 25f, 36f, 49f, 64f, 81f, 100f };
+            int n = 10;
+            Spline s = new Spline(n);
+            s.set(y, x, n);
+            s.calculateAlpha();
+            float a = s.calculateRes(2.5f);
+            Debug.Write(a+"\n\n");
+
+            a = s.calculateRes(3.6f);
+            Debug.Write(a + "\n\n");
+
+            a = s.calculateRes(7.89f);
+            Debug.Write(a + "\n\n");
+
+            a = s.calculateRes(3f);
+            Debug.Write(a + "\n\n");
+
+        }
+
+
+
+
+
     }
 }

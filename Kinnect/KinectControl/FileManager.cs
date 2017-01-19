@@ -432,6 +432,7 @@ namespace KinectControl
           //Read a command from the xml file
           public Commands readCommand()
           {
+
               Commands command = new Commands();
               XmlNodeList xmlcommands = kinnectXMLCommand.GetElementsByTagName("commands");
               if (xmlcommands.Count > 0)
@@ -445,21 +446,22 @@ namespace KinectControl
                     foreach (XmlNode xmlcmd in xmlcommand.SelectNodes("command"))
                     {
                         Commands.Command ccmd = new Commands.Command();
-                        ccmd.totalTime = Int32.Parse(xmlcmd.SelectSingleNode("total_time").InnerText);
+                        ccmd.totalTime = float.Parse(xmlcmd.SelectSingleNode("total_time").InnerText);
                         List<Commands.MomentInTime> cmoments = new List<Commands.MomentInTime>();
                         
-                        foreach(XmlNode xmlmoments in xmlcmd.SelectSingleNode("moments").SelectNodes("moments"))
+                        foreach(XmlNode xmlmoments in xmlcmd.SelectSingleNode("moments").SelectNodes("moment"))
                         {
                             Commands.MomentInTime cmoment = new Commands.MomentInTime();
-                            cmoment.time = Int32.Parse(xmlmoments.SelectSingleNode("time").InnerText);
+                            cmoment.time = float.Parse(xmlmoments.SelectSingleNode("time").InnerText);
                             CameraSpacePoint[] chand = new CameraSpacePoint[4];
                             int k = 0;
                             foreach(XmlNode xmlpoint in xmlmoments.SelectSingleNode("points").SelectNodes("point"))
                             {
                                 CameraSpacePoint chandpoint = new CameraSpacePoint();
-                                chandpoint.X = Int32.Parse(xmlpoint.SelectSingleNode("x").InnerText);
-                                chandpoint.Z = Int32.Parse(xmlpoint.SelectSingleNode("z").InnerText);
-                                chandpoint.Y = Int32.Parse(xmlpoint.SelectSingleNode("y").InnerText);
+                                Log.log.Info(xmlpoint.SelectSingleNode("x").InnerText);
+                                chandpoint.X = float.Parse(xmlpoint.SelectSingleNode("x").InnerText);
+                                chandpoint.Z = float.Parse(xmlpoint.SelectSingleNode("z").InnerText);
+                                chandpoint.Y = float.Parse(xmlpoint.SelectSingleNode("y").InnerText);
                                 chand[k] = chandpoint;
                                 ++k;
                             }
