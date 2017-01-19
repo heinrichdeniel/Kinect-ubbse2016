@@ -199,7 +199,7 @@ namespace KinectControl
                                 wasRightGrip = false;
                             }
                         }
-                        else if (body.HandRightState == HandState.Open)
+                        if (body.HandRightState == HandState.Open)
                         {
                             if (wasLeftGrip)
                             {
