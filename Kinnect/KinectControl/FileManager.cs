@@ -18,6 +18,23 @@ namespace KinectControl
         private String xmlKeyCommandFileName = "KeyCommands.xml"; //this xml document contains all data about saved movements.
         private String xmlKinectMovementFileName = "KinectCommands.xml"; //this xml document contains windows key combination commands.
 
+        /// 
+        /// 
+        /// 
+        /// EZEKEt TOROLNI!!!
+        /// 
+        /// 
+        private String xmlKinectDalmaCommandFileName = "KinectCommand.xml";
+        private XmlDocument kinnectXMLCommand;
+        ///
+        /// 
+        /// 
+        /// 
+        /// EDDIG!!!!
+        /// 
+        /// 
+
+
         private static FileManager INSTANCE;
 
         public static FileManager getInstance()
@@ -41,6 +58,25 @@ namespace KinectControl
             {
                 Console.WriteLine(xmlKeyCommandFileName + " not found");
             }
+
+            /// 
+            /// 
+            /// TORLNI
+            /// 
+            
+            kinnectXMLCommand = new XmlDocument();
+            try
+            {
+                kinnectXMLCommand.Load(xmlKinectDalmaCommandFileName);
+            }
+            catch (System.IO.FileNotFoundException e)
+            {
+                Console.WriteLine(xmlKinectDalmaCommandFileName+ " not found");
+            }
+            /// 
+            /// EDDIG
+            /// 
+            /// 
             fileExist(xmlKinectMovementFileName, "movements");
             kinnectXMLCommands = new XmlDocument();
             try {
@@ -86,8 +122,8 @@ namespace KinectControl
             }
             movement.AppendChild(id);
             movement.AppendChild(pointCount);
-            movement.AppendChild(timePoints);
             movement.AppendChild(time);
+            movement.AppendChild(timePoints);
             movement.AppendChild(avg);
 
             kinnectXMLCommands.DocumentElement.AppendChild(movement);
@@ -257,7 +293,26 @@ namespace KinectControl
             
             return commands;
         }
+        public bool saveCommand(Commands.Average avarage)
+        {
 
+            XmlNodeList movements = kinnectXMLCommands.GetElementsByTagName("command");
+            if (movements.Count > 0)
+            {
+                foreach (XmlNode movement in movements)
+                {
+                    if (Int32.Parse(movement.SelectSingleNode("id").InnerText) == avarage.keyID)
+                    {
+                        updateCommand(avarage);
+                        return true;
+                    }
+                }
+                writeCommand(avarage);
+                return false;
+            }
+            return false;
+
+        }
         //check the file (filename) existence
         //and if the file does not exist, create the file
         private void fileExist(String filename, String startingTag)
@@ -316,5 +371,114 @@ namespace KinectControl
             }
             return keyList;
         }
+
+        ///
+        ///
+        ///
+        ///
+        ///////////////////////////////////////////////////
+        ///                                            ///
+        ///          DALMANAK TESZTELNI               ///
+        ///   !!!!!!!A VEGSO KODBOL TOROLNI!!!!!!!   ///
+        ///                                         ///
+        //////////////////////////////////////////////
+        /// 
+        /// 
+        /// 
+
+           //Write a command into the xml file
+          public void writeCommand(Commands command)
+          {
+            XmlElement commands = kinnectXMLCommand.CreateElement("commands");
+            foreach(Commands.Command cmd in command.commands){
+                XmlElement xmlcommand = kinnectXMLCommand.CreateElement("command");
+                XmlElement totalTime = kinnectXMLCommand.CreateElement("total_time");
+                totalTime.InnerText = cmd.totalTime.ToString();
+                XmlElement moments = kinnectXMLCommand.CreateElement("moments");
+                foreach (Commands.MomentInTime moment in cmd.points)
+                {
+                    XmlElement cmoment = kinnectXMLCommand.CreateElement("moment");
+                    XmlElement time = kinnectXMLCommand.CreateElement("time");
+                    time.InnerText = moment.time.ToString();
+
+                    XmlElement points = kinnectXMLCommand.CreateElement("points");
+                    foreach (CameraSpacePoint pair in moment.hand)
+                    {
+                        XmlElement point = kinnectXMLCommand.CreateElement("point");
+                        XmlElement x = kinnectXMLCommand.CreateElement("x");
+                        XmlElement y = kinnectXMLCommand.CreateElement("y");
+                        XmlElement z = kinnectXMLCommand.CreateElement("z");
+                        x.InnerText = pair.X.ToString();
+                        y.InnerText = pair.Y.ToString();
+                        z.InnerText = pair.Z.ToString();
+                        point.AppendChild(x);
+                        point.AppendChild(y);
+                        point.AppendChild(z);
+                        points.AppendChild(point);
+                    }
+                    cmoment.AppendChild(time);
+                    cmoment.AppendChild(points);
+                    moments.AppendChild(cmoment);
+                }
+                xmlcommand.AppendChild(totalTime);
+                xmlcommand.AppendChild(moments);
+                commands.AppendChild(xmlcommand);
+            }
+              
+              kinnectXMLCommand.DocumentElement.AppendChild(commands);
+              kinnectXMLCommand.Save(xmlKinectDalmaCommandFileName);
+          }
+  
+          //Read a command from the xml file
+          public Commands readCommand()
+          {
+              Commands command = new Commands();
+              XmlNodeList xmlcommands = kinnectXMLCommand.GetElementsByTagName("commands");
+              if (xmlcommands.Count > 0)
+              {
+                  
+                  foreach (XmlNode xmlcommand in xmlcommands)
+                  {
+
+                    Commands.Command[] cmd = new Commands.Command[3];
+                    int i = 0;
+                    foreach (XmlNode xmlcmd in xmlcommand.SelectNodes("command"))
+                    {
+                        Commands.Command ccmd = new Commands.Command();
+                        ccmd.totalTime = Int32.Parse(xmlcmd.SelectSingleNode("total_time").InnerText);
+                        List<Commands.MomentInTime> cmoments = new List<Commands.MomentInTime>();
+                        
+                        foreach(XmlNode xmlmoments in xmlcmd.SelectSingleNode("moments").SelectNodes("moments"))
+                        {
+                            Commands.MomentInTime cmoment = new Commands.MomentInTime();
+                            cmoment.time = Int32.Parse(xmlmoments.SelectSingleNode("time").InnerText);
+                            CameraSpacePoint[] chand = new CameraSpacePoint[4];
+                            int k = 0;
+                            foreach(XmlNode xmlpoint in xmlmoments.SelectSingleNode("points").SelectNodes("point"))
+                            {
+                                CameraSpacePoint chandpoint = new CameraSpacePoint();
+                                chandpoint.X = Int32.Parse(xmlpoint.SelectSingleNode("x").InnerText);
+                                chandpoint.Z = Int32.Parse(xmlpoint.SelectSingleNode("z").InnerText);
+                                chandpoint.Y = Int32.Parse(xmlpoint.SelectSingleNode("y").InnerText);
+                                chand[k] = chandpoint;
+                                ++k;
+                            }
+                            cmoment.hand = chand;
+                            cmoments.Add(cmoment);
+                        }
+
+
+                        ccmd.points = cmoments;
+                        cmd[i] = ccmd;
+                        ++i;
+                    }
+                    command.commands = cmd;
+                   
+                  }
+                return command;
+            }
+            
+              return command;
+          }
     }
 }

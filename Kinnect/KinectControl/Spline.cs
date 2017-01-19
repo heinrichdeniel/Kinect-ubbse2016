@@ -18,6 +18,7 @@ namespace KinectControl
         public Spline(int n)
         {
             alpha = new float[n];
+            this.n = n;
         }
         public Spline(float[] x1, float[] time1, int n1)
         {
@@ -56,6 +57,7 @@ namespace KinectControl
             {
                 for (int j = 0; j < n; j++)
                 {
+                   
                     kernel[i][j] = kernelK2(time[i], time[j]);
                     //Log.log.Info(kernel[i][j]);
                 }
@@ -97,10 +99,12 @@ namespace KinectControl
             float res = 0;
             for (int i=0; i < n; i++)
             {
-                       // Log.log.Info(kernelK2(t, time[i]) + "alpha:" + alpha[i]);
+                        // Log.log.Info(kernelK2(t, time[i]) + "alpha:" + alpha[i]);
                 res += alpha[i] * kernelK2(t, time[i]);
             }
+
             return res;
+            
         }
 
     }
