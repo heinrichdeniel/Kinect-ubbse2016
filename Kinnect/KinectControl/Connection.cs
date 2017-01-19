@@ -185,13 +185,16 @@ namespace KinectControl
                                             if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
                                             {
                                                 commandSaved.CommandSaved(selectedKeyId);
+                                                selectedKeyId = 0;
+                                                commandNumber = 0;
+                                                frameWhileNotMoved = 0;
+                                                handpointsnumber = 0;
                                                 btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
                                                 btn.BackColor = Color.Green;
                                                 btn.Enabled = true;
                                                 newCommand = new Commands(commands);
                                                 FileManager fileManager = FileManager.getInstance();
                                                 fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
-                                                selectedKeyId = 0;
                                             }
                                             else
                                             {
