@@ -24,6 +24,7 @@ namespace KinectControl
         private float drawSize = 50.0f;
         private bool drawed = true;
         private int buttonClicked = 0;
+        private Thread connectionThread;
 
         public class CommandSaved : ClickInterface
         {
@@ -375,6 +376,23 @@ namespace KinectControl
             }
         }
 
+        private void Form1_Resize(object sender, System.EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                if (conn != null)
+                {
+                    conn.kinnectImage = false;
+                }
+            }
+            else if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Normal)
+            {
+                if (conn != null)
+                {
+                    conn.kinnectImage = true;
+                }
+            }
+        }
         private void button2_Click_1(object sender, EventArgs e)
         {
 

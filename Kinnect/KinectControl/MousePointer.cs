@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -22,6 +23,7 @@ namespace KinectControl
         private double screeny = 0;
         private int refresh;
         private bool showPointer = false;
+        private bool isWindows10 = true;
 
         public MousePointer()
         {
@@ -37,6 +39,7 @@ namespace KinectControl
                 screeny = 1080 / screeny;
                 screenx = 1920 / screenx;
             }
+            isWindows10 = IsWindows10();
             new Thread(moveCursor).Start();
         }
 
@@ -121,7 +124,14 @@ namespace KinectControl
 
                         using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
                         {
-                            g.FillEllipse(action == 0 ? Brushes.Red : action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x * screenx - 27 / 2), (int)(y * screenx - 27 / 2), (int)(27 * screeny), (int)(27 * screeny));
+                            if (isWindows10)
+                            {
+                                g.FillEllipse(action == 0 ? Brushes.Red : action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x * screenx - 27 / 2), (int)(y * screenx - 27 / 2), (int)(27 * screeny), (int)(27 * screeny));
+                            } else
+                            {
+                                g.FillEllipse(action == 0 ? Brushes.Red : action == 1 ? Brushes.LawnGreen : Brushes.Blue, (int)(x - 27 / 2), (int)(y - 27 / 2), (int)(27 * screeny), (int)(27 * screeny));
+
+                            }
                         }
 
                         ++refresh;
@@ -141,6 +151,14 @@ namespace KinectControl
                 }
                 Thread.Sleep(50);
             }
+        }
+        private bool IsWindows10()
+        {
+            var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+
+            string productName = (string)reg.GetValue("ProductName");
+
+            return productName.StartsWith("Windows 10");
         }
     }
 }

@@ -57,6 +57,7 @@ namespace KinectControl
             ((System.ComponentModel.ISupportInitialize)(this.slider_cursorSmoothing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_mouseSensibility)).BeginInit();
             this.SuspendLayout();
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             // 
             // Service
             // 
