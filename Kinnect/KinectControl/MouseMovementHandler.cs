@@ -17,7 +17,7 @@ namespace KinectControl
         public float cursorSmoothing = CURSOR_SMOOTHING;
 
         // Default values
-        public const float MOUSE_SENSITIVITY = 3.5f;
+        public const float MOUSE_SENSITIVITY = 2.5f;
         public const float CURSOR_SMOOTHING = 0.2f;
 
         private float kinectLastPositionY = 0;
