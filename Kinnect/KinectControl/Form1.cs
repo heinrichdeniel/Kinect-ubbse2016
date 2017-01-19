@@ -23,6 +23,7 @@ namespace KinectControl
         private Thread drawCountThread;
         private float drawSize = 50.0f;
         private bool drawed = true;
+        private int buttonClicked = 0;
 
         public class CommandSaved : ClickInterface
         {
@@ -58,7 +59,7 @@ namespace KinectControl
                 this.button2.BackColor = Color.Green;
                 this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
                 this.button2.Text = "Mouse On";
-                this.isWorking = false;
+                this.isWorking = true;
                 this.showToolStripMenuItem.Text = "Stop";
                 this.conn.startStop(isWorking);
                 this.conn.sensor.Open();
@@ -94,11 +95,19 @@ namespace KinectControl
                     conn.setSelectedKeyId(selectedKeyCommand);
                     if (selectedKeys.Exists(element => element == keyInput.id))
                     {
-
+                        ++buttonClicked;
+                        if(buttonClicked > 100)
+                        {
+                            buttonClicked = 0;
+                        }
                         selectedCommand = fileManager.readCommand(keyInput.id);
                         if (selectedCommand.keyID != -1)
                         {
                             conn.kinnectImage = false;
+                            if(drawCountThread != null)
+                            {
+                                drawCountThread.Abort();
+                            }
                             drawCountThread = new Thread(Paint_Thread);
                             drawCountThread.Start();
                             pictureBox1.Refresh();
@@ -307,7 +316,7 @@ namespace KinectControl
             float pos = 0.0f;
             drawSize = 30.0f;
             CameraSpacePoint p = selectedCommand.spline(pos)[0];
-            int keyInputID = selectedCommand.keyID;
+            int button = buttonClicked;
             while (pos < selectedCommand.time)
             {
 
@@ -331,7 +340,7 @@ namespace KinectControl
                     }
                     p = point[0];
                     Thread.Sleep(33);
-                    if (selectedCommand.keyID != keyInputID)
+                    if (button != buttonClicked)
                     {
                         break;
                     }
@@ -356,7 +365,7 @@ namespace KinectControl
             {
                 if (!conn.kinnectImage)
                 {
-
+                    Log.log.Info("POS: " + point[0].X);
                     // Create a local version of the graphics object for the PictureBox.
                     Graphics g = e.Graphics;
                     g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 900, 600));

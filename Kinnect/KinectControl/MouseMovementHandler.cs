@@ -108,7 +108,7 @@ namespace KinectControl
                             {
                                 diffx = -diffx;
                             }
-                            if (diffx > 0.1)
+                            if (diffx > 0.6)
                             {
                                 diffx = 0.0f;
                             }
@@ -126,33 +126,33 @@ namespace KinectControl
                             if (x < kinectLastPositionX)
                             {
                                 mousePositionX -= diffx;
-                                if (mousePositionX < -1.0f)
+                                if (mousePositionX < -0.60f)
                                 {
-                                    mousePositionX = -1.0f;
+                                    mousePositionX = -0.60f;
                                 }
                             }
                             else if (x > kinectLastPositionX)
                             {
                                 mousePositionX += diffx;
-                                if (mousePositionX > 1.0f)
+                                if (mousePositionX > 0.60f)
                                 {
-                                    mousePositionX = 1.0f;
+                                    mousePositionX = 0.60f;
                                 }
                             }
                             if (y < kinectLastPositionY)
                             {
                                 mousePositionY -= diffy;
-                                if (mousePositionY < -1.0f)
+                                if (mousePositionY < -0.60f)
                                 {
-                                    mousePositionY = -1.0f;
+                                    mousePositionY = -0.60f;
                                 }
                             }
                             else if (y > kinectLastPositionY)
                             {
                                 mousePositionY += diffy;
-                                if (mousePositionY > 1.0f)
+                                if (mousePositionY > 0.60f)
                                 {
-                                    mousePositionY = 1.0f;
+                                    mousePositionY = 0.60f;
                                 }
                             }
                             Point curPos = MouseControl.GetCursorPosition();
@@ -180,7 +180,7 @@ namespace KinectControl
 
                             }
                         }
-                        if(body.HandRightState == HandState.Lasso && !wasLeftGrip)
+                        if (handLeft.Y > spineBase.Y && body.HandRightState == HandState.Lasso && !wasLeftGrip)
                         {
                             if (!wasRightGrip)
                             {
@@ -189,6 +189,14 @@ namespace KinectControl
                                 MouseControl.MouseRightDown();
                                 wasRightGrip = true;
 
+                            }
+                        } else if( handLeft.Y < spineBase.Y)
+                        {
+                            if (wasRightGrip)
+                            {
+                                pointer.setRightClick(false);
+                                MouseControl.MouseRightUp();
+                                wasRightGrip = false;
                             }
                         }
                         else if (body.HandRightState == HandState.Open)
