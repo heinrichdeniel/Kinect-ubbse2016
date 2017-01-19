@@ -351,10 +351,10 @@ namespace KinectControl
                     bitmap.UnlockBits(bitmapData);
                     bitmap.RotateFlip(RotateFlipType.RotateNoneFlipNone);
 
-                    Bitmap b = new Bitmap(800, 600);
+                    Bitmap b = new Bitmap(pictureBox1.Width, pictureBox1.Height);
                     using (Graphics g = Graphics.FromImage((Image)b))
                     {
-                        g.DrawImage(bitmap, 0, 0, 800, 600);
+                        g.DrawImage(bitmap, 0, 0, pictureBox1.Width, pictureBox1.Height);
                     }
                     pictureBox1.Image = b;
 
