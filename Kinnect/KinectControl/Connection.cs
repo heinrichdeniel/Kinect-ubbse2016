@@ -232,7 +232,7 @@ namespace KinectControl
                                 handpoints.Add(thumbRight);
                                 handpoints.Add(handTipRight);
 
-                                recognizer.AnalyzeFrames(stopwatchTime, handpoints);
+                              //  recognizer.AnalyzeFrames(stopwatchTime, handpoints);
 
                             }
                             break;
