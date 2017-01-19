@@ -1,6 +1,7 @@
 ﻿using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace KinectControl
 
         public static FileManager getInstance()
         {
-            if(INSTANCE == null)
+            if (INSTANCE == null)
             {
                 INSTANCE = new FileManager();
             }
@@ -63,7 +64,7 @@ namespace KinectControl
             /// 
             /// TORLNI
             /// 
-            
+
             kinnectXMLCommand = new XmlDocument();
             try
             {
@@ -71,7 +72,7 @@ namespace KinectControl
             }
             catch (System.IO.FileNotFoundException e)
             {
-                Console.WriteLine(xmlKinectDalmaCommandFileName+ " not found");
+                Console.WriteLine(xmlKinectDalmaCommandFileName + " not found");
             }
             /// 
             /// EDDIG
@@ -79,9 +80,11 @@ namespace KinectControl
             /// 
             fileExist(xmlKinectMovementFileName, "movements");
             kinnectXMLCommands = new XmlDocument();
-            try {
+            try
+            {
                 kinnectXMLCommands.Load(xmlKinectMovementFileName);
-            } catch (FileNotFoundException e)
+            }
+            catch (FileNotFoundException e)
             {
                 Console.WriteLine(e.ToString());
             }
@@ -110,7 +113,7 @@ namespace KinectControl
 
             XmlElement avg = kinnectXMLCommands.CreateElement("avg");
             int i = 0;
-            foreach (float []ctime in average.avg)
+            foreach (float[] ctime in average.avg)
             {
                 foreach (float cctime in ctime)
                 {
@@ -144,12 +147,12 @@ namespace KinectControl
 
                         command.keyID = keyInputID;
                         command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
-                        command.time = float.Parse(movement.SelectSingleNode("time").InnerText);
+                        command.time = float.Parse(movement.SelectSingleNode("time").InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                         float[] timePoints = new float[60];
                         int i = 0;
                         foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
                         {
-                            timePoints[i] = float.Parse(moment.InnerText);
+                            timePoints[i] = float.Parse(moment.InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                             ++i;
                         }
                         command.timePointCount = timePoints;
@@ -169,7 +172,7 @@ namespace KinectControl
                             {
                                 avg[i] = new float[command.pointcount];
                             }
-                            avg[i][j] = float.Parse(moment.InnerText);
+                            avg[i][j] = float.Parse(moment.InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                             ++j;
                         }
                         command.avg = avg;
@@ -205,7 +208,7 @@ namespace KinectControl
                         }
 
                         movement.SelectSingleNode("avg").RemoveAll();
-                        foreach (float []moment in command.avg)
+                        foreach (float[] moment in command.avg)
                         {
                             foreach (float cmoment in moment)
                             {
@@ -256,13 +259,13 @@ namespace KinectControl
 
                     Commands.Average command = new Commands.Average();
                     command.keyID = Int32.Parse(movement.SelectSingleNode("id").InnerText);
-                    command.time = float.Parse(movement.SelectSingleNode("time").InnerText);
+                    command.time = float.Parse(movement.SelectSingleNode("time").InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                     command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
                     float[] timePoints = new float[command.pointcount];
                     int i = 0;
                     foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
                     {
-                        timePoints[i] = float.Parse(moment.InnerText);
+                        timePoints[i] = float.Parse(moment.InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                         ++i;
                     }
                     command.timePointCount = timePoints;
@@ -272,7 +275,7 @@ namespace KinectControl
                     int j = 0;
                     foreach (XmlNode moment in movement.SelectSingleNode("avg").SelectNodes("avg_point"))
                     {
-                       
+
                         if (j >= command.pointcount)
                         {
                             j = 0;
@@ -283,14 +286,14 @@ namespace KinectControl
                         {
                             avg[i] = new float[command.pointcount];
                         }
-                        avg[i][j] = float.Parse(moment.InnerText);
+                        avg[i][j] = float.Parse(moment.InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                         ++j;
                     }
                     command.avg = avg;
                     commands.Add(command);
                 }
             }
-            
+
             return commands;
         }
         public bool saveCommand(Commands.Average avarage)
@@ -319,14 +322,16 @@ namespace KinectControl
         {
             if (!File.Exists(Environment.CurrentDirectory + "\\" + filename))
             {
-                try {
+                try
+                {
                     XmlDocument doc = new XmlDocument();
                     XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
                     XmlElement root = doc.DocumentElement;
                     doc.InsertBefore(xmlDeclaration, root);
                     doc.AppendChild(doc.CreateElement(string.Empty, startingTag, string.Empty));
                     doc.Save(Environment.CurrentDirectory + "\\" + filename);
-                } catch (ArgumentException e)
+                }
+                catch (ArgumentException e)
                 {
                     Console.WriteLine(filename + " not found: " + e.ToString());
                 }
@@ -386,11 +391,12 @@ namespace KinectControl
         /// 
         /// 
 
-           //Write a command into the xml file
-          public void writeCommand(Commands command)
-          {
+        //Write a command into the xml file
+        public void writeCommand(Commands command)
+        {
             XmlElement commands = kinnectXMLCommand.CreateElement("commands");
-            foreach(Commands.Command cmd in command.commands){
+            foreach (Commands.Command cmd in command.commands)
+            {
                 XmlElement xmlcommand = kinnectXMLCommand.CreateElement("command");
                 XmlElement totalTime = kinnectXMLCommand.CreateElement("total_time");
                 totalTime.InnerText = cmd.totalTime.ToString();
@@ -424,44 +430,44 @@ namespace KinectControl
                 xmlcommand.AppendChild(moments);
                 commands.AppendChild(xmlcommand);
             }
-              
-              kinnectXMLCommand.DocumentElement.AppendChild(commands);
-              kinnectXMLCommand.Save(xmlKinectDalmaCommandFileName);
-          }
-  
-          //Read a command from the xml file
-          public Commands readCommand()
-          {
 
-              Commands command = new Commands();
-              XmlNodeList xmlcommands = kinnectXMLCommand.GetElementsByTagName("commands");
-              if (xmlcommands.Count > 0)
-              {
-                  
-                  foreach (XmlNode xmlcommand in xmlcommands)
-                  {
+            kinnectXMLCommand.DocumentElement.AppendChild(commands);
+            kinnectXMLCommand.Save(xmlKinectDalmaCommandFileName);
+        }
+
+        //Read a command from the xml file
+        public Commands readCommand()
+        {
+
+            Commands command = new Commands();
+            XmlNodeList xmlcommands = kinnectXMLCommand.GetElementsByTagName("commands");
+            if (xmlcommands.Count > 0)
+            {
+
+                foreach (XmlNode xmlcommand in xmlcommands)
+                {
 
                     Commands.Command[] cmd = new Commands.Command[3];
                     int i = 0;
                     foreach (XmlNode xmlcmd in xmlcommand.SelectNodes("command"))
                     {
                         Commands.Command ccmd = new Commands.Command();
-                        ccmd.totalTime = float.Parse(xmlcmd.SelectSingleNode("total_time").InnerText);
+                        ccmd.totalTime = float.Parse(xmlcmd.SelectSingleNode("total_time").InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                         List<Commands.MomentInTime> cmoments = new List<Commands.MomentInTime>();
-                        
-                        foreach(XmlNode xmlmoments in xmlcmd.SelectSingleNode("moments").SelectNodes("moment"))
+
+                        foreach (XmlNode xmlmoments in xmlcmd.SelectSingleNode("moments").SelectNodes("moment"))
                         {
                             Commands.MomentInTime cmoment = new Commands.MomentInTime();
-                            cmoment.time = float.Parse(xmlmoments.SelectSingleNode("time").InnerText);
+                            cmoment.time = float.Parse(xmlmoments.SelectSingleNode("time").InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                             CameraSpacePoint[] chand = new CameraSpacePoint[4];
                             int k = 0;
-                            foreach(XmlNode xmlpoint in xmlmoments.SelectSingleNode("points").SelectNodes("point"))
+                            foreach (XmlNode xmlpoint in xmlmoments.SelectSingleNode("points").SelectNodes("point"))
                             {
                                 CameraSpacePoint chandpoint = new CameraSpacePoint();
                                 Log.log.Info(xmlpoint.SelectSingleNode("x").InnerText);
-                                chandpoint.X = float.Parse(xmlpoint.SelectSingleNode("x").InnerText);
-                                chandpoint.Z = float.Parse(xmlpoint.SelectSingleNode("z").InnerText);
-                                chandpoint.Y = float.Parse(xmlpoint.SelectSingleNode("y").InnerText);
+                                chandpoint.X = float.Parse(xmlpoint.SelectSingleNode("x").InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
+                                chandpoint.Z = float.Parse(xmlpoint.SelectSingleNode("z").InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
+                                chandpoint.Y = float.Parse(xmlpoint.SelectSingleNode("y").InnerText, System.Globalization.NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                                 chand[k] = chandpoint;
                                 ++k;
                             }
@@ -475,12 +481,12 @@ namespace KinectControl
                         ++i;
                     }
                     command.commands = cmd;
-                   
-                  }
+
+                }
                 return command;
             }
-            
-              return command;
-          }
+
+            return command;
+        }
     }
 }
