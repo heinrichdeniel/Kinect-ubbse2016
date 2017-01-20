@@ -338,19 +338,26 @@ namespace KinectControl
             drawSize = 30.0f;
             int button = buttonClicked;
             float last = 0.0f;
+            CameraSpacePoint firstPointD = new CameraSpacePoint();
+
             foreach(KeyValuePair<float, CameraSpacePoint> point in selectedCommand.points)
             {
 
+                    
+
                 if(last == 0.0f)
                 {
+
+                    firstPointD = point.Value;
                     last = point.Key;
                 }
                 if (drawed)
                 {
-                    this.point.X = point.Value.X;
-                    this.point.Y = point.Value.Y;
-                    this.point.Z = point.Value.Z;
+                    this.point.X = point.Value.X - firstPointD.X;
+                    this.point.Y = point.Value.Y - firstPointD.Y;
+                    this.point.Z = point.Value.Z - firstPointD.Z;
                     drawed = false;
+                   
                     Thread.Sleep((int)(point.Key - last));
                     if (button != buttonClicked)
                     {
