@@ -25,6 +25,7 @@ namespace KinectControl
         private bool drawed = true;
         private int buttonClicked = 0;
         private Thread connectionThread;
+        private BackgroundWorker backgroundWorker1;
 
         public class CommandSaved : ClickInterface
         {
@@ -38,10 +39,17 @@ namespace KinectControl
         {
             fileManager = FileManager.getInstance();
             InitializeComponent();
+            backgroundWorker1 = new BackgroundWorker();
+            backgroundWorker1.RunWorkerAsync();
+            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+            //conn = new KinectControl.Connection(pictureBox1, button1);
+            //conn.setCommandSaveInterface(new CommandSaved());
+        }
 
-            conn = new KinectControl.Connection(pictureBox1, button1);
-            conn.setCommandSaveInterface(new CommandSaved());
-
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+                conn = new KinectControl.Connection(pictureBox1, button1);
+                conn.setCommandSaveInterface(new CommandSaved());
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -246,6 +254,7 @@ namespace KinectControl
             conn.enableRecognition = true;
 
             conn.sensor.Close();
+            backgroundWorker1.CancelAsync();
             this.Close();
             Application.Exit();
             System.Environment.Exit(1);
