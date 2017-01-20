@@ -17,8 +17,8 @@ namespace KinectControl
         static List<int> selectedKeys;
         Boolean isWorking;
         List<Commands.Average> commands;
-        private Commands.Average selectedCommand;
-        private CameraSpacePoint[] point = new CameraSpacePoint[4];
+        private Movement selectedCommand;
+        private CameraSpacePoint point = new CameraSpacePoint();
         private FileManager fileManager;
         private Thread drawCountThread;
         private float drawSize = 50.0f;
@@ -113,7 +113,7 @@ namespace KinectControl
                         {
                             buttonClicked = 0;
                         }
-                        selectedCommand = fileManager.readCommand(keyInput.id);
+                        selectedCommand = fileManager.readMovement(keyInput.id);
                         if (selectedCommand.keyID != -1)
                         {
                             conn.kinnectImage = false;
@@ -147,13 +147,8 @@ namespace KinectControl
             FileManager fileManager = FileManager.getInstance();
             keyInputs = fileManager.getAllKeyInput();
             keyButtons = new List<Button>();
-            selectedKeys = new List<int>();
-            commands = fileManager.readAllCommands();
+            selectedKeys = fileManager.readAllMovementsID();
             conn.setExistingCommands(commands);
-            foreach (Commands.Average cm in commands)
-            {
-                selectedKeys.Add(cm.keyID);
-            }
 
             int i = 0;
             foreach (KeyInput keyInput in keyInputs)
@@ -343,35 +338,23 @@ namespace KinectControl
 
             float pos = 0.0f;
             drawSize = 30.0f;
-            CameraSpacePoint p = selectedCommand.spline(pos)[0];
             int button = buttonClicked;
-            while (pos < selectedCommand.time)
+            float last = 0.0f;
+            foreach(KeyValuePair<float, CameraSpacePoint> point in selectedCommand.points)
             {
 
                 if (drawed)
                 {
+                    this.point.X = point.Value.X;
+                    this.point.Y = point.Value.Y;
+                    this.point.Z = point.Value.Z;
                     drawed = false;
-                    pos += 33.3333f;
-                    CameraSpacePoint[] pnt = selectedCommand.spline(pos);
-                    for (int i = 0; i < 4; ++i)
-                    {
-                        point[i] = pnt[i];
-                    }
-
-                    if (p.Z < point[0].Z)
-                    {
-                        drawSize += 0.5f;
-                    }
-                    else if (p.Z > point[0].Z)
-                    {
-                        drawSize -= 0.5f;
-                    }
-                    p = point[0];
-                    Thread.Sleep(33);
+                    Thread.Sleep((int)(point.Key - last));
                     if (button != buttonClicked)
                     {
                         break;
                     }
+                    last = point.Key;
                     pictureBox1.Invoke(new MethodInvoker(
                         delegate ()
                         {
@@ -393,11 +376,10 @@ namespace KinectControl
             {
                 if (!conn.kinnectImage)
                 {
-                    Log.log.Info("POS: " + point[0].X);
                     // Create a local version of the graphics object for the PictureBox.
                     Graphics g = e.Graphics;
                     g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 900, 600));
-                    g.FillEllipse(new SolidBrush(Color.Red), point[0].X + 400, point[0].Y + 300, drawSize, drawSize);
+                    g.FillEllipse(new SolidBrush(Color.Red), point.X + 400, point.Y + 300, drawSize, drawSize);
                     drawed = true;
                 }
             }

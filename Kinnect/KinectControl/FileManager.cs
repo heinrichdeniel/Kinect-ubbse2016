@@ -16,9 +16,10 @@ namespace KinectControl
 
         private XDocument keyCommandDoc = null;
         private XmlDocument kinnectXMLCommands;
+        private XmlDocument kinectXMLPoints;
         private String xmlKeyCommandFileName = "KeyCommands.xml"; //this xml document contains all data about saved movements.
         private String xmlKinectMovementFileName = "KinectCommands.xml"; //this xml document contains windows key combination commands.
-
+        private String xmlKinectDrawPointFileName = "KinectPoints.xml";
         /// 
         /// 
         /// 
@@ -89,6 +90,17 @@ namespace KinectControl
                 Console.WriteLine(e.ToString());
             }
 
+            fileExist(xmlKinectDrawPointFileName, "movements");
+            kinectXMLPoints= new XmlDocument();
+            try
+            {
+                kinectXMLPoints.Load(xmlKinectDrawPointFileName);
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
 
         }
 
@@ -133,6 +145,73 @@ namespace KinectControl
             kinnectXMLCommands.Save(xmlKinectMovementFileName);
         }
 
+        public void writeMovement(Movement movement)
+        {
+            XmlElement xmlmovement = kinectXMLPoints.CreateElement("movement");
+            XmlElement xmlid = kinectXMLPoints.CreateElement("id");
+            xmlid.InnerText = movement.keyID.ToString();
+            XmlElement xmlpoints = kinectXMLPoints.CreateElement("points");
+            foreach (KeyValuePair<float, CameraSpacePoint> point in movement.points)
+            {
+                XmlElement xmlpoint = kinectXMLPoints.CreateElement("point");
+                XmlElement xmltime = kinectXMLPoints.CreateElement("time");
+                XmlElement x = kinectXMLPoints.CreateElement("x");
+                XmlElement y = kinectXMLPoints.CreateElement("y");
+                XmlElement z = kinectXMLPoints.CreateElement("z");
+                xmltime.InnerText = point.Key.ToString();
+                x.InnerText = point.Value.X.ToString();
+                y.InnerText = point.Value.Y.ToString();
+                z.InnerText = point.Value.Z.ToString();
+                xmlpoint.AppendChild(xmltime);
+                xmlpoint.AppendChild(x);
+                xmlpoint.AppendChild(y);
+                xmlpoint.AppendChild(z);
+                xmlpoints.AppendChild(xmlpoint);
+            }
+
+            xmlmovement.AppendChild(xmlid);
+            xmlmovement.AppendChild(xmlpoints);
+
+            kinectXMLPoints.DocumentElement.AppendChild(xmlmovement);
+            kinectXMLPoints.Save(xmlKinectDrawPointFileName);
+        }
+
+        public Movement readMovement(int keyInputID)
+        {
+            Movement movement = new Movement();
+            XmlNodeList xmlmovements = kinectXMLPoints.GetElementsByTagName("movement");
+            foreach(XmlNode xmlmovement in xmlmovements)
+            {
+                if(Int32.Parse(xmlmovement.SelectSingleNode("id").InnerText) == keyInputID)
+                {
+                    movement.keyID = keyInputID;
+                    Dictionary<float, CameraSpacePoint> points = new Dictionary<float, CameraSpacePoint>();
+                    foreach(XmlNode point in xmlmovement.SelectSingleNode("points").SelectNodes("point"))
+                    {
+                        CameraSpacePoint p = new CameraSpacePoint();
+                        p.X = float.Parse(point.SelectSingleNode("x").InnerText.Replace(",", "."));
+                        p.Y = float.Parse(point.SelectSingleNode("y").InnerText.Replace(",", "."));
+                        p.Z = float.Parse(point.SelectSingleNode("z").InnerText.Replace(",", "."));
+                        points.Add(float.Parse(point.SelectSingleNode("time").InnerText.Replace(",", ".")), p);
+                    }
+                    movement.points = points;
+                    return movement;
+                }
+            }
+            movement.keyID = -1;
+            return movement;
+
+        }
+        public List<int> readAllMovementsID()
+        {
+            List<int> list = new List<int>();
+            XmlNodeList xmlmovements = kinectXMLPoints.GetElementsByTagName("movement");
+            foreach (XmlNode xmlmovement in xmlmovements)
+            {
+                list.Add(Int32.Parse(xmlmovement.SelectSingleNode("id").InnerText));
+            }
+            return list;
+        }
         //Read a command from the xml file
         public Commands.Average readCommand(int keyInputID)
         {
