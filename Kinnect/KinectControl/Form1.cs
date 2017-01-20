@@ -338,6 +338,7 @@ namespace KinectControl
             drawSize = 30.0f;
             int button = buttonClicked;
             float last = 0.0f;
+            float z = 0.0f;
             CameraSpacePoint firstPointD = new CameraSpacePoint();
 
             foreach(KeyValuePair<float, CameraSpacePoint> point in selectedCommand.points)
@@ -350,6 +351,7 @@ namespace KinectControl
 
                     firstPointD = point.Value;
                     last = point.Key;
+                    z = point.Value.Z;
                 }
                 if (drawed)
                 {
@@ -363,6 +365,14 @@ namespace KinectControl
                     {
                         break;
                     }
+                    if(z > point.Value.Z)
+                    {
+                        drawSize += 0.4f;
+                    } else if(z < point.Value.Z)
+                    {
+                        drawSize -= 0.4f;
+                    }
+                    z = point.Value.Z;
                     last = point.Key;
                     Log.log.Info("INFO: " + last + " " + point.Key + " " + point.Value.X);
                     pictureBox1.Invoke(new MethodInvoker(
