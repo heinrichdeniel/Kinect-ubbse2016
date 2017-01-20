@@ -189,9 +189,9 @@ namespace KinectControl
                     foreach(XmlNode point in xmlmovement.SelectSingleNode("points").SelectNodes("point"))
                     {
                         CameraSpacePoint p = new CameraSpacePoint();
-                        p.X = float.Parse(point.SelectSingleNode("x").InnerText.Replace(",", "."));
-                        p.Y = float.Parse(point.SelectSingleNode("y").InnerText.Replace(",", "."));
-                        p.Z = float.Parse(point.SelectSingleNode("z").InnerText.Replace(",", "."));
+                        p.X = float.Parse(point.SelectSingleNode("x").InnerText);
+                        p.Y = float.Parse(point.SelectSingleNode("y").InnerText);
+                        p.Z = float.Parse(point.SelectSingleNode("z").InnerText);
                         points.Add(float.Parse(point.SelectSingleNode("time").InnerText.Replace(",", ".")), p);
                     }
                     movement.points = points;

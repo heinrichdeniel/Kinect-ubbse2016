@@ -335,13 +335,16 @@ namespace KinectControl
         private void Paint_Thread()
         {
 
-            float pos = 0.0f;
             drawSize = 30.0f;
             int button = buttonClicked;
             float last = 0.0f;
             foreach(KeyValuePair<float, CameraSpacePoint> point in selectedCommand.points)
             {
 
+                if(last == 0.0f)
+                {
+                    last = point.Key;
+                }
                 if (drawed)
                 {
                     this.point.X = point.Value.X;
@@ -354,6 +357,7 @@ namespace KinectControl
                         break;
                     }
                     last = point.Key;
+                    Log.log.Info("INFO: " + last + " " + point.Key + " " + point.Value.X);
                     pictureBox1.Invoke(new MethodInvoker(
                         delegate ()
                         {
@@ -378,7 +382,7 @@ namespace KinectControl
                     // Create a local version of the graphics object for the PictureBox.
                     Graphics g = e.Graphics;
                     g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height));
-                    g.FillEllipse(new SolidBrush(Color.Red), point.X + pictureBox1.Width / 2, point.Y + pictureBox1.Height / 2, drawSize, drawSize);
+                    g.FillEllipse(new SolidBrush(Color.Red), point.X * pictureBox1.Width / 5 + pictureBox1.Width / 2, point.Y * pictureBox1.Height / 5 + pictureBox1.Height / 2, drawSize, drawSize);
                     drawed = true;
                 }
             }
