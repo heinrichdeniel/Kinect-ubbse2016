@@ -16,7 +16,6 @@ namespace KinectControl
         List<Button> keyButtons;
         static List<int> selectedKeys;
         Boolean isWorking;
-        List<Commands.Average> commands;
         private Movement selectedCommand;
         private CameraSpacePoint point = new CameraSpacePoint();
         private FileManager fileManager;
@@ -24,7 +23,6 @@ namespace KinectControl
         private float drawSize = 50.0f;
         private bool drawed = true;
         private int buttonClicked = 0;
-        private Thread connectionThread;
         private BackgroundWorker backgroundWorker1;
 
         public class CommandSaved : ClickInterface
@@ -144,7 +142,7 @@ namespace KinectControl
             keyInputs = fileManager.getAllKeyInput();
             keyButtons = new List<Button>();
             selectedKeys = fileManager.readAllMovementsID();
-            conn.setExistingCommands(commands);
+            conn.setExistingCommands(fileManager.readAllCommands());
 
             int i = 0;
             foreach (KeyInput keyInput in keyInputs)
@@ -204,11 +202,11 @@ namespace KinectControl
                 this.ShowInTaskbar = true;
                 this.WindowState = FormWindowState.Maximized;
                 this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
-                this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - 100);
-                this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + 200, 100);
-                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 3 * 2, this.Height / 3 * 2);
-                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
-                this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
+                this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - this.Height / 10);
+                this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 10, this.Height / 10);
+                this.pictureBox1.Size = new System.Drawing.Size(this.Width / 100 * 46, this.Height / 100 * 55);
+                this.button1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 20 * 3, this.Height / 100 * 55 + this.Height / 20 * 3);
+                this.button1.Size = new System.Drawing.Size(this.Width / 100 * 35, this.Height / 100 * 15);
                 this.showToolStripMenuItem.Text = "Stop";
                 try
                 {
@@ -360,8 +358,8 @@ namespace KinectControl
                 {
                     // Create a local version of the graphics object for the PictureBox.
                     Graphics g = e.Graphics;
-                    g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 900, 600));
-                    g.FillEllipse(new SolidBrush(Color.Red), point.X + 400, point.Y + 300, drawSize, drawSize);
+                    g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height));
+                    g.FillEllipse(new SolidBrush(Color.Red), point.X + pictureBox1.Width / 2, point.Y + pictureBox1.Height / 2, drawSize, drawSize);
                     drawed = true;
                 }
             }

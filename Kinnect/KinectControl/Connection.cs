@@ -30,6 +30,8 @@ namespace KinectControl
         Commands.Command[] commands = new Commands.Command[3];
         Movement currentMovement = new Movement();
         Movement lastMovement = new Movement();
+        int lastFrames = 0;
+        int currentFrames = 0;
         int commandNumber = 0;
         Commands newCommand;
         int WAITINGTIME = 50;
@@ -166,7 +168,6 @@ namespace KinectControl
                                 {
                                     Commands.MomentInTime moment = new Commands.MomentInTime();
                                     moment.time = stopwatchTime - gestureStartedAt;
-
                                     moment.hand[0] = wristRight;
                                     moment.hand[1] = handRight;
                                     moment.hand[2] = thumbRight;
@@ -174,12 +175,21 @@ namespace KinectControl
 
                                     if (frameWhileNotMoved == 0)
                                     {
+                                        ++currentFrames;
+                                        currentMovement.points.Add(moment.time, handRight);
                                         commands[commandNumber].points.Add(moment);
                                         commands[commandNumber].totalTime = stopwatchTime - gestureStartedAt;
                                     }
 
                                     if (frameWhileNotMoved == WAITINGTIME / 2)       //ha vege a mozdulatsornak
                                     {
+                                        if(currentFrames > lastFrames)
+                                        {
+                                            lastFrames = currentFrames;
+                                            lastMovement = currentMovement;
+                                            currentMovement = new Movement();
+                                            currentFrames = 0;
+                                        }
                                         gestureStarted = false;
                                         waitingForGesture = false;
                                         if (commands[commandNumber].points.Count > 5)               //ha minimum 5 kepet kapott a kinect-tol
@@ -197,6 +207,8 @@ namespace KinectControl
                                                 newCommand = new Commands(commands);
                                                 FileManager fileManager = FileManager.getInstance();
                                                 fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
+                                                lastMovement.keyID = selectedKeyId;
+                                                fileManager.writeMovement(lastMovement);
                                             }
                                             else
                                             {
