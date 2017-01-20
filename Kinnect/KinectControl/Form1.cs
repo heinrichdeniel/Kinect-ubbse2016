@@ -227,6 +227,7 @@ namespace KinectControl
                 this.button2.BackColor = Color.Green;
                 this.button2.Text = "Mouse On";
                 this.BringToFront();
+                LoadCommands();
                 //this.Refresh();
             }
             else if (showToolStripMenuItem.Text.Equals("Stop"))
