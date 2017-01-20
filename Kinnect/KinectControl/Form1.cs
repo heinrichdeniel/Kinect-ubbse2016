@@ -360,7 +360,7 @@ namespace KinectControl
                     this.point.Z = point.Value.Z - firstPointD.Z;
                     drawed = false;
                    
-                    Thread.Sleep((int)(point.Key - last));
+                    Thread.Sleep((int)(point.Key - last > 0 ? point.Key - last : 1));
                     if (button != buttonClicked)
                     {
                         break;
@@ -374,7 +374,7 @@ namespace KinectControl
                     }
                     z = point.Value.Z;
                     last = point.Key;
-                    Log.log.Info("INFO: " + last + " " + point.Key + " " + point.Value.X);
+                    //Log.log.Info("INFO: " + last + " " + point.Key + " " + point.Value.X);
                     pictureBox1.Invoke(new MethodInvoker(
                         delegate ()
                         {

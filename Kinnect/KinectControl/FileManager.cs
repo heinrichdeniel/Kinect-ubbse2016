@@ -192,7 +192,7 @@ namespace KinectControl
                         p.X = float.Parse(point.SelectSingleNode("x").InnerText);
                         p.Y = float.Parse(point.SelectSingleNode("y").InnerText);
                         p.Z = float.Parse(point.SelectSingleNode("z").InnerText);
-                        points.Add(float.Parse(point.SelectSingleNode("time").InnerText.Replace(",", ".")), p);
+                        points.Add(float.Parse(point.SelectSingleNode("time").InnerText), p);
                     }
                     movement.points = points;
                     return movement;
@@ -226,12 +226,12 @@ namespace KinectControl
 
                         command.keyID = keyInputID;
                         command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
-                        command.time = float.Parse(movement.SelectSingleNode("time").InnerText.Replace(",", "."));
+                        command.time = float.Parse(movement.SelectSingleNode("time").InnerText);
                         float[] timePoints = new float[60];
                         int i = 0;
                         foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
                         {
-                            timePoints[i] = float.Parse(moment.InnerText.Replace(",", "."));
+                            timePoints[i] = float.Parse(moment.InnerText);
                             ++i;
                         }
                         command.timePointCount = timePoints;
@@ -251,7 +251,7 @@ namespace KinectControl
                             {
                                 avg[i] = new float[command.pointcount];
                             }
-                            avg[i][j] = float.Parse(moment.InnerText.Replace(",", "."));
+                            avg[i][j] = float.Parse(moment.InnerText);
                             ++j;
                         }
                         command.avg = avg;
@@ -338,13 +338,13 @@ namespace KinectControl
 
                     Commands.Average command = new Commands.Average();
                     command.keyID = Int32.Parse(movement.SelectSingleNode("id").InnerText);
-                    command.time = float.Parse(movement.SelectSingleNode("time").InnerText.Replace(",", "."));
+                    command.time = float.Parse(movement.SelectSingleNode("time").InnerText);
                     command.pointcount = Int32.Parse(movement.SelectSingleNode("point_count").InnerText);
                     float[] timePoints = new float[command.pointcount];
                     int i = 0;
                     foreach (XmlNode moment in movement.SelectSingleNode("time_points_count").SelectNodes("time_point"))
                     {
-                        timePoints[i] = float.Parse(moment.InnerText.Replace(",", "."));
+                        timePoints[i] = float.Parse(moment.InnerText);
                         ++i;
                     }
                     command.timePointCount = timePoints;
@@ -365,7 +365,7 @@ namespace KinectControl
                         {
                             avg[i] = new float[command.pointcount];
                         }
-                        avg[i][j] = float.Parse(moment.InnerText.Replace(",", "."));
+                        avg[i][j] = float.Parse(moment.InnerText);
                         ++j;
                     }
                     command.avg = avg;
@@ -531,22 +531,22 @@ namespace KinectControl
                     foreach (XmlNode xmlcmd in xmlcommand.SelectNodes("command"))
                     {
                         Commands.Command ccmd = new Commands.Command();
-                        ccmd.totalTime = float.Parse(xmlcmd.SelectSingleNode("total_time").InnerText.Replace(",", "."));
+                        ccmd.totalTime = float.Parse(xmlcmd.SelectSingleNode("total_time").InnerText);
                         List<Commands.MomentInTime> cmoments = new List<Commands.MomentInTime>();
 
                         foreach (XmlNode xmlmoments in xmlcmd.SelectSingleNode("moments").SelectNodes("moment"))
                         {
                             Commands.MomentInTime cmoment = new Commands.MomentInTime();
-                            cmoment.time = float.Parse(xmlmoments.SelectSingleNode("time").InnerText.Replace(",", "."));
+                            cmoment.time = float.Parse(xmlmoments.SelectSingleNode("time").InnerText);
                             CameraSpacePoint[] chand = new CameraSpacePoint[4];
                             int k = 0;
                             foreach (XmlNode xmlpoint in xmlmoments.SelectSingleNode("points").SelectNodes("point"))
                             {
                                 CameraSpacePoint chandpoint = new CameraSpacePoint();
-                                Log.log.Info(xmlpoint.SelectSingleNode("x").InnerText);
-                                chandpoint.X = float.Parse(xmlpoint.SelectSingleNode("x").InnerText.Replace(",", "."));
-                                chandpoint.Z = float.Parse(xmlpoint.SelectSingleNode("z").InnerText.Replace(",", "."));
-                                chandpoint.Y = float.Parse(xmlpoint.SelectSingleNode("y").InnerText.Replace(",", "."));
+                                //Log.log.Info(xmlpoint.SelectSingleNode("x").InnerText);
+                                chandpoint.X = float.Parse(xmlpoint.SelectSingleNode("x").InnerText);
+                                chandpoint.Z = float.Parse(xmlpoint.SelectSingleNode("z").InnerText);
+                                chandpoint.Y = float.Parse(xmlpoint.SelectSingleNode("y").InnerText);
                                 chand[k] = chandpoint;
                                 ++k;
                             }

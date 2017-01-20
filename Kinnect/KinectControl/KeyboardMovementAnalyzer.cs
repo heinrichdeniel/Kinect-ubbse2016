@@ -43,7 +43,7 @@ namespace KinectControl
                 }
 
                 CameraSpacePoint[] csp = goodCommands.ElementAt(i).Value.spline((float)(time-startTime.ElementAt(i).Value)/ (float)goodCommands[i].time );
-                Log.log.Info("time:   " + (float)(time - startTime.ElementAt(i).Value) / (float)goodCommands[i].time);
+                ///Log.log.Info("time:   " + (float)(time - startTime.ElementAt(i).Value) / (float)goodCommands[i].time);
 
                 if (goodCommands[i].time < time - startTime.ElementAt(i).Value)
                 {

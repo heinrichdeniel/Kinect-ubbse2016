@@ -181,7 +181,10 @@ namespace KinectControl
                                     if (frameWhileNotMoved == 0)
                                     {
                                         ++currentFrames;
-                                        currentMovement.points.Add(moment.time, handRight);
+                                        if (currentMovement != null && currentMovement.points != null)
+                                        {
+                                            currentMovement.points.Add(moment.time, handRight);
+                                        }
                                         commands[commandNumber].points.Add(moment);
                                         commands[commandNumber].totalTime = stopwatchTime - gestureStartedAt;
                                     }
@@ -201,8 +204,9 @@ namespace KinectControl
                                         {
                                             if (commandNumber == 2)     //ha a mozdulat harmadszor volt megismetelve
                                             {
+                                                lastMovement.keyID = selectedKeyId;
                                                 commandSaved.CommandSaved(selectedKeyId);
-                                                selectedKeyId = 0;
+                                                
                                                 commandNumber = 0;
                                                 frameWhileNotMoved = 0;
                                                 handpointsnumber = 0;
@@ -216,7 +220,8 @@ namespace KinectControl
                                                 newCommand = new Commands(commands);
                                                 FileManager fileManager = FileManager.getInstance();
                                                 fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
-                                                lastMovement.keyID = selectedKeyId;
+                                                selectedKeyId = 0;
+                                                // lastMovement.keyID = selectedKeyId;
                                                 fileManager.writeMovement(lastMovement);
                                             }
                                             else
@@ -253,9 +258,14 @@ namespace KinectControl
                                         }
                                         else     //ha a mozdulat tul hamar veget ert
                                         {
-                                            btn.Text = commands[commandNumber].points.Count.ToString();
-                                            btn.BackColor = Color.Red;
-                                            btn.Enabled = true;
+                                            btn.Invoke(new MethodInvoker(
+                                      delegate ()
+                                      {
+                                          btn.Text = commands[commandNumber].points.Count.ToString();
+                                          btn.BackColor = Color.Red;
+                                          btn.Enabled = true;
+                                      }));
+                 
                                             commands[commandNumber].points.Clear();
                                         }
                                     }
