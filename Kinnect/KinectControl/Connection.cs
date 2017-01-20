@@ -64,7 +64,8 @@ namespace KinectControl
 
         }
 
-        public void setCommandSaveInterface(ClickInterface commandinterface){
+        public void setCommandSaveInterface(ClickInterface commandinterface)
+        {
             this.commandSaved = commandinterface;
         }
         public bool kinnectImage
@@ -109,7 +110,7 @@ namespace KinectControl
 
         public void setExistingCommands(List<Commands.Average> commands)
         {
-   
+
             recognizer = new KeyboardMovementAnalyzer(commands);
 
         }
@@ -158,8 +159,12 @@ namespace KinectControl
                                 compareHands(hipRight, handRight);
                                 if (handpointsnumber == WAITINGTIME)
                                 {
-                                    btn.Text = "Capturing";
-                                    btn.BackColor = Color.Green;
+                                    btn.Invoke(new MethodInvoker(
+                                    delegate ()
+                                    {
+                                        btn.Text = "Capturing";
+                                        btn.BackColor = Color.Green;
+                                    }));
                                     gestureStartedAt = stopwatchTime;
                                     handpointsnumber = WAITINGTIME + 1;
                                     commands[commandNumber] = new Commands.Command();
@@ -183,7 +188,7 @@ namespace KinectControl
 
                                     if (frameWhileNotMoved == WAITINGTIME / 2)       //ha vege a mozdulatsornak
                                     {
-                                        if(currentFrames > lastFrames)
+                                        if (currentFrames > lastFrames)
                                         {
                                             lastFrames = currentFrames;
                                             lastMovement = currentMovement;
@@ -201,9 +206,13 @@ namespace KinectControl
                                                 commandNumber = 0;
                                                 frameWhileNotMoved = 0;
                                                 handpointsnumber = 0;
-                                                btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
-                                                btn.BackColor = Color.Green;
-                                                btn.Enabled = true;
+                                                btn.Invoke(new MethodInvoker(
+                                                delegate ()
+                                                {
+                                                    btn.Text = "The gesture was saved! Please push the button to create a new gesture!";
+                                                    btn.BackColor = Color.Green;
+                                                    btn.Enabled = true;
+                                                }));
                                                 newCommand = new Commands(commands);
                                                 FileManager fileManager = FileManager.getInstance();
                                                 fileManager.writeCommand(newCommand.averageCommand(selectedKeyId));
@@ -214,18 +223,30 @@ namespace KinectControl
                                             {
                                                 if (commandNumber == 0)
                                                 {
-                                                    btn.BackColor = Color.Transparent;
-                                                    btn.Text = "Please push the button to repeat the gesture for a second time!";
-                                                    
+                                                    btn.Invoke(new MethodInvoker(
+                                                        delegate ()
+                                                        {
+                                                            btn.BackColor = Color.Transparent;
+                                                            btn.Text = "Please push the button to repeat the gesture for a second time!";
+                                                        }));
+
                                                 }
                                                 else
                                                 {
-                                                    btn.BackColor = Color.Transparent;
-                                                    btn.Text = "Please push the button to repeat the gesture for the third time!";
-                                                    
+                                                    btn.Invoke(new MethodInvoker(
+                                                        delegate ()
+                                                        {
+                                                            btn.BackColor = Color.Transparent;
+                                                            btn.Text = "Please push the button to repeat the gesture for the third time!";
+                                                        }));
+
                                                 }
                                                 //btn.BackColor = Color.Red;
-                                                btn.Enabled = true;
+                                                btn.Invoke(new MethodInvoker(
+                                                    delegate ()
+                                                    {
+                                                        btn.Enabled = true;
+                                                    }));
                                                 commandNumber++;
                                                 handpointsnumber = 1;
                                             }
@@ -242,14 +263,14 @@ namespace KinectControl
                             }
                             else if (recognizing)
                             {
-                                
+
                                 List<CameraSpacePoint> handpoints = new List<CameraSpacePoint>();
                                 handpoints.Add(wristRight);
                                 handpoints.Add(handRight);
                                 handpoints.Add(thumbRight);
                                 handpoints.Add(handTipRight);
 
-                              //  recognizer.AnalyzeFrames(stopwatchTime, handpoints);
+                                //  recognizer.AnalyzeFrames(stopwatchTime, handpoints);
 
                             }
                             break;
@@ -272,7 +293,11 @@ namespace KinectControl
 
                 if (hand.Y - hipRight.Y > 0 && !isHandMoved && handpointsnumber < WAITINGTIME)
                 {
-                    btn.Text = "Capturing in " + (5 - handpointsnumber / 10) + " sec";
+                    btn.Invoke((new MethodInvoker(
+                        delegate ()
+                        {
+                            btn.Text = "Capturing in " + (5 - handpointsnumber / 10) + " sec";
+                        })));
                     handpointsnumber++;
                 }
                 else if (hand.Y - hipRight.Y > 0 && !isHandMoved && gestureStarted)
@@ -287,7 +312,11 @@ namespace KinectControl
                 else if (handpointsnumber < WAITINGTIME)
                 {
                     handpointsnumber = 1;
-                    btn.Text = "Please raise up your right hand before starting capture!";
+                    btn.Invoke(new MethodInvoker(
+                         delegate ()
+                         {
+                             btn.Text = "Please raise up your right hand before starting capture!";
+                         }));
                     btn.BackColor = Color.Red;
                 }
 
@@ -396,9 +425,13 @@ namespace KinectControl
             if (selectedKeyId != 0)
             {
                 this.waitingForGesture = true;
-                btn.Text = "Please raise up your right hand before starting capture!";
-                btn.BackColor = Color.Red;
-                btn.Enabled = false;
+                btn.Invoke(new MethodInvoker(
+                        delegate ()
+                        {
+                            btn.Text = "Please raise up your right hand before starting capture!";
+                            btn.BackColor = Color.Red;
+                            btn.Enabled = false;
+                        }));
             }
             else
             {

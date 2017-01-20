@@ -11,6 +11,11 @@ namespace KinectControl
     {
         private int _keyID;
         private Dictionary<float, CameraSpacePoint> _points;
+        
+        public Movement()
+        {
+            _points = new Dictionary<float, CameraSpacePoint>();
+        }
         public int keyID
         {
             get
