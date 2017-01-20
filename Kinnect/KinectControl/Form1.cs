@@ -26,6 +26,7 @@ namespace KinectControl
         private int buttonClicked = 0;
         private Thread connectionThread;
         private BackgroundWorker backgroundWorker1;
+        //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskBar));
 
         public class CommandSaved : ClickInterface
         {
@@ -57,22 +58,25 @@ namespace KinectControl
             DialogResult dialogResult = MessageBox.Show("Do you want to start working with the Kinect device?", "Are you ready?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                //this.TopMost = true;
                 this.WindowState = FormWindowState.Maximized;
                 this.tabControl1.Size = new System.Drawing.Size(this.Width, this.Height);
                 this.keyCommandsPanel.Size = new System.Drawing.Size(this.Width / 3, this.Height - this.Height / 10);
                 this.pictureBox1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 10, this.Height / 10);
                 this.pictureBox1.Size = new System.Drawing.Size(this.Width / 100 * 46, this.Height / 100 * 55);
-                this.button1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 20 * 3, this.Height / 100 * 55  + this.Height / 20 * 3);
+                this.button1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 20 * 3, this.Height / 100 * 55 + this.Height / 20 * 3);
                 this.button1.Size = new System.Drawing.Size(this.Width / 100 * 35, this.Height / 100 * 15);
                 this.button2.BackColor = Color.Green;
-                this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
+                //this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
+                //this.Icon = ((System.Drawing.Icon)(resources.GetObject("Settings_Green.Icon")));
                 this.button2.Text = "Mouse On";
                 this.isWorking = true;
                 this.showToolStripMenuItem.Text = "Stop";
+                while (this.conn == null)
+                {
+                    
+                }
                 this.conn.startStop(isWorking);
                 this.conn.sensor.Open();
-
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -215,7 +219,7 @@ namespace KinectControl
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 * 2 - 150, this.Height / 3 * 2 + 100);
                 this.showToolStripMenuItem.Text = "Stop";
-                try
+/*                try
                 {
                     this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
                 }
@@ -223,25 +227,28 @@ namespace KinectControl
                 {
 
                 }
+*/
                 this.conn.sensor.Open();
                 this.isWorking = true;
                 this.conn.startStop(isWorking);
                 this.button2.BackColor = Color.Green;
                 this.button2.Text = "Mouse On";
                 this.BringToFront();
+                //this.Refresh();
             }
             else if (showToolStripMenuItem.Text.Equals("Stop"))
             {
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
-                try
-                {
+/*                try
+               {
                     this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings.Icon")));
                 }
                 catch (NullReferenceException e)
                 {
 
                 }
+*/
                 this.showToolStripMenuItem.Text = "Start";
                 this.isWorking = false;
                 this.conn.startStop(isWorking);
@@ -254,7 +261,6 @@ namespace KinectControl
             conn.enableRecognition = true;
 
             conn.sensor.Close();
-            backgroundWorker1.CancelAsync();
             this.Close();
             Application.Exit();
             System.Environment.Exit(1);
@@ -281,10 +287,22 @@ namespace KinectControl
             {
                 e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
-                this.Hide();
-                return;
+                this.ShowInTaskbar = false;
+/*
+                try
+               {
+                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings.Icon")));
+               }
+                catch (NullReferenceException ef)
+                {
+
+                }
+*/
+                this.showToolStripMenuItem.Text = "Start";
+                this.isWorking = false;
+                this.conn.startStop(isWorking);
+                this.conn.sensor.Close();
             }
-            Application.Exit();
         }
 
         private void TaskBar_FormClosed(object sender, FormClosedEventArgs e)
@@ -385,23 +403,6 @@ namespace KinectControl
             }
         }
 
-        private void Form1_Resize(object sender, System.EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                if (conn != null)
-                {
-                    conn.kinnectImage = false;
-                }
-            }
-            else if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Normal)
-            {
-                if (conn != null)
-                {
-                    conn.kinnectImage = true;
-                }
-            }
-        }
         private void button2_Click_1(object sender, EventArgs e)
         {
 
