@@ -28,6 +28,8 @@ namespace KinectControl
         bool waitingForGesture = false;
         bool gestureStarted = false;
         Commands.Command[] commands = new Commands.Command[3];
+        Movement currentMovement = new Movement();
+        Movement lastMovement = new Movement();
         int commandNumber = 0;
         Commands newCommand;
         int WAITINGTIME = 50;
