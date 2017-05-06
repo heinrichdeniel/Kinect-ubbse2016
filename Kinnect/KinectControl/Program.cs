@@ -10,7 +10,7 @@ namespace KinectControl
 {
     public class Program
     {
-        TaskBar taskbar = null;
+        Form1 form = null;
 
         /// <summary>
         /// The main entry point for the application.
@@ -30,13 +30,13 @@ namespace KinectControl
                 if (isConnected())
                 {
                     Log.log.Info("Kinect connected");
-                    if (taskbar == null)
+                    if (form == null)
                     {
-                        taskbar = new TaskBar();
-                        Application.Run(taskbar);
+                        form = new Form1();
+                        Application.Run(form);
 
                     }
-                    taskbar.show();
+                    form.show();
                 }
             }
         }
