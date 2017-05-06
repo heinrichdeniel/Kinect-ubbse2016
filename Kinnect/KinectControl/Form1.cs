@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace KinectControl
 {
-    public partial class TaskBar : Form
+    public partial class Form1 : Form
     {
         KinectControl.Connection conn;
         List<KeyInput> keyInputs;
@@ -24,7 +24,7 @@ namespace KinectControl
         private bool drawed = true;
         private int buttonClicked = 0;
         private BackgroundWorker backgroundWorker1;
-        //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskBar));
+        //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 
         public class CommandSaved : ClickInterface
         {
@@ -34,7 +34,7 @@ namespace KinectControl
             }
         }
 
-        public TaskBar()
+        public Form1()
         {
             fileManager = FileManager.getInstance();
             InitializeComponent();
@@ -64,7 +64,7 @@ namespace KinectControl
                 this.button1.Location = new System.Drawing.Point(this.Width / 3 + this.Width / 20 * 3, this.Height / 100 * 55 + this.Height / 20 * 3);
                 this.button1.Size = new System.Drawing.Size(this.Width / 100 * 35, this.Height / 100 * 15);
                 this.button2.BackColor = Color.Green;
-                //this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
+                //this.Icon = this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(Form1)).GetObject("Settings_Green.Icon")));
                 //this.Icon = ((System.Drawing.Icon)(resources.GetObject("Settings_Green.Icon")));
                 this.button2.Text = "Mouse On";
                 this.isWorking = true;
@@ -189,7 +189,7 @@ namespace KinectControl
 
         }
 
-        private void TaskBar_Move(object sender, EventArgs e)
+        private void Form1_Move(object sender, EventArgs e)
         {
 
         }
@@ -214,7 +214,7 @@ namespace KinectControl
                 this.showToolStripMenuItem.Text = "Stop";
 /*                try
                 {
-                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings_Green.Icon")));
+                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(Form1)).GetObject("Settings_Green.Icon")));
                 }
                 catch (NullReferenceException e)
                 {
@@ -236,7 +236,7 @@ namespace KinectControl
                 this.ShowInTaskbar = false;
 /*                try
                {
-                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings.Icon")));
+                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(Form1)).GetObject("Settings.Icon")));
                 }
                 catch (NullReferenceException e)
                 {
@@ -265,17 +265,17 @@ namespace KinectControl
 
         }
 
-        private void TaskBar_Shown(object sender, EventArgs e)
+        private void Form1_Shown(object sender, EventArgs e)
         {
 
         }
 
-        private void TaskBar_Leave(object sender, EventArgs e)
+        private void Form1_Leave(object sender, EventArgs e)
         {
 
         }
 
-        private void TaskBar_FormClosing(object sender, FormClosingEventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
@@ -285,7 +285,7 @@ namespace KinectControl
 /*
                 try
                {
-                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(TaskBar)).GetObject("Settings.Icon")));
+                    this.Settings.Icon = ((System.Drawing.Icon)(new System.ComponentModel.ComponentResourceManager(typeof(Form1)).GetObject("Settings.Icon")));
                }
                 catch (NullReferenceException ef)
                 {
@@ -299,7 +299,7 @@ namespace KinectControl
             }
         }
 
-        private void TaskBar_FormClosed(object sender, FormClosedEventArgs e)
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Close();
         }

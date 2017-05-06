@@ -1,7 +1,7 @@
 ﻿
 namespace KinectControl
 {
-    partial class TaskBar
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -20,7 +20,7 @@ namespace KinectControl
             }
             base.Dispose(disposing);
         }
-      
+
 
         #region Windows Form Designer generated code
 
@@ -31,7 +31,7 @@ namespace KinectControl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskBar));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Service = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -246,7 +246,7 @@ namespace KinectControl
             this.lb_mouseSensitivity.TabIndex = 0;
             this.lb_mouseSensitivity.Text = "Mouse Sensitivity";
             // 
-            // TaskBar
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -254,15 +254,15 @@ namespace KinectControl
             this.ContextMenuStrip = this.Service;
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "TaskBar";
+            this.Name = "Form1";
             this.Text = "Settings";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TaskBar_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TaskBar_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Shown += new System.EventHandler(this.TaskBar_Shown);
-            this.Leave += new System.EventHandler(this.TaskBar_Leave);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
+            this.Leave += new System.EventHandler(this.Form1_Leave);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form_MouseClick);
-            this.Move += new System.EventHandler(this.TaskBar_Move);
+            this.Move += new System.EventHandler(this.Form1_Move);
             this.Service.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
