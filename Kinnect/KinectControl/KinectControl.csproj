@@ -73,7 +73,6 @@
     <Compile Include="MouseControl.cs" />
     <Compile Include="MouseMovementHandler.cs" />
     <Compile Include="MousePointer.cs" />
-    <Compile Include="Movement.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spline.cs" />
