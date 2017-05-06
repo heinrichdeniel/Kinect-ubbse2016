@@ -1,0 +1,16 @@
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\KinectTests.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\KinectTests.pdb
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\KinectControl.exe
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\log4net.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.Kinect.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\KinectControl.pdb
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\log4net.xml
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.Kinect.xml
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.csprojResolveAssemblyReference.cache
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.dll
+E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.pdb
