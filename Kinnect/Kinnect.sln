@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectControl", "KinectControl\KinectControl.csproj", "{D7E16454-B33C-42B1-9F7D-79558D3C25A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectTests", "KinectTests\KinectTests.csproj", "{062B4396-2F23-4577-BD47-03EA5F210728}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D7E16454-B33C-42B1-9F7D-79558D3C25A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7E16454-B33C-42B1-9F7D-79558D3C25A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7E16454-B33C-42B1-9F7D-79558D3C25A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{062B4396-2F23-4577-BD47-03EA5F210728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{062B4396-2F23-4577-BD47-03EA5F210728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{062B4396-2F23-4577-BD47-03EA5F210728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{062B4396-2F23-4577-BD47-03EA5F210728}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
