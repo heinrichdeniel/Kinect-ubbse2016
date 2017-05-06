@@ -12,7 +12,6 @@ namespace KinectTests
         {
             Program program = new Program();
             bool expectedValue = true;
-
             Assert.AreEqual(expectedValue, program.isConnected() , "Kinect is not connected!");
 
 
