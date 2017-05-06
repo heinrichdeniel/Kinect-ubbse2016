@@ -48,6 +48,11 @@ namespace KinectControl
                 }
             }
         }
+
+        public bool isConnected()
+        {
+            return false;
+        }
     }
 
 
