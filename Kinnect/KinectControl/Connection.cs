@@ -10,7 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace KinectControl
-{
+{ 
     public class Connection
     {
         Button btn = null;

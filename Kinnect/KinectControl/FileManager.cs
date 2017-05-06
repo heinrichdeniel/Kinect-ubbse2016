@@ -182,10 +182,6 @@ namespace KinectControl
 
         public Movement readMovement(int keyInputID)
         {
-            if(keyInputID == null)
-            {
-                throw new ArgumentException("Paramaeter can't be null", "original");
-            }
             Movement movement = new Movement();
             XmlNodeList xmlmovements = kinectXMLPoints.GetElementsByTagName("movement");
             foreach(XmlNode xmlmovement in xmlmovements)
@@ -432,10 +428,6 @@ namespace KinectControl
 
         public KeyInput getKeyInput(int keyInputId)
         {
-            if (keyInputId == null)
-            {
-                throw new System.ArgumentException("Paramaeter can't be null", "original");
-            }
             KeyInput keyInput = new KeyInput();
             if (keyInputId < 32 && keyInputId > 0)
             {

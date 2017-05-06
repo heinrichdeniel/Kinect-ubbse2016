@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KinectControl
 {
-    class KeyInput
+    public class KeyInput
     {
         public int id;
         public String descriptionLong;

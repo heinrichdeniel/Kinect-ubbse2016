@@ -41,7 +41,7 @@ namespace KinectControl
             }
         }
 
-        public bool isConnected()
+        public  bool isConnected()
         {
             ManagementObjectCollection mbsList = null;
             ManagementObjectSearcher mbs = new ManagementObjectSearcher("Select * From Win32_USBHub");

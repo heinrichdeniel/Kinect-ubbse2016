@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KinectControl
 {
-    class Movement
+    public class Movement
     {
         private int _keyID;
         private Dictionary<float, CameraSpacePoint> _points;
