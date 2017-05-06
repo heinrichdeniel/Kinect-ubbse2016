@@ -27,30 +27,34 @@ namespace KinectControl
 
             while (true)
             {
-                ManagementObjectCollection mbsList = null;
-                ManagementObjectSearcher mbs = new ManagementObjectSearcher("Select * From Win32_USBHub");
-                mbsList = mbs.Get();
-
-                //itarate through USB hubs, until we found Kinect device connected
-                foreach (ManagementObject mo in mbsList)
+                if (isConnected())
                 {
-                    if (Convert.ToString(mo["Name"]).IndexOf("SuperSpeed") > -1)
+                    Log.log.Info("Kinect connected");
+                    if (taskbar == null)
                     {
-                        Log.log.Info("Kinect connected");
-                        if (taskbar == null)
-                        {
-                            taskbar = new TaskBar();
-                            Application.Run(taskbar);
+                        taskbar = new TaskBar();
+                        Application.Run(taskbar);
 
-                        }
-                        taskbar.show();
                     }
+                    taskbar.show();
                 }
             }
         }
 
         public bool isConnected()
         {
+            ManagementObjectCollection mbsList = null;
+            ManagementObjectSearcher mbs = new ManagementObjectSearcher("Select * From Win32_USBHub");
+            mbsList = mbs.Get();
+
+            //itarate through USB hubs, until we found Kinect device connected
+            foreach (ManagementObject mo in mbsList)
+            {
+                if (Convert.ToString(mo["Name"]).IndexOf("SuperSpeed") > -1)
+                {
+                    return true;
+                }
+            }
             return false;
         }
     }
