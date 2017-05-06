@@ -76,7 +76,7 @@ namespace KinectControl
                 set { _timePointCount = value; }
             }
 
-            public Spline s
+            public Spline _spline
             {
                 get { return _s; }
                 set { _s = value; }
@@ -92,7 +92,7 @@ namespace KinectControl
                 {
                     avg[i] = new float[pointcount];
                 }
-                s = new Spline(pointcount);
+               // _spline = new Spline(pointcount);
             }
             public Average(int k)
             {
@@ -103,7 +103,7 @@ namespace KinectControl
                 {
                     avg[i] = new float[pointcount];
                 }
-                s = new Spline(pointcount);
+              //  _spline = new Spline(pointcount);
             }
 
 
@@ -112,19 +112,22 @@ namespace KinectControl
             public CameraSpacePoint[] spline(float t)
             {
                 CameraSpacePoint[] returnResult = new CameraSpacePoint[4];
-                for (int i = 0; i < 4; ++i)
+                if (_spline != null)
                 {
-                    s.set(avg[i * _number], timePointCount);
-                    s.calculateAlpha();
-                    returnResult[i].X = s.calculateRes(t);
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        _spline.set(avg[i * _number], timePointCount);
+                        _spline.calculateAlpha();
+                        returnResult[i].X = _spline.calculateRes(t);
 
-                    s.set(avg[i * _number + 1], timePointCount);
-                    s.calculateAlpha();
-                    returnResult[i].Y = s.calculateRes(t);
+                        _spline.set(avg[i * _number + 1], timePointCount);
+                        _spline.calculateAlpha();
+                        returnResult[i].Y = _spline.calculateRes(t);
 
-                    s.set(avg[i * _number + 2], timePointCount);
-                    s.calculateAlpha();
-                    returnResult[i].Z = s.calculateRes(t);
+                        _spline.set(avg[i * _number + 2], timePointCount);
+                        _spline.calculateAlpha();
+                        returnResult[i].Z = _spline.calculateRes(t);
+                    }
                 }
                 return returnResult;
             }
@@ -440,10 +443,5 @@ namespace KinectControl
             Debug.Write(a + "\n\n");
 
         }
-
-
-
-
-
     }
 }

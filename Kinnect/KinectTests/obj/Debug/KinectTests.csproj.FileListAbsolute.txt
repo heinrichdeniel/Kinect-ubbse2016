@@ -14,3 +14,6 @@ E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\bin\Debug\Microsoft.Kinect.xml
 E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.csprojResolveAssemblyReference.cache
 E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.dll
 E:\Egyetem\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.pdb
+C:\Users\Jozsa\Dropbox\Hazik\Verifikacio&Validacio\Projekt\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.csprojResolveAssemblyReference.cache
+C:\Users\Jozsa\Dropbox\Hazik\Verifikacio&Validacio\Projekt\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.dll
+C:\Users\Jozsa\Dropbox\Hazik\Verifikacio&Validacio\Projekt\Kinect-ubbse2016\Kinnect\KinectTests\obj\Debug\KinectTests.pdb
