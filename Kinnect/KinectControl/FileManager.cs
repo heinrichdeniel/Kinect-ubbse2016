@@ -112,8 +112,8 @@ namespace KinectControl
             {
                 throw new ArgumentException("Argument can't be null", "original");
             }
-			Commands.Average avg = readCommand(average.keyID);
-			if (avg == null || avg.keyID == -1)
+			Commands.Average avga = readCommand(average.keyID);
+			if (avga == null || avga.keyID == -1)
 			{
 				throw new ArgumentException("Command exist in the file!", "original");
 			}
