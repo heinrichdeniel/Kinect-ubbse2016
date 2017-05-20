@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace KinectTests
 {
 	[TestClass]
-	public class FileManagerIntegrationTest
+	public class FileManagerTesting
 	{
 		[TestMethod]
 		public void CommandSaving_WithNewCommand_CommandWillBeSaved()
@@ -20,7 +20,7 @@ namespace KinectTests
 			avg.avg[2] = new float[avg.pointcount];
 			avg.timePointCount = new float[avg.pointcount];
 			for (int i = 0; i < avg.time; ++i)
-			{
+			{ 
 				avg.avg[0][i] = (float)rand.NextDouble();
 				avg.avg[1][i] = (float)rand.NextDouble();
 				avg.avg[2][i] = (float)rand.NextDouble();
