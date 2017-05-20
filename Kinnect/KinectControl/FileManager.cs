@@ -410,7 +410,7 @@ namespace KinectControl
         }
         //check the file (filename) existence
         //and if the file does not exist, create the file
-        private void fileExist(String filename, String startingTag)
+        public bool fileExist(String filename, String startingTag)
         {
             if (!File.Exists(Environment.CurrentDirectory + "\\" + filename))
             {
@@ -427,8 +427,9 @@ namespace KinectControl
                 {
                     Console.WriteLine(filename + " not found: " + e.ToString());
                 }
+                return false;
             }
-
+            return true;
         }
 
         public KeyInput getKeyInput(int keyInputId)

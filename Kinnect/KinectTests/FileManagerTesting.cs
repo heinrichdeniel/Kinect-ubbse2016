@@ -33,7 +33,7 @@ namespace KinectTests
         public void InvalidCommandDeleting_ExistingCommand_CommandWillBeDeleted()
         {
             FileManager fm = FileManager.getInstance();
-            Assert.AreEqual(true, fm.removeCommand(50));
+            Assert.AreEqual(false, fm.removeCommand(50));
         }
 
         [TestMethod]
