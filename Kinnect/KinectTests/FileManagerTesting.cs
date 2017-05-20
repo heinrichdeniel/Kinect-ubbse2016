@@ -7,7 +7,36 @@ namespace KinectTests
 	[TestClass]
 	public class FileManagerTesting
 	{
-		[TestMethod]
+        [TestMethod]
+        public void RealCommandDeleting_ExistingCommand_CommandWillBeDeleted()
+        {
+            FileManager fm = FileManager.getInstance();
+            Assert.AreEqual(true, fm.removeCommand(1));
+        }
+
+        [TestMethod]
+        public void FileExist_ExistingFile_FileIsExist()
+        {
+            FileManager fm = FileManager.getInstance();
+            Assert.AreEqual(true, fm.fileExist("KinectCommands.xml", "movements"));
+        }
+
+        [TestMethod]
+        public void FileNotExist_FictivFile_FileIsExist()
+        {
+            FileManager fm = FileManager.getInstance();
+            fm.fileExist("InvalidFile.xml", "invalid");
+            Assert.AreEqual(true, fm.fileExist("InvalidFile.xml", "invalid"));
+        }
+
+        [TestMethod]
+        public void InvalidCommandDeleting_ExistingCommand_CommandWillBeDeleted()
+        {
+            FileManager fm = FileManager.getInstance();
+            Assert.AreEqual(true, fm.removeCommand(50));
+        }
+
+        [TestMethod]
 		public void CommandSaving_WithNewCommand_CommandWillBeSaved()
 		{
 			Commands.Average avg = new Commands.Average();
