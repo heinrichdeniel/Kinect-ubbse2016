@@ -110,7 +110,7 @@ namespace KinectControl
         {
             if(average == null)
             {
-                throw new ArgumentException("Argument can't be null", "original");
+                throw new ArgumentNullException("Argument can't be null", "original");
             }
 			Commands.Average avga = readCommand(average.keyID);
 			if (avga != null || avga.keyID != -1)

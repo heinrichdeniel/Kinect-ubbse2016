@@ -17,6 +17,10 @@ namespace KinectControl
 
         public Spline(int n)
         {
+            if (n == 0)
+            {
+                throw new ArgumentException("n must be a positive number");
+            }
             alpha = new float[n];
             this.n = n;
         }
@@ -80,6 +84,7 @@ namespace KinectControl
 
         public float[] calculateAlpha()
         {
+            
             calculateKernel();
             float[][] kernelInv;
             kernelInv = new float[n][];
