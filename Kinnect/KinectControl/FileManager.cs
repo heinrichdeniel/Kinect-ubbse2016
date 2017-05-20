@@ -112,6 +112,11 @@ namespace KinectControl
             {
                 throw new ArgumentException("Argument can't be null", "original");
             }
+			Commands.Average avg = readCommand(average.keyID);
+			if (avg == null || avg.keyID == -1)
+			{
+				throw new ArgumentException("Command exist in the file!", "original");
+			}
             XmlElement movement = kinnectXMLCommands.CreateElement("command");
             XmlElement id = kinnectXMLCommands.CreateElement("id");
             id.InnerText = average.keyID.ToString();
