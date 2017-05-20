@@ -7,7 +7,7 @@ using Microsoft.Kinect;
 
 namespace KinectControl
 {
-    class MouseMovementHandler
+    public class MouseMovementHandler
     {
 
         int screenWidth, screenHeight;
@@ -59,20 +59,31 @@ namespace KinectControl
         }
 
 
-        public void updateMouseSensibility(float sensibility)
+        public bool updateMouseSensibility(float sensibility)
         {
+            if (sensibility < 0 || sensibility > 10)
+            {
+                throw new ArgumentException("Incorrect sensibility passed", "sensibility");
+            }
             mouseSensitivity = sensibility;
+            return true;
         }
 
-        public void updateMouseVisibility(bool visible)
+        public bool updateMouseVisibility(bool visible)
         {
             if (canMove)
                 pointer.pointerVisibility(visible);
+            return visible;
         }
 
-        public void updatecursorSmoothing(float smoothing)
+        public bool updatecursorSmoothing(float smoothing)
         {
+            if (smoothing < 0 || smoothing > 1)
+            {
+                throw new ArgumentException("Incorrect smoothing passed", "smoothing");
+            }
             cursorSmoothing = smoothing;
+            return true;
         }
 
         /// <summary>

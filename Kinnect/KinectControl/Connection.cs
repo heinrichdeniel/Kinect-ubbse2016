@@ -94,7 +94,7 @@ namespace KinectControl
 
 
 
-        public void startStop(Boolean can)
+        public bool startStop(Boolean can)
         {
             if (can == false)
             {
@@ -106,6 +106,7 @@ namespace KinectControl
                 movementHandler.canMove = true;
                 movementHandler.pointer.pointerVisibility(true);
             }
+            return can;
         }
 
         public void setExistingCommands(List<Commands.Average> commands)
@@ -339,7 +340,7 @@ namespace KinectControl
 
         }
 
-        private Boolean handMoved(CameraSpacePoint prevHand, CameraSpacePoint hand)
+        public Boolean handMoved(CameraSpacePoint prevHand, CameraSpacePoint hand)
         {
             if (Math.Abs(prevHand.X - hand.X) > 0.01 || Math.Abs(prevHand.Y - hand.Y) > 0.01 || Math.Abs(prevHand.Z - hand.Z) > 0.01)
             {
