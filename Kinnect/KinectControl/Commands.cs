@@ -438,12 +438,6 @@ namespace KinectControl
 
             a = s.calculateRes(3f);
             Debug.Write(a + "\n\n");
-
         }
-
-
-
-
-
     }
 }

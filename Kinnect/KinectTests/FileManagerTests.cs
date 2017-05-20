@@ -16,7 +16,6 @@ namespace KinectTests
         {
             FileManager fm = FileManager.getInstance();
             Commands.Average comm = fm.readCommand(2);
-
             Assert.AreEqual(comm.keyID, 2, "The keyId returned should match what was passed in");
         }
 
