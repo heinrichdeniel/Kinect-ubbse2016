@@ -47,5 +47,27 @@ namespace KinectTests
 
             Assert.AreEqual(expectedValue, connection.handMoved(a, b), "Hand did not move!");
         }
+
+        [TestMethod]
+        public void ConnectionStartStop_Starts_returnTrue()
+        {
+            Connection connection = new Connection(new PictureBox(), new Button());
+            CameraSpacePoint a = new CameraSpacePoint();
+
+            bool expectedValue = true;
+
+            Assert.AreEqual(expectedValue, connection.startStop(true), "Did not start!");
+        }
+
+        [TestMethod]
+        public void ConnectionStartStop_Stops_returnTrue()
+        {
+            Connection connection = new Connection(new PictureBox(), new Button());
+            CameraSpacePoint a = new CameraSpacePoint();
+
+            bool expectedValue = false;
+
+            Assert.AreEqual(expectedValue, connection.startStop(false), "Did not stop!");
+        }
     }
 }

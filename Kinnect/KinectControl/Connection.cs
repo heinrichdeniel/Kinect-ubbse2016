@@ -94,7 +94,7 @@ namespace KinectControl
 
 
 
-        public void startStop(Boolean can)
+        public bool startStop(Boolean can)
         {
             if (can == false)
             {
@@ -106,6 +106,7 @@ namespace KinectControl
                 movementHandler.canMove = true;
                 movementHandler.pointer.pointerVisibility(true);
             }
+            return can;
         }
 
         public void setExistingCommands(List<Commands.Average> commands)
