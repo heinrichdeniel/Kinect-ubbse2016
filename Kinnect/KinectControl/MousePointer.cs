@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace KinectControl
 {
-    class MousePointer
+    public class MousePointer
     {
         private Brush b;
         private int x = 0, y = 0;

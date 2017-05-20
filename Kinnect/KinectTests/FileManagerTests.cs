@@ -12,21 +12,21 @@ namespace KinectTests
     {
 
         [TestMethod]
-        public void ReadMovement_WithAnId_ReturnsTheMovement()
+        public void ReadCommand_WithAnId_ReturnsTheMovement()
         {
             FileManager fm = FileManager.getInstance();
-            Movement mov = fm.readMovement(3);
+            Commands.Average comm = fm.readCommand(2);
 
-            Assert.AreEqual(mov.keyID, 3, "The keyId returned should match what was passed in");
+            Assert.AreEqual(comm.keyID, 2, "The keyId returned should match what was passed in");
         }
 
         [TestMethod]
-        public void ReadMovement_WithInvalidId_ReturnsMinusOne()
+        public void ReadCommand_WithInvalidId_ReturnsMinusOne()
         {
             FileManager fm = FileManager.getInstance();
-            Movement mov = fm.readMovement(-5);
+            Commands.Average comm = fm.readCommand(-5);
 
-            Assert.AreEqual(mov.keyID, -1, "The keyId passed in was invalid");
+            Assert.AreEqual(comm.keyID, -1, "The keyId passed in was invalid");
 
         }
 
